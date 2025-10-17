@@ -1,0 +1,73 @@
+[GIN-debug] [WARNING] Creating an Engine instance with the Logger and Recovery middleware already attached.
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] GET    /health                   --> main.main.func1 (5 handlers)
+[GIN-debug] GET    /openapi.json             --> station-backend/internal/booking.RegisterDocsRoutes.func1 (5 handlers)
+[GIN-debug] GET    /docs                     --> station-backend/internal/booking.RegisterDocsRoutes.func2 (5 handlers)
+[GIN-debug] POST   /api/v1/bookings          --> station-backend/internal/booking.(*Handler).Create-fm (6 handlers)
+[GIN-debug] POST   /api/v1/bookings/by-queue-entry --> station-backend/internal/booking.(*Handler).CreateByQueueEntry-fm (6 handlers)
+[GIN-debug] POST   /api/v1/bookings/cancel-one-by-queue-entry --> station-backend/internal/booking.(*Handler).CancelOneByQueueEntry-fm (6 handlers)
+[GIN-debug] PUT    /api/v1/bookings/:id/cancel --> station-backend/internal/booking.(*Handler).Cancel-fm (6 handlers)
+[GIN-debug] GET    /api/v1/trips             --> station-backend/internal/booking.(*Handler).ListTrips-fm (6 handlers)
+[GIN-debug] GET    /api/v1/trips/today       --> station-backend/internal/booking.(*Handler).ListTodayTrips-fm (6 handlers)
+2025/10/16 17:41:46 Booking service starting on port 8003
+[GIN-debug] [WARNING] You trusted all proxies, this is NOT safe. We recommend you to set a value.
+Please check https://github.com/gin-gonic/gin/blob/master/docs/doc.md#dont-trust-all-proxies for details.
+[GIN-debug] Listening and serving HTTP on :8003
+127.0.0.1 - [16/Oct/2025:17:41:47 +0100] "GET /health HTTP/1.1 200 49.819µs "curl/7.81.0" "
+[GIN] 2025/10/16 - 17:41:47 | 200 |     473.475µs |       127.0.0.1 | GET      "/health"
+::1 - [16/Oct/2025:18:05:15 +0100] "GET /health HTTP/1.1 200 351.208µs "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) louaj-desktop/0.0.0 Chrome/124.0.6367.243 Electron/30.5.1 Safari/537.36" "
+[GIN] 2025/10/16 - 18:05:15 | 200 |     649.948µs |             ::1 | GET      "/health"
+::1 - [16/Oct/2025:18:05:15 +0100] "GET /health HTTP/1.1 200 47.47µs "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) louaj-desktop/0.0.0 Chrome/124.0.6367.243 Electron/30.5.1 Safari/537.36" "
+[GIN] 2025/10/16 - 18:05:15 | 200 |     276.779µs |             ::1 | GET      "/health"
+::1 - [16/Oct/2025:18:10:29 +0100] "GET /health HTTP/1.1 200 161.139µs "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) louaj-desktop/0.0.0 Chrome/124.0.6367.243 Electron/30.5.1 Safari/537.36" "
+[GIN] 2025/10/16 - 18:10:29 | 200 |     418.107µs |             ::1 | GET      "/health"
+::1 - [16/Oct/2025:18:10:29 +0100] "GET /health HTTP/1.1 200 40.514µs "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) louaj-desktop/0.0.0 Chrome/124.0.6367.243 Electron/30.5.1 Safari/537.36" "
+[GIN] 2025/10/16 - 18:10:29 | 200 |     281.026µs |             ::1 | GET      "/health"
+::1 - [16/Oct/2025:18:11:19 +0100] "GET /health HTTP/1.1 200 32.263µs "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) louaj-desktop/0.0.0 Chrome/124.0.6367.243 Electron/30.5.1 Safari/537.36" "
+[GIN] 2025/10/16 - 18:11:19 | 200 |     312.567µs |             ::1 | GET      "/health"
+::1 - [16/Oct/2025:18:11:19 +0100] "GET /health HTTP/1.1 200 56.014µs "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) louaj-desktop/0.0.0 Chrome/124.0.6367.243 Electron/30.5.1 Safari/537.36" "
+[GIN] 2025/10/16 - 18:11:19 | 200 |     426.052µs |             ::1 | GET      "/health"
+::1 - [16/Oct/2025:18:15:55 +0100] "GET /health HTTP/1.1 200 32.895µs "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) louaj-desktop/0.0.0 Chrome/124.0.6367.243 Electron/30.5.1 Safari/537.36" "
+[GIN] 2025/10/16 - 18:15:55 | 200 |     210.145µs |             ::1 | GET      "/health"
+::1 - [16/Oct/2025:18:15:55 +0100] "GET /health HTTP/1.1 200 66.368µs "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) louaj-desktop/0.0.0 Chrome/124.0.6367.243 Electron/30.5.1 Safari/537.36" "
+[GIN] 2025/10/16 - 18:15:55 | 200 |     507.147µs |             ::1 | GET      "/health"
+::1 - [16/Oct/2025:18:19:07 +0100] "GET /health HTTP/1.1 200 40.206µs "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) louaj-desktop/0.0.0 Chrome/124.0.6367.243 Electron/30.5.1 Safari/537.36" "
+[GIN] 2025/10/16 - 18:19:07 | 200 |     265.083µs |             ::1 | GET      "/health"
+::1 - [16/Oct/2025:18:19:07 +0100] "GET /health HTTP/1.1 200 114.513µs "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) louaj-desktop/0.0.0 Chrome/124.0.6367.243 Electron/30.5.1 Safari/537.36" "
+[GIN] 2025/10/16 - 18:19:07 | 200 |      187.66µs |             ::1 | GET      "/health"
+::1 - [16/Oct/2025:18:38:31 +0100] "GET /health HTTP/1.1 200 58.397µs "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) louaj-desktop/0.0.0 Chrome/124.0.6367.243 Electron/30.5.1 Safari/537.36" "
+[GIN] 2025/10/16 - 18:38:31 | 200 |     182.202µs |             ::1 | GET      "/health"
+::1 - [16/Oct/2025:18:38:31 +0100] "GET /health HTTP/1.1 200 23.606µs "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) louaj-desktop/0.0.0 Chrome/124.0.6367.243 Electron/30.5.1 Safari/537.36" "
+[GIN] 2025/10/16 - 18:38:31 | 200 |     164.822µs |             ::1 | GET      "/health"
+::1 - [16/Oct/2025:18:48:50 +0100] "GET /health HTTP/1.1 200 51.189µs "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) louaj-desktop/0.0.0 Chrome/124.0.6367.243 Electron/30.5.1 Safari/537.36" "
+[GIN] 2025/10/16 - 18:48:50 | 200 |      136.81µs |             ::1 | GET      "/health"
+::1 - [16/Oct/2025:18:48:50 +0100] "GET /health HTTP/1.1 200 18.131µs "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) louaj-desktop/0.0.0 Chrome/124.0.6367.243 Electron/30.5.1 Safari/537.36" "
+[GIN] 2025/10/16 - 18:48:50 | 200 |     111.216µs |             ::1 | GET      "/health"
+::1 - [16/Oct/2025:18:49:09 +0100] "GET /health HTTP/1.1 200 23.465µs "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) louaj-desktop/0.0.0 Chrome/124.0.6367.243 Electron/30.5.1 Safari/537.36" "
+[GIN] 2025/10/16 - 18:49:09 | 200 |      152.57µs |             ::1 | GET      "/health"
+::1 - [16/Oct/2025:18:49:09 +0100] "GET /health HTTP/1.1 200 65.966µs "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) louaj-desktop/0.0.0 Chrome/124.0.6367.243 Electron/30.5.1 Safari/537.36" "
+[GIN] 2025/10/16 - 18:49:09 | 200 |     262.674µs |             ::1 | GET      "/health"
+::1 - [16/Oct/2025:18:53:54 +0100] "GET /health HTTP/1.1 200 40.411µs "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) louaj-desktop/0.0.0 Chrome/124.0.6367.243 Electron/30.5.1 Safari/537.36" "
+[GIN] 2025/10/16 - 18:53:54 | 200 |     405.552µs |             ::1 | GET      "/health"
+::1 - [16/Oct/2025:18:53:54 +0100] "GET /health HTTP/1.1 200 43.108µs "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) louaj-desktop/0.0.0 Chrome/124.0.6367.243 Electron/30.5.1 Safari/537.36" "
+[GIN] 2025/10/16 - 18:53:54 | 200 |     453.656µs |             ::1 | GET      "/health"
+::1 - [16/Oct/2025:18:54:05 +0100] "GET /health HTTP/1.1 200 85.161µs "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) louaj-desktop/0.0.0 Chrome/124.0.6367.243 Electron/30.5.1 Safari/537.36" "
+[GIN] 2025/10/16 - 18:54:05 | 200 |     644.313µs |             ::1 | GET      "/health"
+::1 - [16/Oct/2025:18:54:05 +0100] "GET /health HTTP/1.1 200 31.242µs "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) louaj-desktop/0.0.0 Chrome/124.0.6367.243 Electron/30.5.1 Safari/537.36" "
+[GIN] 2025/10/16 - 18:54:05 | 200 |     160.477µs |             ::1 | GET      "/health"
+::1 - [16/Oct/2025:19:59:54 +0100] "GET /health HTTP/1.1 200 159.453µs "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) louaj-desktop/0.0.0 Chrome/124.0.6367.243 Electron/30.5.1 Safari/537.36" "
+[GIN] 2025/10/16 - 19:59:54 | 200 |     444.203µs |             ::1 | GET      "/health"
+::1 - [16/Oct/2025:19:59:54 +0100] "GET /health HTTP/1.1 200 30.227µs "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) louaj-desktop/0.0.0 Chrome/124.0.6367.243 Electron/30.5.1 Safari/537.36" "
+[GIN] 2025/10/16 - 19:59:54 | 200 |     213.812µs |             ::1 | GET      "/health"
+::1 - [16/Oct/2025:20:02:01 +0100] "GET /health HTTP/1.1 200 29.82µs "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) louaj-desktop/0.0.0 Chrome/124.0.6367.243 Electron/30.5.1 Safari/537.36" "
+[GIN] 2025/10/16 - 20:02:01 | 200 |      98.749µs |             ::1 | GET      "/health"
+::1 - [16/Oct/2025:20:02:01 +0100] "GET /health HTTP/1.1 200 14.103µs "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) louaj-desktop/0.0.0 Chrome/124.0.6367.243 Electron/30.5.1 Safari/537.36" "
+[GIN] 2025/10/16 - 20:02:01 | 200 |      96.491µs |             ::1 | GET      "/health"
+::1 - [16/Oct/2025:20:02:22 +0100] "GET /health HTTP/1.1 200 13.579µs "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) louaj-desktop/0.0.0 Chrome/124.0.6367.243 Electron/30.5.1 Safari/537.36" "
+[GIN] 2025/10/16 - 20:02:22 | 200 |      104.82µs |             ::1 | GET      "/health"
+::1 - [16/Oct/2025:20:02:22 +0100] "GET /health HTTP/1.1 200 49.871µs "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) louaj-desktop/0.0.0 Chrome/124.0.6367.243 Electron/30.5.1 Safari/537.36" "
+[GIN] 2025/10/16 - 20:02:22 | 200 |     128.977µs |             ::1 | GET      "/health"

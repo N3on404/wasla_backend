@@ -1,0 +1,15 @@
+{
+  "name": "station-backend",
+  "version": "1.0.0",
+  "description": "A robust, high-performance backend system built with Go and Gin for managing transportation station operations.",
+  "main": "test-websocket.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "ws": "^8.18.3"
+  }
+}

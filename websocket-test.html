@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>WebSocket Test</title>
+</head>
+<body>
+    <h1>WebSocket Connection Test</h1>
+    <div id="status">Connecting...</div>
+    <div id="messages"></div>
+    
+    <script>
+        const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjA3NjY5MDksImZpcnN0X25hbWUiOiJVc2VyIiwiaWF0IjoxNzYwNjgwNTA5LCJsYXN0X25hbWUiOiJJdmFuIiwic3RhZmZfaWQiOiJzdGFmZl8xNzU4OTk1NDI4MzYzXzJuaGZlZ3N2ZSJ9.Jmxx9BCbzEAcrkPvz93yjjqUMHwVPs8A3KmFCjsQS6s';
+        const url = `ws://localhost:8004/ws/queue/station-moknin?token=${encodeURIComponent(token)}`;
+        
+        console.log('Connecting to:', url);
+        
+        const ws = new WebSocket(url);
+        
+        ws.onopen = () => {
+            console.log('WebSocket connected');
+            document.getElementById('status').textContent = 'Connected';
+            
+            // Send a ping message
+            ws.send(JSON.stringify({
+                type: 'ping',
+                timestamp: Date.now()
+            }));
+            
+            // Subscribe to events
+            ws.send(JSON.stringify({
+                type: 'subscribe',
+                events: ['queue_updated', 'day_pass_created'],
+                timestamp: Date.now()
+            }));
+        };
+        
+        ws.onmessage = (event) => {
+            console.log('Message received:', event.data);
+            const messages = document.getElementById('messages');
+            messages.innerHTML += '<div>' + event.data + '</div>';
+        };
+        
+        ws.onerror = (error) => {
+            console.error('WebSocket error:', error);
+            document.getElementById('status').textContent = 'Error: ' + error;
+        };
+        
+        ws.onclose = (event) => {
+            console.log('WebSocket closed:', event.code, event.reason);
+            document.getElementById('status').textContent = 'Closed: ' + event.code + ' - ' + event.reason;
+        };
+    </script>
+</body>
+</html>
