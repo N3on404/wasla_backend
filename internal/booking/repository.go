@@ -19,6 +19,7 @@ type Repository interface {
 	ListTrips(ctx context.Context, limit int) ([]Trip, error)
 	CancelOneBookingByQueueEntry(ctx context.Context, queueEntryID string, staffID string) (*Booking, error)
 	ListTodayTrips(ctx context.Context, search string, limit int) ([]Trip, error)
+	GetTodayTripsCount(ctx context.Context) (int, error)
 }
 
 type RepositoryImpl struct {
@@ -333,7 +334,7 @@ func (r *RepositoryImpl) ListTrips(ctx context.Context, limit int) ([]Trip, erro
 	var list []Trip
 	for rows.Next() {
 		var t Trip
-		if err := rows.Scan(&t.ID, &t.VehicleID, &t.LicensePlate, &t.DestinationID, &t.DestinationName, &t.QueueID, &t.SeatsBooked, &t.StartTime, &t.CreatedAt); err != nil {
+		if err := rows.Scan(&t.ID, &t.VehicleID, &t.LicensePlate, &t.DestinationID, &t.DestinationName, &t.QueueID, &t.SeatsBooked, &t.VehicleCapacity, &t.BasePrice, &t.StartTime, &t.CreatedAt); err != nil {
 			return nil, err
 		}
 		list = append(list, t)
@@ -350,7 +351,8 @@ func (r *RepositoryImpl) ListTodayTrips(ctx context.Context, search string, limi
 	var err error
 	if search != "" {
 		rows, err = r.db.Query(ctx, `
-            SELECT id, vehicle_id, license_plate, destination_id, destination_name, queue_id, seats_booked, start_time, created_at
+            SELECT id, vehicle_id, license_plate, destination_id, destination_name, queue_id, seats_booked, 
+                   vehicle_capacity, base_price, start_time, created_at
             FROM trips
             WHERE start_time::date = CURRENT_DATE AND license_plate ILIKE '%' || $1 || '%'
             ORDER BY start_time DESC
@@ -358,7 +360,8 @@ func (r *RepositoryImpl) ListTodayTrips(ctx context.Context, search string, limi
         `, search, limit)
 	} else {
 		rows, err = r.db.Query(ctx, `
-            SELECT id, vehicle_id, license_plate, destination_id, destination_name, queue_id, seats_booked, start_time, created_at
+            SELECT id, vehicle_id, license_plate, destination_id, destination_name, queue_id, seats_booked, 
+                   vehicle_capacity, base_price, start_time, created_at
             FROM trips
             WHERE start_time::date = CURRENT_DATE
             ORDER BY start_time DESC
@@ -372,7 +375,7 @@ func (r *RepositoryImpl) ListTodayTrips(ctx context.Context, search string, limi
 	var list []Trip
 	for rows.Next() {
 		var t Trip
-		if err := rows.Scan(&t.ID, &t.VehicleID, &t.LicensePlate, &t.DestinationID, &t.DestinationName, &t.QueueID, &t.SeatsBooked, &t.StartTime, &t.CreatedAt); err != nil {
+		if err := rows.Scan(&t.ID, &t.VehicleID, &t.LicensePlate, &t.DestinationID, &t.DestinationName, &t.QueueID, &t.SeatsBooked, &t.VehicleCapacity, &t.BasePrice, &t.StartTime, &t.CreatedAt); err != nil {
 			return nil, err
 		}
 		list = append(list, t)
@@ -463,76 +466,52 @@ func (r *RepositoryImpl) CreateBookingByQueueEntry(ctx context.Context, req Crea
 		basePrice = 15.0 // Default price if not found
 	}
 
-	// Create exit pass information if vehicle is fully booked
+	// Check if vehicle is now fully booked after this booking
 	var exitPass *ExitPass
-	if isReady {
-		seatsForTrip := totalSeats
+	fmt.Printf("DEBUG: Checking if vehicle becomes fully booked - newAvailableSeats: %d\n", newAvailableSeats)
+	if newAvailableSeats == 0 {
+		fmt.Printf("DEBUG: Vehicle is now fully booked! Creating trip record...\n")
+		// Vehicle is now fully booked, create trip record
 		tripID := fmt.Sprintf("trip_%d", time.Now().UnixNano())
-		currentExitTime := time.Now()
+		currentExitTime := time.Now().In(time.FixedZone("Africa/Tunis", 3600)) // Use Tunisia timezone
 
 		// Create trip record
+		fmt.Printf("DEBUG: Inserting trip record with ID: %s, Vehicle: %s, Destination: %s\n", tripID, licensePlate, destName)
 		if _, err := tx.Exec(ctx, `
 			INSERT INTO trips (
-				id, vehicle_id, license_plate, destination_id, destination_name, queue_id, seats_booked, start_time, created_at
+				id, vehicle_id, license_plate, destination_id, destination_name, queue_id, seats_booked, 
+				vehicle_capacity, base_price, start_time, created_at
 			) VALUES (
-				$1, $2, $3, $4, $5, $6, $7, NOW(), NOW()
-			)`, tripID, vehicleID, licensePlate, destID, destName, queueID, seatsForTrip); err != nil {
+				$1, $2, $3, $4, $5, $6, $7, $8, $9, NOW(), NOW()
+			)`, tripID, vehicleID, licensePlate, destID, destName, queueID, totalSeats, totalSeats, basePrice); err != nil {
+			fmt.Printf("DEBUG: Error creating trip record: %v\n", err)
 			return nil, err
 		}
+		fmt.Printf("DEBUG: Trip record created successfully!\n")
 
-		// Get previous vehicles that exited to the same destination today with their exit times
-		var previousVehicles []PreviousVehicle
-		rows, err := tx.Query(ctx, `
-			SELECT license_plate, start_time 
-			FROM trips 
-			WHERE destination_id = $1 
-			  AND DATE(start_time) = CURRENT_DATE 
-			  AND id != $2
-			ORDER BY start_time DESC
-			LIMIT 5`, destID, tripID)
-		if err == nil {
-			defer rows.Close()
-			for rows.Next() {
-				var lp string
-				var exitTime time.Time
-				if err := rows.Scan(&lp, &exitTime); err == nil {
-					previousVehicles = append(previousVehicles, PreviousVehicle{
-						LicensePlate: lp,
-						ExitTime:     exitTime,
-					})
-				}
-			}
-		}
-
+		// Calculate total amount (vehicle capacity * base price without service fees)
 		totalPrice := basePrice * float64(totalSeats)
 
-		// Create exit pass record
-		exitPassID := fmt.Sprintf("exit_pass_%d", time.Now().UnixNano())
-		if _, err := tx.Exec(ctx, `
-			INSERT INTO exit_passes (
-				id, queue_id, vehicle_id, license_plate, destination_id, destination_name,
-				current_exit_time, created_by, created_at
-			) VALUES (
-				$1, $2, $3, $4, $5, $6, NOW(), $7, NOW()
-			)`, exitPassID, queueID, vehicleID, licensePlate, destID, destName, req.StaffID); err != nil {
-			return nil, err
-		}
-
-		// Create exit pass for response
+		// Create exit pass information for frontend
 		exitPass = &ExitPass{
-			ID:               exitPassID,
-			QueueID:          queueID,
-			VehicleID:        vehicleID,
-			LicensePlate:     licensePlate,
-			DestinationID:    destID,
-			DestinationName:  destName,
-			PreviousVehicles: previousVehicles,
-			CurrentExitTime:  currentExitTime,
-			TotalPrice:       totalPrice,
-			CreatedBy:        req.StaffID,
-			CreatedByName:    staffName,
-			CreatedAt:        time.Now(),
+			ID:              tripID, // Use trip ID as exit pass ID
+			QueueID:         queueID,
+			VehicleID:       vehicleID,
+			LicensePlate:    licensePlate,
+			DestinationID:   destID,
+			DestinationName: destName,
+			CurrentExitTime: currentExitTime,
+			TotalPrice:      totalPrice,
+			CreatedBy:       req.StaffID,
+			CreatedByName:   staffName,
+			CreatedAt:       time.Now(),
+			// Vehicle and pricing information for ticket generation
+			VehicleCapacity: totalSeats, // Vehicle capacity
+			BasePrice:       basePrice,  // Base price per seat from route
 		}
+		fmt.Printf("DEBUG: Exit pass created for frontend\n")
+	} else {
+		fmt.Printf("DEBUG: Vehicle not fully booked yet - available seats: %d\n", newAvailableSeats)
 	}
 
 	// Get the next available seat numbers for this queue based on existing bookings
@@ -609,4 +588,14 @@ func (r *RepositoryImpl) GetDestinationByQueueEntry(ctx context.Context, queueEn
 		return "", err
 	}
 	return destinationID, nil
+}
+
+// GetTodayTripsCount returns the count of trips for today
+func (r *RepositoryImpl) GetTodayTripsCount(ctx context.Context) (int, error) {
+	var count int
+	err := r.db.QueryRow(ctx, `SELECT COUNT(*) FROM trips WHERE start_time::date = CURRENT_DATE`).Scan(&count)
+	if err != nil {
+		return 0, err
+	}
+	return count, nil
 }

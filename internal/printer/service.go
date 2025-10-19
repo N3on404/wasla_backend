@@ -140,19 +140,35 @@ func (s *Service) PrintTalon(printerID string, ticketData *TicketData) error {
 func (s *Service) generateBookingTicketContent(data *TicketData) string {
 	var content strings.Builder
 
-	content.WriteString("================================\n")
-	content.WriteString("      BILLET DE RÉSERVATION\n")
-	content.WriteString("================================\n\n")
-	content.WriteString(fmt.Sprintf("Véhicule: %s\n", data.LicensePlate))
+	// Compact header with company name
+	if data.CompanyName != "" {
+		content.WriteString("================================\n")
+		content.WriteString(fmt.Sprintf("  %s\n", strings.ToUpper("STE DHRAIFF SERVICES TRANSPORT")))
+		content.WriteString("================================\n")
+	}
+
+	// Compact ticket title
+	content.WriteString("     BILLET DE RÉSERVATION\n")
+	content.WriteString("--------------------------------\n")
+
+	// Essential information in compact format
+	content.WriteString(fmt.Sprintf("Vehicule: %s\n", data.LicensePlate))
 	content.WriteString(fmt.Sprintf("Destination: %s\n", data.DestinationName))
 	content.WriteString(fmt.Sprintf("Siège: %d\n", data.SeatNumber))
-	content.WriteString(fmt.Sprintf("Code: %s\n", data.VerificationCode))
 	content.WriteString(fmt.Sprintf("Montant: %.2f TND\n", data.TotalAmount))
-	content.WriteString(fmt.Sprintf("Créé par: %s\n", data.CreatedBy))
-	content.WriteString(fmt.Sprintf("Date: %s\n", data.CreatedAt.Format("2006-01-02 15:04")))
-	content.WriteString("\n================================\n")
+	content.WriteString(fmt.Sprintf("Date: %s\n", data.CreatedAt.Format("02/01/2006 15:04")))
+	content.WriteString(fmt.Sprintf("Agent: %s\n", data.CreatedBy))
+
+	// Compact footer
+	content.WriteString("--------------------------------\n")
 	content.WriteString("Merci de nous avoir choisis!\n")
-	content.WriteString("================================\n\n\n\n")
+
+	// Staff information at the bottom (compact)
+	if data.StaffFirstName != "" && data.StaffLastName != "" {
+		content.WriteString(fmt.Sprintf("Agent: %s %s\n", data.StaffFirstName, data.StaffLastName))
+	}
+
+	content.WriteString("\n\n")
 
 	return content.String()
 }
@@ -160,17 +176,32 @@ func (s *Service) generateBookingTicketContent(data *TicketData) string {
 func (s *Service) generateEntryTicketContent(data *TicketData) string {
 	var content strings.Builder
 
-	content.WriteString("================================\n")
+	// Compact header with company name
+	if data.CompanyName != "" {
+		content.WriteString("================================\n")
+		content.WriteString(fmt.Sprintf("  %s\n", strings.ToUpper("STE DHRAIFF SERVICES TRANSPORT")))
+		content.WriteString("================================\n")
+	}
+
+	// Compact ticket title
 	content.WriteString("        BILLET D'ENTRÉE\n")
-	content.WriteString("================================\n\n")
-	content.WriteString(fmt.Sprintf("Véhicule: %s\n", data.LicensePlate))
+	content.WriteString("--------------------------------\n")
+
+	// Essential information in compact format
+	content.WriteString(fmt.Sprintf("Vehicule: %s\n", data.LicensePlate))
 	content.WriteString(fmt.Sprintf("Route: %s\n", data.RouteName))
-	content.WriteString(fmt.Sprintf("Station: %s\n", data.StationName))
-	content.WriteString(fmt.Sprintf("Code: %s\n", data.VerificationCode))
-	content.WriteString(fmt.Sprintf("Date: %s\n", data.CreatedAt.Format("2006-01-02 15:04")))
-	content.WriteString("\n================================\n")
+	content.WriteString(fmt.Sprintf("Date: %s\n", data.CreatedAt.Format("02/01/2006 15:04")))
+	content.WriteString(fmt.Sprintf("Agent: %s\n", data.CreatedBy))
+	// Compact footer
+	content.WriteString("--------------------------------\n")
 	content.WriteString("Bon voyage!\n")
-	content.WriteString("================================\n\n\n\n")
+
+	// Staff information at the bottom (compact)
+	if data.StaffFirstName != "" && data.StaffLastName != "" {
+		content.WriteString(fmt.Sprintf("Agent: %s %s\n", data.StaffFirstName, data.StaffLastName))
+	}
+
+	content.WriteString("\n\n")
 
 	return content.String()
 }
@@ -178,17 +209,33 @@ func (s *Service) generateEntryTicketContent(data *TicketData) string {
 func (s *Service) generateExitTicketContent(data *TicketData) string {
 	var content strings.Builder
 
-	content.WriteString("================================\n")
+	// Compact header with company name
+	if data.CompanyName != "" {
+		content.WriteString("================================\n")
+		content.WriteString(fmt.Sprintf("  %s\n", strings.ToUpper("STE DHRAIFF SERVICES TRANSPORT")))
+		content.WriteString("================================\n")
+	}
+
+	// Compact ticket title
 	content.WriteString("        BILLET DE SORTIE\n")
-	content.WriteString("================================\n\n")
-	content.WriteString(fmt.Sprintf("Véhicule: %s\n", data.LicensePlate))
+	content.WriteString("--------------------------------\n")
+
+	// Essential information in compact format
+	content.WriteString(fmt.Sprintf("Vehicule: %s\n", data.LicensePlate))
 	content.WriteString(fmt.Sprintf("Route: %s\n", data.RouteName))
 	content.WriteString(fmt.Sprintf("Station: %s\n", data.StationName))
-	content.WriteString(fmt.Sprintf("Code: %s\n", data.VerificationCode))
-	content.WriteString(fmt.Sprintf("Date: %s\n", data.CreatedAt.Format("2006-01-02 15:04")))
-	content.WriteString("\n================================\n")
+	content.WriteString(fmt.Sprintf("Date: %s\n", data.CreatedAt.Format("02/01/2006 15:04")))
+	content.WriteString(fmt.Sprintf("Agent: %s\n", data.CreatedBy))
+	// Compact footer
+	content.WriteString("--------------------------------\n")
 	content.WriteString("Merci!\n")
-	content.WriteString("================================\n\n\n\n")
+
+	// Staff information at the bottom (compact)
+	if data.StaffFirstName != "" && data.StaffLastName != "" {
+		content.WriteString(fmt.Sprintf("Agent: %s %s\n", data.StaffFirstName, data.StaffLastName))
+	}
+
+	content.WriteString("\n\n")
 
 	return content.String()
 }
@@ -196,18 +243,33 @@ func (s *Service) generateExitTicketContent(data *TicketData) string {
 func (s *Service) generateDayPassTicketContent(data *TicketData) string {
 	var content strings.Builder
 
-	content.WriteString("================================\n")
+	// Compact header with company name
+	if data.CompanyName != "" {
+		content.WriteString("================================\n")
+		content.WriteString(fmt.Sprintf("  %s\n", strings.ToUpper("STE DHRAIFF SERVICES TRANSPORT")))
+		content.WriteString("================================\n")
+	}
+
+	// Compact ticket title
 	content.WriteString("      BILLET PASS JOURNÉE\n")
-	content.WriteString("================================\n\n")
-	content.WriteString(fmt.Sprintf("Véhicule: %s\n", data.LicensePlate))
+	content.WriteString("--------------------------------\n")
+
+	// Essential information in compact format
+	content.WriteString(fmt.Sprintf("Vehicule: %s\n", data.LicensePlate))
 	content.WriteString(fmt.Sprintf("Route: %s\n", data.RouteName))
-	content.WriteString(fmt.Sprintf("Station: %s\n", data.StationName))
-	content.WriteString(fmt.Sprintf("Code: %s\n", data.VerificationCode))
 	content.WriteString(fmt.Sprintf("Montant: %.2f TND\n", data.TotalAmount))
-	content.WriteString(fmt.Sprintf("Date: %s\n", data.CreatedAt.Format("2006-01-02 15:04")))
-	content.WriteString("\n================================\n")
+	content.WriteString(fmt.Sprintf("Date: %s\n", data.CreatedAt.Format("02/01/2006 15:04")))
+	content.WriteString(fmt.Sprintf("Agent: %s\n", data.CreatedBy))
+	// Compact footer
+	content.WriteString("--------------------------------\n")
 	content.WriteString("Valide toute la journée!\n")
-	content.WriteString("================================\n\n\n\n")
+
+	// Staff information at the bottom (compact)
+	if data.StaffFirstName != "" && data.StaffLastName != "" {
+		content.WriteString(fmt.Sprintf("Agent: %s %s\n", data.StaffFirstName, data.StaffLastName))
+	}
+
+	content.WriteString("\n\n")
 
 	return content.String()
 }
@@ -215,17 +277,44 @@ func (s *Service) generateDayPassTicketContent(data *TicketData) string {
 func (s *Service) generateExitPassTicketContent(data *TicketData) string {
 	var content strings.Builder
 
-	content.WriteString("================================\n")
-	content.WriteString("     BILLET AUTORISATION SORTIE\n")
-	content.WriteString("================================\n\n")
-	content.WriteString(fmt.Sprintf("Véhicule: %s\n", data.LicensePlate))
-	content.WriteString(fmt.Sprintf("Route: %s\n", data.RouteName))
-	content.WriteString(fmt.Sprintf("Station: %s\n", data.StationName))
-	content.WriteString(fmt.Sprintf("Code: %s\n", data.VerificationCode))
-	content.WriteString(fmt.Sprintf("Date: %s\n", data.CreatedAt.Format("2006-01-02 15:04")))
-	content.WriteString("\n================================\n")
-	content.WriteString("Sortie autorisée!\n")
-	content.WriteString("================================\n\n\n\n")
+	// Compact header with company name
+	if data.CompanyName != "" {
+		content.WriteString("================================\n")
+		content.WriteString(fmt.Sprintf("  %s\n", strings.ToUpper("STE DHRAIFF SERVICES TRANSPORT")))
+		content.WriteString("================================\n")
+	}
+
+	// Compact ticket title with exit pass count in top right
+	content.WriteString("   🚪 BILLET AUTORISATION SORTIE")
+	// Add spaces to position exit pass count in top right (assuming 32 char width)
+	if data.ExitPassCount > 0 {
+		countSpaces := 32 - 30 - 4 // 32 total - "🚪 BILLET AUTORISATION SORTIE" (30) - count (4) = -2 spaces
+		for i := 0; i < countSpaces; i++ {
+			content.WriteString(" ")
+		}
+		content.WriteString(fmt.Sprintf("(%d)\n", data.ExitPassCount))
+	} else {
+		content.WriteString("\n")
+	}
+	content.WriteString("--------------------------------\n")
+
+	// Essential information in compact format
+	content.WriteString(fmt.Sprintf("Vehicule: %s\n", data.LicensePlate))
+	content.WriteString(fmt.Sprintf("Destination: %s\n", data.DestinationName))
+	content.WriteString(fmt.Sprintf("Montant Total: %.2f TND\n", data.TotalAmount))
+	fmt.Printf("DEBUG: Exit pass ticket time - Original: %v\n", data.CreatedAt)
+	content.WriteString(fmt.Sprintf("Date: %s\n", data.CreatedAt.Format("02/01/2006 15:04")))
+	content.WriteString(fmt.Sprintf("Agent: %s\n", data.CreatedBy))
+	// Compact footer
+	content.WriteString("--------------------------------\n")
+	content.WriteString("🚪 Sortie autorisée!\n")
+
+	// Staff information at the bottom (compact)
+	if data.StaffFirstName != "" && data.StaffLastName != "" {
+		content.WriteString(fmt.Sprintf("Agent: %s %s\n", data.StaffFirstName, data.StaffLastName))
+	}
+
+	content.WriteString("\n\n")
 
 	return content.String()
 }
@@ -233,17 +322,19 @@ func (s *Service) generateExitPassTicketContent(data *TicketData) string {
 func (s *Service) generateTalonContent(data *TicketData) string {
 	var content strings.Builder
 
-	content.WriteString("================================\n")
-	content.WriteString("            TALON\n")
-	content.WriteString("================================\n\n")
-	content.WriteString(fmt.Sprintf("Véhicule: %s\n", data.LicensePlate))
-	content.WriteString(fmt.Sprintf("Route: %s\n", data.RouteName))
-	content.WriteString(fmt.Sprintf("Station: %s\n", data.StationName))
-	content.WriteString(fmt.Sprintf("Code: %s\n", data.VerificationCode))
-	content.WriteString(fmt.Sprintf("Date: %s\n", data.CreatedAt.Format("2006-01-02 15:04")))
-	content.WriteString("\n================================\n")
-	content.WriteString("Billet de position dans la file\n")
-	content.WriteString("================================\n\n\n\n")
+	// Minimal talon with seat index in top right
+	// Add spaces to position seat number in top right (assuming 32 char width)
+	seatSpaces := 32 - 5 - 3 // 32 total - "Vehicule Number Plate" (5) - seat number (3) = 24 spaces
+	content.WriteString(fmt.Sprintf("Vehicule: %s\n", data.LicensePlate))
+	for i := 0; i < seatSpaces; i++ {
+		content.WriteString(" ")
+	}
+	content.WriteString(fmt.Sprintf("(%d)\n", data.SeatNumber))
+	content.WriteString("-----\n")
+	content.WriteString(fmt.Sprintf("Montant: %.2f TND\n", data.TotalAmount))
+	content.WriteString(fmt.Sprintf("Heure: %s\n", data.CreatedAt.Format("15:04")))
+	content.WriteString(fmt.Sprintf("Agent: %s\n", data.CreatedBy))
+	content.WriteString("\n")
 
 	return content.String()
 }
@@ -251,17 +342,33 @@ func (s *Service) generateTalonContent(data *TicketData) string {
 func (s *Service) generateStandardTicketContent(data *TicketData) string {
 	var content strings.Builder
 
-	content.WriteString("================================\n")
+	// Compact header with company name
+	if data.CompanyName != "" {
+		content.WriteString("================================\n")
+		content.WriteString(fmt.Sprintf("  %s\n", strings.ToUpper("STE DHRAIFF SERVICES TRANSPORT")))
+		content.WriteString("================================\n")
+	}
+
+	// Compact ticket title
 	content.WriteString("        BILLET STANDARD\n")
-	content.WriteString("================================\n\n")
-	content.WriteString(fmt.Sprintf("Véhicule: %s\n", data.LicensePlate))
+	content.WriteString("--------------------------------\n")
+
+	// Essential information in compact format
+	content.WriteString(fmt.Sprintf("Vehicule: %s\n", data.LicensePlate))
 	content.WriteString(fmt.Sprintf("Destination: %s\n", data.DestinationName))
-	content.WriteString(fmt.Sprintf("Code: %s\n", data.VerificationCode))
 	content.WriteString(fmt.Sprintf("Montant: %.2f TND\n", data.TotalAmount))
-	content.WriteString(fmt.Sprintf("Date: %s\n", data.CreatedAt.Format("2006-01-02 15:04")))
-	content.WriteString("\n================================\n")
+	content.WriteString(fmt.Sprintf("Date: %s\n", data.CreatedAt.Format("02/01/2006 15:04")))
+	content.WriteString(fmt.Sprintf("Agent: %s\n", data.CreatedBy))
+	// Compact footer
+	content.WriteString("--------------------------------\n")
 	content.WriteString("Merci!\n")
-	content.WriteString("================================\n\n\n\n")
+
+	// Staff information at the bottom (compact)
+	if data.StaffFirstName != "" && data.StaffLastName != "" {
+		content.WriteString(fmt.Sprintf("Agent: %s %s\n", data.StaffFirstName, data.StaffLastName))
+	}
+
+	content.WriteString("\n\n")
 
 	return content.String()
 }
@@ -287,11 +394,16 @@ func (s *Service) convertToESCPOS(content string, config *PrinterConfig) []byte 
 	// Print content
 	lines := strings.Split(content, "\n")
 	for _, line := range lines {
-		if strings.Contains(line, "BILLET") || strings.Contains(line, "TALON") || strings.Contains(line, "AUTORISATION") {
+		if strings.Contains(line, "BILLET") || strings.Contains(line, "TALON") || strings.Contains(line, "AUTORISATION") || strings.Contains(line, "STANDARD") {
 			// Bold for titles
 			buffer.WriteByte(0x1B) // ESC
 			buffer.WriteByte(0x21) // !
 			buffer.WriteByte(0x08) // Bold
+		} else if strings.Contains(line, "Agent:") {
+			// Italic for staff information
+			buffer.WriteByte(0x1B) // ESC
+			buffer.WriteByte(0x21) // !
+			buffer.WriteByte(0x40) // Italic
 		} else {
 			// Normal text
 			buffer.WriteByte(0x1B) // ESC
@@ -303,12 +415,16 @@ func (s *Service) convertToESCPOS(content string, config *PrinterConfig) []byte 
 		buffer.WriteByte(0x0A) // Line feed
 
 		// Reset alignment after title
-		if strings.Contains(line, "BILLET") || strings.Contains(line, "TALON") || strings.Contains(line, "AUTORISATION") {
+		if strings.Contains(line, "BILLET") || strings.Contains(line, "TALON") || strings.Contains(line, "AUTORISATION") || strings.Contains(line, "STANDARD") {
 			buffer.WriteByte(0x1B) // ESC
 			buffer.WriteByte(0x61) // a
 			buffer.WriteByte(0x00) // Left align
 		}
 	}
+
+	// Add extra line feeds before cutting to ensure all content is printed
+	buffer.WriteByte(0x0A) // Line feed
+	buffer.WriteByte(0x0A) // Line feed
 
 	// Cut paper
 	buffer.WriteByte(0x1D) // GS

@@ -22,7 +22,7 @@ type RedisDB struct {
 func NewPostgres() (*PostgresDB, error) {
 	databaseURL := os.Getenv("DATABASE_URL")
 	if databaseURL == "" {
-		databaseURL = "postgresql://ivan:Lost2409@localhost:5432/louaj_node?sslmode=disable"
+		databaseURL = "postgresql://ivan:Lost2409@localhost:5432/louaj_node?sslmode=disable&timezone=Africa/Tunis"
 	}
 
 	config, err := pgxpool.ParseConfig(databaseURL)
@@ -47,6 +47,11 @@ func NewPostgres() (*PostgresDB, error) {
 
 	if err := pool.Ping(ctx); err != nil {
 		return nil, fmt.Errorf("failed to ping database: %w", err)
+	}
+
+	// Set timezone to Tunisia (UTC+1)
+	if _, err := pool.Exec(ctx, "SET timezone = 'Africa/Tunis'"); err != nil {
+		return nil, fmt.Errorf("failed to set timezone: %w", err)
 	}
 
 	return &PostgresDB{Pool: pool}, nil

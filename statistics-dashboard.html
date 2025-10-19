@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real-Time Statistics Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .status {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .status.connected {
+            border-left: 4px solid #4CAF50;
+        }
+        .status.disconnected {
+            border-left: 4px solid #f44336;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .card h3 {
+            margin-top: 0;
+            color: #333;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 10px;
+        }
+        .stat-item {
+            display: flex;
+            justify-content: space-between;
+            margin: 10px 0;
+            padding: 8px;
+            background: #f8f9fa;
+            border-radius: 4px;
+        }
+        .stat-label {
+            font-weight: bold;
+            color: #666;
+        }
+        .stat-value {
+            color: #333;
+            font-weight: bold;
+        }
+        .transaction-item {
+            background: #e8f5e8;
+            border-left: 4px solid #4CAF50;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 4px;
+        }
+        .transaction-item.day-pass {
+            background: #e3f2fd;
+            border-left-color: #2196F3;
+        }
+        .timestamp {
+            font-size: 0.8em;
+            color: #666;
+        }
+        .refresh-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px 5px;
+        }
+        .refresh-btn:hover {
+            background: #5a6fd8;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📊 Real-Time Statistics Dashboard</h1>
+            <p>Live updates of staff income and station statistics</p>
+        </div>
+
+        <div id="status" class="status disconnected">
+            <strong>Connection Status:</strong> <span id="statusText">Disconnected</span>
+            <br>
+            <strong>Connected Clients:</strong> <span id="clientCount">0</span>
+        </div>
+
+        <div style="text-align: center;">
+            <button class="refresh-btn" onclick="connectWebSocket()">Connect</button>
+            <button class="refresh-btn" onclick="disconnectWebSocket()">Disconnect</button>
+            <button class="refresh-btn" onclick="clearData()">Clear Data</button>
+        </div>
+
+        <div class="grid">
+            <div class="card">
+                <h3>👥 Staff Statistics</h3>
+                <div id="staffStats">
+                    <p>No data available. Connect to WebSocket to see real-time updates.</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>🏢 Station Statistics</h3>
+                <div id="stationStats">
+                    <p>No data available. Connect to WebSocket to see real-time updates.</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>💰 Recent Transactions</h3>
+                <div id="transactions">
+                    <p>No transactions yet. Connect to WebSocket to see real-time updates.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let ws = null;
+        let staffData = {};
+        let stationData = {};
+        let transactions = [];
+
+        function connectWebSocket() {
+            if (ws && ws.readyState === WebSocket.OPEN) {
+                console.log('Already connected');
+                return;
+            }
+
+            // Connect to statistics WebSocket
+            ws = new WebSocket('ws://localhost:8006/api/v1/statistics/ws');
+
+            ws.onopen = function(event) {
+                console.log('Connected to statistics WebSocket');
+                updateStatus('Connected', true);
+            };
+
+            ws.onmessage = function(event) {
+                try {
+                    const data = JSON.parse(event.data);
+                    console.log('Received:', data);
+                    handleMessage(data);
+                } catch (error) {
+                    console.error('Error parsing message:', error);
+                }
+            };
+
+            ws.onclose = function(event) {
+                console.log('Disconnected from statistics WebSocket');
+                updateStatus('Disconnected', false);
+            };
+
+            ws.onerror = function(error) {
+                console.error('WebSocket error:', error);
+                updateStatus('Error', false);
+            };
+        }
+
+        function disconnectWebSocket() {
+            if (ws) {
+                ws.close();
+                ws = null;
+            }
+        }
+
+        function updateStatus(text, connected) {
+            document.getElementById('statusText').textContent = text;
+            const statusDiv = document.getElementById('status');
+            statusDiv.className = connected ? 'status connected' : 'status disconnected';
+        }
+
+        function handleMessage(data) {
+            // Handle websocket messages from the existing websocket system
+            if (data.type === 'statistics_update') {
+                const statsData = data.data;
+                switch (statsData.type) {
+                    case 'staff_income_update':
+                        handleStaffUpdate(statsData.data);
+                        break;
+                    case 'station_income_update':
+                        handleStationUpdate(statsData.data);
+                        break;
+                    case 'transaction_update':
+                        handleTransactionUpdate(statsData.data);
+                        break;
+                    default:
+                        console.log('Unknown statistics update type:', statsData.type);
+                }
+            } else {
+                console.log('Unknown message type:', data.type);
+            }
+        }
+
+        function handleStaffUpdate(staffData) {
+            staffData[staffData.staffId] = staffData;
+            updateStaffDisplay();
+        }
+
+        function handleStationUpdate(stationData) {
+            stationData[stationData.stationId] = stationData;
+            updateStationDisplay();
+        }
+
+        function handleTransactionUpdate(transaction) {
+            transactions.unshift(transaction);
+            if (transactions.length > 20) {
+                transactions = transactions.slice(0, 20);
+            }
+            updateTransactionsDisplay();
+        }
+
+        function updateStaffDisplay() {
+            const container = document.getElementById('staffStats');
+            if (Object.keys(staffData).length === 0) {
+                container.innerHTML = '<p>No staff data available</p>';
+                return;
+            }
+
+            let html = '';
+            Object.values(staffData).forEach(staff => {
+                html += `
+                    <div class="stat-item">
+                        <span class="stat-label">${staff.staffName}</span>
+                        <span class="stat-value">${staff.totalIncome.toFixed(2)} TND</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Seat Bookings</span>
+                        <span class="stat-value">${staff.seatBookings}</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Day Pass Sales</span>
+                        <span class="stat-value">${staff.dayPassSales}</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Total Transactions</span>
+                        <span class="stat-value">${staff.totalTransactions}</span>
+                    </div>
+                    <hr style="margin: 15px 0;">
+                `;
+            });
+            container.innerHTML = html;
+        }
+
+        function updateStationDisplay() {
+            const container = document.getElementById('stationStats');
+            if (Object.keys(stationData).length === 0) {
+                container.innerHTML = '<p>No station data available</p>';
+                return;
+            }
+
+            let html = '';
+            Object.values(stationData).forEach(station => {
+                html += `
+                    <div class="stat-item">
+                        <span class="stat-label">${station.stationName}</span>
+                        <span class="stat-value">${station.totalIncome.toFixed(2)} TND</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Total Seat Bookings</span>
+                        <span class="stat-value">${station.totalSeatBookings}</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Total Day Pass Sales</span>
+                        <span class="stat-value">${station.totalDayPassSales}</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Active Staff</span>
+                        <span class="stat-value">${station.activeStaffCount}</span>
+                    </div>
+                    <hr style="margin: 15px 0;">
+                `;
+            });
+            container.innerHTML = html;
+        }
+
+        function updateTransactionsDisplay() {
+            const container = document.getElementById('transactions');
+            if (transactions.length === 0) {
+                container.innerHTML = '<p>No transactions yet</p>';
+                return;
+            }
+
+            let html = '';
+            transactions.forEach(transaction => {
+                const isDayPass = transaction.transactionType === 'DAY_PASS_SALE';
+                const className = isDayPass ? 'transaction-item day-pass' : 'transaction-item';
+                const icon = isDayPass ? '🎫' : '💺';
+                
+                html += `
+                    <div class="${className}">
+                        <strong>${icon} ${transaction.staffName}</strong><br>
+                        ${transaction.transactionType === 'SEAT_BOOKING' ? 'Seat Booking' : 'Day Pass Sale'}: 
+                        ${transaction.quantity} × ${transaction.amount.toFixed(2)} TND<br>
+                        <span class="timestamp">${new Date(transaction.createdAt).toLocaleTimeString()}</span>
+                    </div>
+                `;
+            });
+            container.innerHTML = html;
+        }
+
+        function clearData() {
+            staffData = {};
+            stationData = {};
+            transactions = [];
+            updateStaffDisplay();
+            updateStationDisplay();
+            updateTransactionsDisplay();
+        }
+
+        // Auto-connect on page load
+        window.onload = function() {
+            connectWebSocket();
+        };
+    </script>
+</body>
+</html>

@@ -70,14 +70,23 @@ type PrintQueueStatus struct {
 
 // TicketData represents the data for printing tickets
 type TicketData struct {
-	LicensePlate     string    `json:"licensePlate"`
-	DestinationName  string    `json:"destinationName"`
-	SeatNumber       int       `json:"seatNumber"`
-	VerificationCode string    `json:"verificationCode"`
-	TotalAmount      float64   `json:"totalAmount"`
-	CreatedBy        string    `json:"createdBy"`
-	CreatedAt        time.Time `json:"createdAt"`
-	StationName      string    `json:"stationName"`
-	RouteName        string    `json:"routeName"`
-	PreviousVehicles []string  `json:"previousVehicles,omitempty"` // For exit pass tickets
+	LicensePlate    string    `json:"licensePlate"`
+	DestinationName string    `json:"destinationName"`
+	SeatNumber      int       `json:"seatNumber"`
+	TotalAmount     float64   `json:"totalAmount"`
+	CreatedBy       string    `json:"createdBy"`
+	CreatedAt       time.Time `json:"createdAt"`
+	StationName     string    `json:"stationName"`
+	RouteName       string    `json:"routeName"`
+	// Vehicle and pricing information
+	VehicleCapacity int     `json:"vehicleCapacity,omitempty"` // Vehicle capacity for total amount calculation
+	BasePrice       float64 `json:"basePrice,omitempty"`       // Base price per seat from route
+	// Exit pass count for today
+	ExitPassCount int `json:"exitPassCount,omitempty"` // Current count of exit passes for today
+	// Company branding
+	CompanyName string `json:"companyName,omitempty"`
+	CompanyLogo string `json:"companyLogo,omitempty"`
+	// Staff information
+	StaffFirstName string `json:"staffFirstName,omitempty"`
+	StaffLastName  string `json:"staffLastName,omitempty"`
 }

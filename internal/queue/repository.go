@@ -140,15 +140,26 @@ func (r *RepositoryImpl) ListVehicles(ctx context.Context, searchQuery string) (
 	var args []interface{}
 
 	if searchQuery != "" {
-		// Search by license plate (case-insensitive, partial match)
+		// Enhanced search focusing on the right part of license plate (after TUN)
+		// Also supports full license plate search as fallback
 		query = `
 			SELECT id, license_plate, capacity, phone_number, is_active, is_available, is_banned,
 			       default_destination_id, default_destination_name, available_seats, total_seats, base_price,
 			       destination_id, destination_name, created_at, updated_at
 			FROM vehicles 
-			WHERE LOWER(license_plate) LIKE LOWER($1)
-			ORDER BY license_plate ASC`
-		args = []interface{}{"%" + searchQuery + "%"}
+			WHERE (
+				-- Search by right part of license plate (after TUN)
+				LOWER(SUBSTRING(license_plate FROM 'TUN\s*(.*)$')) LIKE LOWER($1) OR
+				-- Fallback: full license plate search
+				LOWER(license_plate) LIKE LOWER($2)
+			)
+			ORDER BY 
+				CASE 
+					WHEN LOWER(SUBSTRING(license_plate FROM 'TUN\s*(.*)$')) LIKE LOWER($1) THEN 1
+					ELSE 2
+				END,
+				license_plate ASC`
+		args = []interface{}{"%" + searchQuery + "%", "%" + searchQuery + "%"}
 	} else {
 		// Return all vehicles if no search query
 		query = `
@@ -422,6 +433,15 @@ func (r *RepositoryImpl) AddQueueEntry(ctx context.Context, req AddQueueEntryReq
 	}
 	defer tx.Rollback(ctx)
 
+	// Check if vehicle is already in any queue
+	var existingEntryID, existingDestinationID, existingDestinationName string
+	err = tx.QueryRow(ctx, `SELECT id, destination_id, destination_name FROM vehicle_queue WHERE vehicle_id=$1`, req.VehicleID).Scan(&existingEntryID, &existingDestinationID, &existingDestinationName)
+	if err == nil {
+		return nil, nil, nil, "", fmt.Errorf("vehicle is already in queue for destination: %s", existingDestinationName)
+	} else if err != pgx.ErrNoRows {
+		return nil, nil, nil, "", err
+	}
+
 	// Compute next queue position for destination
 	var nextPos int
 	if err := tx.QueryRow(ctx, `SELECT COALESCE(MAX(queue_position),0)+1 FROM vehicle_queue WHERE destination_id=$1`, req.DestinationID).Scan(&nextPos); err != nil {
@@ -496,9 +516,9 @@ func (r *RepositoryImpl) AddQueueEntry(ctx context.Context, req AddQueueEntryReq
 			DestinationID:   req.DestinationID,
 			DestinationName: req.DestinationName,
 			Price:           2.0,
-			PurchaseDate:    time.Now(),
-			ValidFrom:       time.Now().Truncate(24 * time.Hour),
-			ValidUntil:      time.Now().Truncate(24 * time.Hour).Add(24*time.Hour - time.Second),
+			PurchaseDate:    time.Now().In(time.FixedZone("Africa/Tunis", 3600)), // Use Tunisia timezone
+			ValidFrom:       time.Now().In(time.FixedZone("Africa/Tunis", 3600)).Truncate(24 * time.Hour),
+			ValidUntil:      time.Now().In(time.FixedZone("Africa/Tunis", 3600)).Truncate(24 * time.Hour).Add(24*time.Hour - time.Second),
 			CreatedBy:       req.CreatedBy,
 		}
 	} else {
@@ -511,9 +531,9 @@ func (r *RepositoryImpl) AddQueueEntry(ctx context.Context, req AddQueueEntryReq
 			DestinationID:   req.DestinationID,
 			DestinationName: req.DestinationName,
 			Price:           price,
-			PurchaseDate:    purchaseDate,
-			ValidFrom:       validFrom,
-			ValidUntil:      validUntil,
+			PurchaseDate:    purchaseDate.In(time.FixedZone("Africa/Tunis", 3600)), // Convert to Tunisia timezone
+			ValidFrom:       validFrom.In(time.FixedZone("Africa/Tunis", 3600)),
+			ValidUntil:      validUntil.In(time.FixedZone("Africa/Tunis", 3600)),
 			CreatedBy:       createdBy,
 		}
 	}
@@ -591,6 +611,11 @@ func (r *RepositoryImpl) GetVehicleDayPass(ctx context.Context, vehicleID string
 
 	dayPass.DestinationID = destinationID
 	dayPass.DestinationName = destinationName
+
+	// Convert timestamps to Tunisia timezone
+	dayPass.PurchaseDate = dayPass.PurchaseDate.In(time.FixedZone("Africa/Tunis", 3600))
+	dayPass.ValidFrom = dayPass.ValidFrom.In(time.FixedZone("Africa/Tunis", 3600))
+	dayPass.ValidUntil = dayPass.ValidUntil.In(time.FixedZone("Africa/Tunis", 3600))
 
 	return &dayPass, nil
 }

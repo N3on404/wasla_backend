@@ -77,6 +77,22 @@ func (h *Handler) ListVehicles(c *gin.Context) {
 	utils.SuccessResponse(c, http.StatusOK, "Vehicles fetched", list)
 }
 
+// SearchVehicles provides enhanced search functionality
+func (h *Handler) SearchVehicles(c *gin.Context) {
+	query := c.Query("q")
+	if query == "" {
+		utils.BadRequestResponse(c, "Search query parameter 'q' is required")
+		return
+	}
+
+	list, err := h.service.ListVehicles(context.Background(), query)
+	if err != nil {
+		utils.InternalServerErrorResponse(c, "Failed to search vehicles", err)
+		return
+	}
+	utils.SuccessResponse(c, http.StatusOK, "Vehicles found", list)
+}
+
 func (h *Handler) CreateVehicle(c *gin.Context) {
 	var req CreateVehicleRequest
 	if err := c.ShouldBindJSON(&req); err != nil {

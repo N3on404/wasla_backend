@@ -49,18 +49,20 @@ type PreviousVehicle struct {
 }
 
 type ExitPass struct {
-	ID               string            `json:"id"`
-	QueueID          string            `json:"queueId"`
-	VehicleID        string            `json:"vehicleId"`
-	LicensePlate     string            `json:"licensePlate"`
-	DestinationID    string            `json:"destinationId"`
-	DestinationName  string            `json:"destinationName"`
-	PreviousVehicles []PreviousVehicle `json:"previousVehicles"` // Previous vehicles with exit times
-	CurrentExitTime  time.Time         `json:"currentExitTime"`  // Current vehicle exit time
-	TotalPrice       float64           `json:"totalPrice"`       // Base price × vehicle capacity
-	CreatedBy        string            `json:"createdBy"`
-	CreatedByName    string            `json:"createdByName"` // Staff name
-	CreatedAt        time.Time         `json:"createdAt"`
+	ID              string    `json:"id"`
+	QueueID         string    `json:"queueId"`
+	VehicleID       string    `json:"vehicleId"`
+	LicensePlate    string    `json:"licensePlate"`
+	DestinationID   string    `json:"destinationId"`
+	DestinationName string    `json:"destinationName"`
+	CurrentExitTime time.Time `json:"currentExitTime"` // Current vehicle exit time
+	TotalPrice      float64   `json:"totalPrice"`      // Base price × vehicle capacity
+	CreatedBy       string    `json:"createdBy"`
+	CreatedByName   string    `json:"createdByName"` // Staff name
+	CreatedAt       time.Time `json:"createdAt"`
+	// Vehicle and pricing information for ticket generation
+	VehicleCapacity int     `json:"vehicleCapacity"` // Vehicle capacity
+	BasePrice       float64 `json:"basePrice"`       // Base price per seat from route
 }
 
 type ExitPassCreatedEvent struct {
@@ -83,10 +85,13 @@ type Trip struct {
 	LicensePlate    string    `json:"licensePlate"`
 	DestinationID   string    `json:"destinationId"`
 	DestinationName string    `json:"destinationName"`
-	QueueID         string    `json:"queueId"`
+	QueueID         *string   `json:"queueId"` // Made nullable to handle SET NULL constraint
 	SeatsBooked     int       `json:"seatsBooked"`
 	StartTime       time.Time `json:"startTime"`
 	CreatedAt       time.Time `json:"createdAt"`
+	// Vehicle and pricing information
+	VehicleCapacity *int     `json:"vehicleCapacity"` // Vehicle capacity (nullable)
+	BasePrice       *float64 `json:"basePrice"`       // Base price per seat from route (nullable)
 }
 
 type QueueEntry struct {

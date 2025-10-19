@@ -4,16 +4,18 @@ import (
 	"context"
 	"regexp"
 
+	"station-backend/internal/statistics"
 	"station-backend/internal/websocket"
 )
 
 type Service struct {
-	repo Repository
-	ws   *websocket.Hub
+	repo        Repository
+	ws          *websocket.Hub
+	statsLogger *statistics.StatisticsLogger
 }
 
-func NewService(repo Repository, ws *websocket.Hub) *Service {
-	return &Service{repo: repo, ws: ws}
+func NewService(repo Repository, ws *websocket.Hub, statsLogger *statistics.StatisticsLogger) *Service {
+	return &Service{repo: repo, ws: ws, statsLogger: statsLogger}
 }
 
 // Tunisian license plate pattern: 2 or 3 digits, then space? then TUN, then space? then 1..9999
@@ -94,6 +96,13 @@ func (s *Service) AddQueueEntry(ctx context.Context, req AddQueueEntryRequest) (
 		DayPass:       dayPassEvent,
 		DayPassValid:  existingDayPass,
 		DayPassStatus: dayPassStatus,
+	}
+
+	// Log statistics for day pass creation
+	if s.statsLogger != nil && req.CreatedBy != "" && dayPassEvent != nil {
+		// Use destination ID as station ID for now
+		stationID := req.DestinationID
+		s.statsLogger.LogDayPassTransactionAsync(req.CreatedBy, dayPassEvent.DayPassID, stationID)
 	}
 
 	if s.ws != nil {

@@ -113,3 +113,12 @@ func (h *Handler) ListTodayTrips(c *gin.Context) {
 	}
 	utils.SuccessResponse(c, http.StatusOK, "Today's trips fetched", trips)
 }
+
+func (h *Handler) GetTodayTripsCount(c *gin.Context) {
+	count, err := h.service.GetTodayTripsCount(c.Request.Context())
+	if err != nil {
+		utils.InternalServerErrorResponse(c, "Failed to get today's trips count", err)
+		return
+	}
+	utils.SuccessResponse(c, http.StatusOK, "Today's trips count fetched", map[string]int{"count": count})
+}

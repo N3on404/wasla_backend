@@ -6,6 +6,7 @@ import (
 
 	"station-backend/internal/booking"
 	"station-backend/internal/database"
+	"station-backend/internal/statistics"
 	"station-backend/internal/websocket"
 	"station-backend/pkg/middleware"
 
@@ -27,8 +28,11 @@ func main() {
 	wsHub := websocket.NewHub()
 	go wsHub.Run()
 
+	// Initialize statistics logger
+	statsLogger := statistics.NewStatisticsLogger(db.Pool)
+
 	repo := booking.NewRepository(db.Pool)
-	service := booking.NewService(repo, wsHub)
+	service := booking.NewService(repo, wsHub, statsLogger)
 	h := booking.NewHandler(service)
 
 	r := gin.Default()
@@ -47,6 +51,7 @@ func main() {
 		api.PUT("/bookings/:id/cancel", middleware.AuthRequired(), h.Cancel)
 		api.GET("/trips", middleware.AuthRequired(), h.ListTrips)
 		api.GET("/trips/today", middleware.AuthRequired(), h.ListTodayTrips)
+		api.GET("/trips/today/count", middleware.AuthRequired(), h.GetTodayTripsCount)
 	}
 
 	port := os.Getenv("BOOKING_SERVICE_PORT")

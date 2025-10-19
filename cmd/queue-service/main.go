@@ -6,6 +6,7 @@ import (
 
 	"station-backend/internal/database"
 	"station-backend/internal/queue"
+	"station-backend/internal/statistics"
 	"station-backend/internal/websocket"
 	"station-backend/pkg/middleware"
 
@@ -30,9 +31,12 @@ func main() {
 	wsHub := websocket.NewHub()
 	go wsHub.Run()
 
+	// Initialize statistics logger
+	statsLogger := statistics.NewStatisticsLogger(db.Pool)
+
 	// Repo / Service / Handler
 	repo := queue.NewRepository(db.Pool)
-	service := queue.NewService(repo, wsHub)
+	service := queue.NewService(repo, wsHub, statsLogger)
 	h := queue.NewHandler(service)
 
 	r := gin.Default()
@@ -55,6 +59,7 @@ func main() {
 
 		// Vehicles
 		api.GET("/vehicles", h.ListVehicles)
+		api.GET("/vehicles/search", h.SearchVehicles)
 		api.POST("/vehicles", h.CreateVehicle)
 		api.PUT("/vehicles/:id", h.UpdateVehicle)
 		api.DELETE("/vehicles/:id", h.DeleteVehicle)
