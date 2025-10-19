@@ -5,7 +5,7 @@ services:
     image: postgres:15
     container_name: station-postgres
     environment:
-      POSTGRES_DB: louaj_node
+      POSTGRES_DB: main-ste
       POSTGRES_USER: ivan
       POSTGRES_PASSWORD: Lost2409
     ports:
@@ -32,7 +32,7 @@ services:
       dockerfile: Dockerfile.auth
     container_name: station-auth-service
     environment:
-      - DATABASE_URL=postgresql://ivan:Lost2409@postgres:5432/louaj_node?sslmode=disable&timezone=Africa/Tunis
+      - DATABASE_URL=postgresql://ivan:Lost2409@postgres:5432/main-ste?sslmode=disable&timezone=Africa/Tunis
       - REDIS_URL=redis://redis:6379
       - JWT_SECRET_KEY=your-secret-key-change-this-in-production
       - AUTH_SERVICE_PORT=8001

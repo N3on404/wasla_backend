@@ -22,7 +22,7 @@ type RedisDB struct {
 func NewPostgres() (*PostgresDB, error) {
 	databaseURL := os.Getenv("DATABASE_URL")
 	if databaseURL == "" {
-		databaseURL = "postgresql://ivan:Lost2409@localhost:5432/louaj_node?sslmode=disable&timezone=Africa/Tunis"
+		databaseURL = "postgresql://ivan:Lost2409@localhost:5432/main-ste?sslmode=disable&timezone=Africa/Tunis"
 	}
 
 	config, err := pgxpool.ParseConfig(databaseURL)

@@ -82,11 +82,11 @@ docker-auth:
 migrate:
 	@echo "Running database migrations..."
 	@echo "Applying initial schema..."
-	psql -d louaj_node -f migrations/001_initial_schema.sql
+	psql -d main-ste -f migrations/001_initial_schema.sql
 	@echo "Applying statistics schema..."
-	psql -d louaj_node -f migrations/002_statistics_schema.sql
+	psql -d main-ste -f migrations/002_statistics_schema.sql
 	@echo "Applying trips and exit passes schema..."
-	psql -d louaj_node -f migrations/003_trips_and_exit_passes.sql
+	psql -d main-ste -f migrations/003_trips_and_exit_passes.sql
 	@echo "Migrations complete!"
 
 # Install dependencies
