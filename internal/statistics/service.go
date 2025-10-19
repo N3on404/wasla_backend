@@ -16,8 +16,8 @@ func NewService(repo Repository) *Service {
 
 // LogSeatBooking logs a seat booking transaction
 func (s *Service) LogSeatBooking(ctx context.Context, staffID, bookingID, stationID string, seats int) error {
-	// Calculate income: 0.2 TND per seat
-	seatIncome := float64(seats) * 0.2
+	// Calculate income: 0.15 TND per seat
+	seatIncome := float64(seats) * 0.15
 
 	req := LogTransactionRequest{
 		StaffID:         staffID,

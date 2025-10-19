@@ -526,7 +526,7 @@ func (r *RepositoryImpl) CreateBookingByQueueEntry(ctx context.Context, req Crea
 
 	// Create individual bookings for each seat
 	var bookings []Booking
-	seatPrice := pricePerSeat + 0.2 // base price + 0.2 TND fee per seat
+	seatPrice := pricePerSeat + 0.15 // base price + 0.15 TND fee per seat
 
 	for i := 0; i < req.Seats; i++ {
 		var bookingID string

@@ -27,8 +27,8 @@ func NewStatisticsLoggerWithRealtime(db *pgxpool.Pool, realtimeHub *RealTimeStat
 
 // LogSeatBookingTransaction logs a seat booking transaction
 func (sl *StatisticsLogger) LogSeatBookingTransaction(ctx context.Context, staffID, bookingID, stationID string, seats int) error {
-	// Calculate income: 0.2 TND per seat
-	seatIncome := float64(seats) * 0.2
+	// Calculate income: 0.15 TND per seat
+	seatIncome := float64(seats) * 0.15
 
 	_, err := sl.db.Exec(ctx, `
 		SELECT log_staff_transaction($1, $2, $3, $4, $5, $6)
