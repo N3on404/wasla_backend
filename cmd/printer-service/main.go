@@ -35,6 +35,10 @@ func main() {
 	printerHandler := printer.NewHandler(printerService)
 
 	// Setup Gin router
+	// Set Gin mode based on environment
+	if os.Getenv("ENVIRONMENT") == "production" {
+		gin.SetMode(gin.ReleaseMode)
+	}
 	r := gin.Default()
 
 	// Middleware

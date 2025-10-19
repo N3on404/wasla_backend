@@ -36,6 +36,10 @@ func main() {
 	h := booking.NewHandler(service)
 
 	r := gin.Default()
+	// Set Gin mode based on environment
+	if os.Getenv("ENVIRONMENT") == "production" {
+		gin.SetMode(gin.ReleaseMode)
+	}
 	r.Use(middleware.CORS())
 	r.Use(middleware.Logger())
 	r.GET("/health", func(c *gin.Context) { c.String(200, "ok") })

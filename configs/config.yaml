@@ -22,13 +22,12 @@ redis:
   pool_size: 10
 
 jwt:
-  secret_key: "your-secret-key-change-this-in-production"
+  secret_key: "yzUcAoaEZKUKdGp1rCxZQXo3nXFKuyGnsF3G4GcxE6YKKlOwGbzgdualz+B0T8z4Pg00OOZqYS+NYZGvZeVouA=="
   expiration_hours: 24
 
 cors:
   allowed_origins:
-    - "http://localhost:3000"
-    - "http://localhost:5173"
+    - "*"
   allowed_methods:
     - "GET"
     - "POST"
