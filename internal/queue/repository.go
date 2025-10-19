@@ -542,8 +542,11 @@ func (r *RepositoryImpl) AddQueueEntry(ctx context.Context, req AddQueueEntryReq
         INSERT INTO vehicle_queue (id, vehicle_id, destination_id, destination_name, sub_route, sub_route_name,
             queue_type, queue_position, status, entered_at, available_seats, total_seats, base_price)
         SELECT gen_random_uuid(), $1, $2, $3, $4, $5,
-               COALESCE($6,'REGULAR'), $7, 'WAITING', now(), v.available_seats, v.total_seats, v.base_price
-        FROM vehicles v WHERE v.id = $1
+               COALESCE($6,'REGULAR'), $7, 'WAITING', now(), v.available_seats, v.total_seats, 
+               COALESCE(r.base_price, v.base_price)
+        FROM vehicles v 
+        LEFT JOIN routes r ON r.destination_station_id = $2
+        WHERE v.id = $1
         RETURNING id, vehicle_id, destination_id, destination_name, sub_route, sub_route_name,
                queue_type, queue_position, status, entered_at,
                available_seats, total_seats, base_price, estimated_departure, actual_departure`,
@@ -811,15 +814,16 @@ func (r *RepositoryImpl) ListDayPasses(ctx context.Context, limit int) ([]DayPas
 func (r *RepositoryImpl) ListQueueSummaries(ctx context.Context) ([]QueueSummary, error) {
 	rows, err := r.db.Query(ctx, `
 		SELECT q.destination_id,
-		       q.destination_name,
+		       s.name as destination_name,
 		       COUNT(*) as total_vehicles,
 		       COALESCE(SUM(q.total_seats),0) as total_seats,
 		       COALESCE(SUM(q.available_seats),0) as available_seats,
 		       COALESCE(r.base_price, 0) as base_price
 		FROM vehicle_queue q
-		LEFT JOIN routes r ON LOWER(r.station_name) = LOWER(q.destination_name)
-		GROUP BY q.destination_id, q.destination_name, r.base_price
-		ORDER BY q.destination_name ASC`)
+		LEFT JOIN stations s ON q.destination_id = s.id
+		LEFT JOIN routes r ON r.destination_station_id = q.destination_id
+		GROUP BY q.destination_id, s.name, r.base_price
+		ORDER BY s.name ASC`)
 	if err != nil {
 		return nil, err
 	}

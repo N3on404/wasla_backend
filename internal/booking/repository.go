@@ -59,8 +59,9 @@ func (r *RepositoryImpl) CreateBookingByDestination(ctx context.Context, req Cre
                 UPDATE vehicle_queue q
                 SET available_seats = q.available_seats - $2
                 FROM candidate c
+                LEFT JOIN routes r ON r.destination_station_id = q.destination_id
                 WHERE q.id = c.id
-                RETURNING q.id, q.vehicle_id, q.base_price`, req.DestinationID, req.Seats, *req.SubRoute)
+                RETURNING q.id, q.vehicle_id, COALESCE(r.base_price, q.base_price)`, req.DestinationID, req.Seats, *req.SubRoute)
 		} else {
 			row = tx.QueryRow(ctx, `
                 WITH candidate AS (
@@ -75,8 +76,9 @@ func (r *RepositoryImpl) CreateBookingByDestination(ctx context.Context, req Cre
                 UPDATE vehicle_queue q
                 SET available_seats = q.available_seats - $2
                 FROM candidate c
+                LEFT JOIN routes r ON r.destination_station_id = q.destination_id
                 WHERE q.id = c.id
-                RETURNING q.id, q.vehicle_id, q.base_price`, req.DestinationID, req.Seats)
+                RETURNING q.id, q.vehicle_id, COALESCE(r.base_price, q.base_price)`, req.DestinationID, req.Seats)
 		}
 		var tmpQ, tmpV string
 		var tmpP float64
@@ -106,8 +108,9 @@ func (r *RepositoryImpl) CreateBookingByDestination(ctx context.Context, req Cre
                 UPDATE vehicle_queue q
                 SET available_seats = q.available_seats - $2
                 FROM candidate c
+                LEFT JOIN routes r ON r.destination_station_id = q.destination_id
                 WHERE q.id = c.id
-                RETURNING q.id, q.vehicle_id, q.base_price`, req.DestinationID, req.Seats, *req.SubRoute)
+                RETURNING q.id, q.vehicle_id, COALESCE(r.base_price, q.base_price)`, req.DestinationID, req.Seats, *req.SubRoute)
 		} else {
 			row = tx.QueryRow(ctx, `
                 WITH candidate AS (
@@ -122,8 +125,9 @@ func (r *RepositoryImpl) CreateBookingByDestination(ctx context.Context, req Cre
                 UPDATE vehicle_queue q
                 SET available_seats = q.available_seats - $2
                 FROM candidate c
+                LEFT JOIN routes r ON r.destination_station_id = q.destination_id
                 WHERE q.id = c.id
-                RETURNING q.id, q.vehicle_id, q.base_price`, req.DestinationID, req.Seats)
+                RETURNING q.id, q.vehicle_id, COALESCE(r.base_price, q.base_price)`, req.DestinationID, req.Seats)
 		}
 
 		if err := row.Scan(&queueID, &vehicleID, &pricePerSeat); err != nil {
@@ -409,9 +413,10 @@ func (r *RepositoryImpl) CreateBookingByQueueEntry(ctx context.Context, req Crea
 	var pricePerSeat float64
 	var availableSeats int
 	err = tx.QueryRow(ctx, `
-		SELECT id, vehicle_id, base_price, available_seats
-		FROM vehicle_queue
-		WHERE id = $1 AND queue_type='REGULAR' AND status IN ('WAITING','LOADING','READY')
+		SELECT q.id, q.vehicle_id, COALESCE(r.base_price, q.base_price), q.available_seats
+		FROM vehicle_queue q
+		LEFT JOIN routes r ON r.destination_station_id = q.destination_id
+		WHERE q.id = $1 AND q.queue_type='REGULAR' AND q.status IN ('WAITING','LOADING','READY')
 		FOR UPDATE`, req.QueueEntryID).Scan(&queueID, &vehicleID, &pricePerSeat, &availableSeats)
 	if err != nil {
 		if err == pgx.ErrNoRows {
@@ -459,9 +464,13 @@ func (r *RepositoryImpl) CreateBookingByQueueEntry(ctx context.Context, req Crea
 		return nil, err
 	}
 
-	// Get base price from vehicle_queue table
+	// Get base price from routes table (preferred) or fallback to vehicle_queue
 	var basePrice float64
-	err = tx.QueryRow(ctx, `SELECT base_price FROM vehicle_queue WHERE id = $1`, queueID).Scan(&basePrice)
+	err = tx.QueryRow(ctx, `
+		SELECT COALESCE(r.base_price, q.base_price)
+		FROM vehicle_queue q
+		LEFT JOIN routes r ON r.destination_station_id = q.destination_id
+		WHERE q.id = $1`, queueID).Scan(&basePrice)
 	if err != nil {
 		basePrice = 15.0 // Default price if not found
 	}
