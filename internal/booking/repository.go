@@ -19,7 +19,7 @@ type Repository interface {
 	ListTrips(ctx context.Context, limit int) ([]Trip, error)
 	CancelOneBookingByQueueEntry(ctx context.Context, queueEntryID string, staffID string) (*Booking, error)
 	ListTodayTrips(ctx context.Context, search string, limit int) ([]Trip, error)
-	GetTodayTripsCount(ctx context.Context) (int, error)
+	GetTodayTripsCount(ctx context.Context, destinationID *string) (int, error)
 }
 
 type RepositoryImpl struct {
@@ -59,7 +59,7 @@ func (r *RepositoryImpl) CreateBookingByDestination(ctx context.Context, req Cre
                 UPDATE vehicle_queue q
                 SET available_seats = q.available_seats - $2
                 FROM candidate c
-                LEFT JOIN routes r ON r.destination_station_id = q.destination_id
+                LEFT JOIN routes r ON r.station_id = q.destination_id
                 WHERE q.id = c.id
                 RETURNING q.id, q.vehicle_id, COALESCE(r.base_price, q.base_price)`, req.DestinationID, req.Seats, *req.SubRoute)
 		} else {
@@ -76,7 +76,7 @@ func (r *RepositoryImpl) CreateBookingByDestination(ctx context.Context, req Cre
                 UPDATE vehicle_queue q
                 SET available_seats = q.available_seats - $2
                 FROM candidate c
-                LEFT JOIN routes r ON r.destination_station_id = q.destination_id
+                LEFT JOIN routes r ON r.station_id = q.destination_id
                 WHERE q.id = c.id
                 RETURNING q.id, q.vehicle_id, COALESCE(r.base_price, q.base_price)`, req.DestinationID, req.Seats)
 		}
@@ -108,7 +108,7 @@ func (r *RepositoryImpl) CreateBookingByDestination(ctx context.Context, req Cre
                 UPDATE vehicle_queue q
                 SET available_seats = q.available_seats - $2
                 FROM candidate c
-                LEFT JOIN routes r ON r.destination_station_id = q.destination_id
+                LEFT JOIN routes r ON r.station_id = q.destination_id
                 WHERE q.id = c.id
                 RETURNING q.id, q.vehicle_id, COALESCE(r.base_price, q.base_price)`, req.DestinationID, req.Seats, *req.SubRoute)
 		} else {
@@ -125,7 +125,7 @@ func (r *RepositoryImpl) CreateBookingByDestination(ctx context.Context, req Cre
                 UPDATE vehicle_queue q
                 SET available_seats = q.available_seats - $2
                 FROM candidate c
-                LEFT JOIN routes r ON r.destination_station_id = q.destination_id
+                LEFT JOIN routes r ON r.station_id = q.destination_id
                 WHERE q.id = c.id
                 RETURNING q.id, q.vehicle_id, COALESCE(r.base_price, q.base_price)`, req.DestinationID, req.Seats)
 		}
@@ -415,7 +415,7 @@ func (r *RepositoryImpl) CreateBookingByQueueEntry(ctx context.Context, req Crea
 	err = tx.QueryRow(ctx, `
 		SELECT q.id, q.vehicle_id, COALESCE(r.base_price, q.base_price), q.available_seats
 		FROM vehicle_queue q
-		LEFT JOIN routes r ON r.destination_station_id = q.destination_id
+		LEFT JOIN routes r ON r.station_id = q.destination_id
 		WHERE q.id = $1 AND q.queue_type='REGULAR' AND q.status IN ('WAITING','LOADING','READY')
 		FOR UPDATE`, req.QueueEntryID).Scan(&queueID, &vehicleID, &pricePerSeat, &availableSeats)
 	if err != nil {
@@ -469,7 +469,7 @@ func (r *RepositoryImpl) CreateBookingByQueueEntry(ctx context.Context, req Crea
 	err = tx.QueryRow(ctx, `
 		SELECT COALESCE(r.base_price, q.base_price)
 		FROM vehicle_queue q
-		LEFT JOIN routes r ON r.destination_station_id = q.destination_id
+		LEFT JOIN routes r ON r.station_id = q.destination_id
 		WHERE q.id = $1`, queueID).Scan(&basePrice)
 	if err != nil {
 		basePrice = 15.0 // Default price if not found
@@ -599,10 +599,21 @@ func (r *RepositoryImpl) GetDestinationByQueueEntry(ctx context.Context, queueEn
 	return destinationID, nil
 }
 
-// GetTodayTripsCount returns the count of trips for today
-func (r *RepositoryImpl) GetTodayTripsCount(ctx context.Context) (int, error) {
+// GetTodayTripsCount returns the count of trips for today, optionally filtered by destination
+func (r *RepositoryImpl) GetTodayTripsCount(ctx context.Context, destinationID *string) (int, error) {
 	var count int
-	err := r.db.QueryRow(ctx, `SELECT COUNT(*) FROM trips WHERE start_time::date = CURRENT_DATE`).Scan(&count)
+	var query string
+	var args []interface{}
+
+	if destinationID != nil && *destinationID != "" {
+		query = `SELECT COUNT(*) FROM trips WHERE start_time::date = CURRENT_DATE AND destination_id = $1`
+		args = []interface{}{*destinationID}
+	} else {
+		query = `SELECT COUNT(*) FROM trips WHERE start_time::date = CURRENT_DATE`
+		args = []interface{}{}
+	}
+
+	err := r.db.QueryRow(ctx, query, args...).Scan(&count)
 	if err != nil {
 		return 0, err
 	}

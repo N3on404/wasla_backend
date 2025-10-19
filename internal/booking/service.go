@@ -132,8 +132,8 @@ func (s *Service) ListTodayTrips(ctx context.Context, search string, limit int) 
 	return s.repo.ListTodayTrips(ctx, search, limit)
 }
 
-func (s *Service) GetTodayTripsCount(ctx context.Context) (int, error) {
-	return s.repo.GetTodayTripsCount(ctx)
+func (s *Service) GetTodayTripsCount(ctx context.Context, destinationID *string) (int, error) {
+	return s.repo.GetTodayTripsCount(ctx, destinationID)
 }
 
 func (s *Service) CancelOneBookingByQueueEntry(ctx context.Context, req CancelOneByQueueEntryRequest) (*Booking, error) {

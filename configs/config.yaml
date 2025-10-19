@@ -3,7 +3,9 @@ server:
   queue_port: 8002
   booking_port: 8003
   websocket_port: 8004
-
+  station_port: 8006
+  printer_port: 8005
+  
 database:
   host: localhost
   port: 5432

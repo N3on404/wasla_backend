@@ -115,7 +115,14 @@ func (h *Handler) ListTodayTrips(c *gin.Context) {
 }
 
 func (h *Handler) GetTodayTripsCount(c *gin.Context) {
-	count, err := h.service.GetTodayTripsCount(c.Request.Context())
+	// Get destination ID from query parameter
+	destinationID := c.Query("destination_id")
+	var destID *string
+	if destinationID != "" {
+		destID = &destinationID
+	}
+
+	count, err := h.service.GetTodayTripsCount(c.Request.Context(), destID)
 	if err != nil {
 		utils.InternalServerErrorResponse(c, "Failed to get today's trips count", err)
 		return
