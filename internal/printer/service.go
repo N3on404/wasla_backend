@@ -155,7 +155,17 @@ func (s *Service) generateBookingTicketContent(data *TicketData) string {
 	content.WriteString(fmt.Sprintf("Vehicule: %s\n", data.LicensePlate))
 	content.WriteString(fmt.Sprintf("Destination: %s\n", data.DestinationName))
 	content.WriteString(fmt.Sprintf("Siège: %d\n", data.SeatNumber))
-	content.WriteString(fmt.Sprintf("Montant: %.2f TND\n", data.TotalAmount))
+
+	// Detailed pricing breakdown
+	if data.BasePrice > 0 {
+		serviceFee := 0.15
+		content.WriteString(fmt.Sprintf("Prix de base: %.2f TND\n", data.BasePrice))
+		content.WriteString(fmt.Sprintf("Frais de service: %.2f TND\n", serviceFee))
+		content.WriteString(fmt.Sprintf("Total: %.2f TND\n", data.TotalAmount))
+	} else {
+		content.WriteString(fmt.Sprintf("Montant: %.2f TND\n", data.TotalAmount))
+	}
+
 	content.WriteString(fmt.Sprintf("Date: %s\n", data.CreatedAt.Format("02/01/2006 15:04")))
 	content.WriteString(fmt.Sprintf("Agent: %s\n", data.CreatedBy))
 
@@ -331,7 +341,7 @@ func (s *Service) generateTalonContent(data *TicketData) string {
 	}
 	content.WriteString(fmt.Sprintf("(%d)\n", data.SeatNumber))
 	content.WriteString("-----\n")
-	content.WriteString(fmt.Sprintf("Montant: %.2f TND\n", data.BasePrice))
+	content.WriteString(fmt.Sprintf("Montant: %.2f TND\n", data.TotalAmount))
 	content.WriteString(fmt.Sprintf("Heure: %s\n", data.CreatedAt.Format("15:04")))
 	content.WriteString(fmt.Sprintf("Agent: %s\n", data.CreatedBy))
 	content.WriteString("\n")
