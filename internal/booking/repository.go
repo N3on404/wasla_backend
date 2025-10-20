@@ -329,7 +329,8 @@ func (r *RepositoryImpl) ListTrips(ctx context.Context, limit int) ([]Trip, erro
 		limit = 50
 	}
 	rows, err := r.db.Query(ctx, `
-        SELECT id, vehicle_id, license_plate, destination_id, destination_name, queue_id, seats_booked, start_time, created_at
+        SELECT id, vehicle_id, license_plate, destination_id, destination_name, queue_id, seats_booked,
+               NULL::int as vehicle_capacity, NULL::numeric as base_price, start_time, created_at
         FROM trips ORDER BY start_time DESC LIMIT $1`, limit)
 	if err != nil {
 		return nil, err
@@ -355,8 +356,8 @@ func (r *RepositoryImpl) ListTodayTrips(ctx context.Context, search string, limi
 	var err error
 	if search != "" {
 		rows, err = r.db.Query(ctx, `
-            SELECT id, vehicle_id, license_plate, destination_id, destination_name, queue_id, seats_booked, 
-                   vehicle_capacity, base_price, start_time, created_at
+            SELECT id, vehicle_id, license_plate, destination_id, destination_name, queue_id, seats_booked,
+                   NULL::int as vehicle_capacity, NULL::numeric as base_price, start_time, created_at
             FROM trips
             WHERE start_time::date = CURRENT_DATE AND license_plate ILIKE '%' || $1 || '%'
             ORDER BY start_time DESC
@@ -364,8 +365,8 @@ func (r *RepositoryImpl) ListTodayTrips(ctx context.Context, search string, limi
         `, search, limit)
 	} else {
 		rows, err = r.db.Query(ctx, `
-            SELECT id, vehicle_id, license_plate, destination_id, destination_name, queue_id, seats_booked, 
-                   vehicle_capacity, base_price, start_time, created_at
+            SELECT id, vehicle_id, license_plate, destination_id, destination_name, queue_id, seats_booked,
+                   NULL::int as vehicle_capacity, NULL::numeric as base_price, start_time, created_at
             FROM trips
             WHERE start_time::date = CURRENT_DATE
             ORDER BY start_time DESC
@@ -417,7 +418,7 @@ func (r *RepositoryImpl) CreateBookingByQueueEntry(ctx context.Context, req Crea
 		FROM vehicle_queue q
 		LEFT JOIN routes r ON r.station_id = q.destination_id
 		WHERE q.id = $1 AND q.queue_type='REGULAR' AND q.status IN ('WAITING','LOADING','READY')
-		FOR UPDATE`, req.QueueEntryID).Scan(&queueID, &vehicleID, &pricePerSeat, &availableSeats)
+		FOR UPDATE OF q`, req.QueueEntryID).Scan(&queueID, &vehicleID, &pricePerSeat, &availableSeats)
 	if err != nil {
 		if err == pgx.ErrNoRows {
 			return nil, fmt.Errorf("queue entry not found or not available for booking")

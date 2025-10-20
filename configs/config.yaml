@@ -11,7 +11,7 @@ database:
   port: 5432
   user: ivan
   password: Lost2409
-  dbname: main-ste
+  dbname: louaj_node
   sslmode: disable
   max_connections: 100
   min_connections: 10

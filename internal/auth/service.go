@@ -24,6 +24,40 @@ func NewService(repo Repository, redis *redis.Client) *Service {
 	}
 }
 
+// CRUD wrappers
+func (s *Service) ListStaff(ctx context.Context) ([]models.Staff, error) {
+	return s.repo.ListStaff(ctx)
+}
+
+func (s *Service) GetStaffByID(ctx context.Context, id string) (*models.Staff, error) {
+	return s.repo.GetStaffByID(ctx, id)
+}
+
+func (s *Service) CreateStaff(ctx context.Context, input models.Staff) (*models.Staff, error) {
+	if input.CIN == "" || len(input.CIN) != 8 {
+		return nil, fmt.Errorf("invalid CIN")
+	}
+	if input.FirstName == "" || input.LastName == "" {
+		return nil, fmt.Errorf("missing name")
+	}
+	if input.Role == "" {
+		input.Role = "WORKER"
+	}
+	if input.ID == "" {
+		input.ID = fmt.Sprintf("staff_%d", time.Now().UnixNano())
+	}
+	input.IsActive = true
+	return s.repo.CreateStaff(ctx, input)
+}
+
+func (s *Service) UpdateStaff(ctx context.Context, id string, input models.Staff) (*models.Staff, error) {
+	return s.repo.UpdateStaff(ctx, id, input)
+}
+
+func (s *Service) DeleteStaff(ctx context.Context, id string) error {
+	return s.repo.DeleteStaff(ctx, id)
+}
+
 func (s *Service) ValidateStaff(cin string) (*models.Staff, error) {
 	ctx := context.Background()
 

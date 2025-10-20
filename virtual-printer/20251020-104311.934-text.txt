@@ -1,0 +1,19 @@
+@!a!================================
+!  STE DHRAIFF SERVICES TRANSPORT
+!================================
+!    BILLET AUTORISATION SORTIE(1)
+a!--------------------------------
+!Vehicule: 130 TUN 2221
+!Destination: Jemmal
+!Montant Total: 5.85 TND
+!Date: 20/10/2025 10:43
+!@Agent: staff_1758995428363_2nhfegsve
+!--------------------------------
+! Sortie autorise!
+!@Agent: User Ivan
+!
+!
+!
+
+
+V

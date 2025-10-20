@@ -1,0 +1,19 @@
+@!a!================================
+!  STE DHRAIFF SERVICES TRANSPORT
+!================================
+!     BILLET DE RSERVATION
+a!--------------------------------
+!Vehicule: 247 TUN 8556
+!Destination: MOKNIN
+!Sige: 1
+!Montant: 2.20 TND
+!Date: 20/10/2025 11:17
+!@Agent: fadhel mehri
+!--------------------------------
+!Merci de nous avoir choisis!
+!
+!
+!
+
+
+V

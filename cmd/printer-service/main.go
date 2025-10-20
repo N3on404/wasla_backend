@@ -6,6 +6,9 @@ import (
 
 	"station-backend/internal/database"
 	"station-backend/internal/printer"
+	"station-backend/internal/queue"
+	"station-backend/internal/statistics"
+	"station-backend/internal/websocket"
 	"station-backend/pkg/middleware"
 
 	"github.com/gin-gonic/gin"
@@ -18,21 +21,34 @@ func main() {
 		log.Printf("Warning: Could not load .env file: %v", err)
 	}
 
-	// Initialize Redis
+	// Initialize Redis for printer service
 	redis, err := database.NewRedis()
 	if err != nil {
 		log.Fatal("Failed to connect to Redis:", err)
 	}
 	defer redis.Close()
 
+	// Initialize PostgreSQL for queue service
+	db, err := database.NewPostgres()
+	if err != nil {
+		log.Fatal("DB error:", err)
+	}
+	defer db.Close()
+
 	// Initialize repository
 	printerRepo := printer.NewRepository(redis.Client)
+
+	// Initialize queue repository and service
+	queueRepo := queue.NewRepository(db.Pool)
+	wsHub := websocket.NewHub()
+	statsLogger := statistics.NewStatisticsLogger(db.Pool)
+	queueService := queue.NewService(queueRepo, wsHub, statsLogger)
 
 	// Initialize service
 	printerService := printer.NewService(printerRepo)
 
 	// Initialize handler
-	printerHandler := printer.NewHandler(printerService)
+	printerHandler := printer.NewHandler(printerService, queueService)
 
 	// Setup Gin router
 	// Set Gin mode based on environment
@@ -64,7 +80,17 @@ func main() {
 		printerGroup.POST("/:id/print/exit", printerHandler.PrintExitTicket)
 		printerGroup.POST("/:id/print/daypass", printerHandler.PrintDayPassTicket)
 		printerGroup.POST("/:id/print/exitpass", printerHandler.PrintExitPassTicket)
+		printerGroup.POST("/:id/print/exitpass-and-remove", printerHandler.PrintExitPassAndRemoveFromQueue)
 		printerGroup.POST("/:id/print/talon", printerHandler.PrintTalon)
+
+		// Alternate patterns to avoid any param matching issues
+		printerGroup.POST("/print/:id/booking", printerHandler.PrintBookingTicket)
+		printerGroup.POST("/print/:id/entry", printerHandler.PrintEntryTicket)
+		printerGroup.POST("/print/:id/exit", printerHandler.PrintExitTicket)
+		printerGroup.POST("/print/:id/daypass", printerHandler.PrintDayPassTicket)
+		printerGroup.POST("/print/:id/exitpass", printerHandler.PrintExitPassTicket)
+		printerGroup.POST("/print/:id/exitpass-and-remove", printerHandler.PrintExitPassAndRemoveFromQueue)
+		printerGroup.POST("/print/:id/talon", printerHandler.PrintTalon)
 	}
 
 	// Health check

@@ -1,20 +1,26 @@
 package printer
 
 import (
+	"context"
 	"net/http"
+	"time"
+
+	"station-backend/internal/queue"
 
 	"github.com/gin-gonic/gin"
 )
 
 // Handler handles HTTP requests for printer operations
 type Handler struct {
-	service *Service
+	service      *Service
+	queueService *queue.Service
 }
 
 // NewHandler creates a new printer handler
-func NewHandler(service *Service) *Handler {
+func NewHandler(service *Service, queueService *queue.Service) *Handler {
 	return &Handler{
-		service: service,
+		service:      service,
+		queueService: queueService,
 	}
 }
 
@@ -320,6 +326,85 @@ func (h *Handler) PrintExitPassTicket(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, gin.H{"message": "exit pass ticket printed successfully"})
+}
+
+// PrintExitPassAndRemoveFromQueue godoc
+// @Summary Print exit pass ticket and remove vehicle from queue
+// @Description Print an exit pass ticket with booked seats calculation and remove the vehicle from queue
+// @Tags printer
+// @Accept json
+// @Produce json
+// @Param id path string true "Printer ID"
+// @Param request body ExitPassAndRemoveRequest true "Exit pass and remove request"
+// @Success 200 {object} map[string]string
+// @Failure 400 {object} map[string]string
+// @Failure 500 {object} map[string]string
+// @Router /printer/{id}/print/exitpass-and-remove [post]
+func (h *Handler) PrintExitPassAndRemoveFromQueue(c *gin.Context) {
+	printerID := c.Param("id")
+	if printerID == "" {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "printer ID is required"})
+		return
+	}
+
+	var request ExitPassAndRemoveRequest
+	if err := c.ShouldBindJSON(&request); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	// Calculate total amount: booked seats × base price
+	totalAmount := float64(request.BookedSeats) * request.BasePrice
+
+	// Create ticket data for printing
+	ticketData := &TicketData{
+		LicensePlate:    request.LicensePlate,
+		DestinationName: request.DestinationName,
+		SeatNumber:      request.BookedSeats, // Use booked seats as seat number
+		TotalAmount:     totalAmount,
+		CreatedBy:       request.CreatedBy,
+		CreatedAt:       time.Now(),
+		StationName:     request.StationName,
+		RouteName:       request.RouteName,
+		VehicleCapacity: request.TotalSeats,
+		BasePrice:       request.BasePrice,
+		ExitPassCount:   request.ExitPassCount,
+		CompanyName:     request.CompanyName,
+		CompanyLogo:     request.CompanyLogo,
+		StaffFirstName:  request.StaffFirstName,
+		StaffLastName:   request.StaffLastName,
+	}
+
+	// Print the exit pass ticket
+	err := h.service.PrintExitPassTicket(printerID, ticketData)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to print exit pass ticket: " + err.Error()})
+		return
+	}
+
+	// Create a trip record before removing from queue
+	if request.QueueEntryID == "" {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "queueEntryId is required"})
+		return
+	}
+	if _, tripErr := h.queueService.CreateTripFromExit(context.Background(), request.QueueEntryID, request.LicensePlate, request.DestinationName, request.BookedSeats, request.TotalSeats, request.BasePrice); tripErr != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to create trip record: " + tripErr.Error()})
+		return
+	}
+
+	// Remove vehicle from queue
+	err = h.queueService.DeleteQueueEntry(context.Background(), request.QueueEntryID)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to remove vehicle from queue: " + err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"message":     "exit pass ticket printed and vehicle removed from queue successfully",
+		"totalAmount": totalAmount,
+		"bookedSeats": request.BookedSeats,
+		"basePrice":   request.BasePrice,
+	})
 }
 
 // PrintTalon godoc

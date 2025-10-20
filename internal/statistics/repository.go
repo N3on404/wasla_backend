@@ -257,27 +257,41 @@ func (r *RepositoryImpl) GetAllStaffIncomeForDate(ctx context.Context, date time
 		SELECT 
 			s.id as staff_id,
 			CONCAT(s.first_name, ' ', s.last_name) as staff_name,
-			sds.date,
-			COALESCE(sds.total_seats_booked, 0) as seat_bookings,
-			COALESCE(sds.total_seat_income, 0.00) as seat_income,
-			COALESCE(sds.total_day_passes_sold, 0) as day_pass_sales,
-			COALESCE(sds.total_day_pass_income, 0.00) as day_pass_income,
-			COALESCE(sds.total_income, 0.00) as total_income,
-			COALESCE(sds.total_transactions, 0) as total_transactions,
-			CASE 
-				WHEN COALESCE(sds.total_seats_booked, 0) > 0 
-				THEN COALESCE(sds.total_seat_income, 0.00) / sds.total_seats_booked 
-				ELSE 0.00 
-			END as avg_income_per_seat,
-			CASE 
-				WHEN COALESCE(sds.total_day_passes_sold, 0) > 0 
-				THEN COALESCE(sds.total_day_pass_income, 0.00) / sds.total_day_passes_sold 
-				ELSE 0.00 
-			END as avg_income_per_day_pass
+			$1::date as date,
+			COALESCE(booking_stats.total_seats_booked, 0) as seat_bookings,
+			COALESCE(booking_stats.total_seats_booked, 0) * 0.150 as seat_income,
+			COALESCE(daypass_stats.total_day_passes_sold, 0) as day_pass_sales,
+			COALESCE(daypass_stats.total_day_passes_sold, 0) * 2.0 as day_pass_income,
+			(COALESCE(booking_stats.total_seats_booked, 0) * 0.150) + (COALESCE(daypass_stats.total_day_passes_sold, 0) * 2.0) as total_income,
+			COALESCE(booking_stats.total_transactions, 0) + COALESCE(daypass_stats.total_transactions, 0) as total_transactions,
+			0.150 as avg_income_per_seat,
+			2.0 as avg_income_per_day_pass
 		FROM staff s
-		LEFT JOIN staff_daily_statistics sds ON s.id = sds.staff_id AND sds.date = $1
+		LEFT JOIN (
+			SELECT 
+				created_by as staff_id,
+				SUM(seats_booked) as total_seats_booked,
+				COUNT(*) as total_transactions
+			FROM bookings 
+			WHERE DATE(created_at) = $1 
+				AND booking_status = 'ACTIVE'
+				AND created_by IS NOT NULL
+			GROUP BY created_by
+		) booking_stats ON s.id = booking_stats.staff_id
+		LEFT JOIN (
+			SELECT 
+				created_by as staff_id,
+				COUNT(*) as total_day_passes_sold,
+				COUNT(*) as total_transactions
+			FROM day_passes 
+			WHERE DATE(created_at) = $1 
+				AND is_active = true
+				AND created_by IS NOT NULL
+			GROUP BY created_by
+		) daypass_stats ON s.id = daypass_stats.staff_id
 		WHERE s.is_active = true
-		ORDER BY COALESCE(sds.total_income, 0.00) DESC
+			AND (booking_stats.staff_id IS NOT NULL OR daypass_stats.staff_id IS NOT NULL)
+		ORDER BY ((COALESCE(booking_stats.total_seats_booked, 0) * 0.150) + (COALESCE(daypass_stats.total_day_passes_sold, 0) * 2.0)) DESC
 	`
 
 	rows, err := r.db.Query(ctx, query, date)

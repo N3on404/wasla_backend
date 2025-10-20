@@ -42,6 +42,11 @@ func (s *Service) DeleteRoute(ctx context.Context, id string) error {
 	return s.repo.DeleteRoute(ctx, id)
 }
 
+// Trips
+func (s *Service) CreateTripFromExit(ctx context.Context, queueEntryID string, licensePlate string, destinationName string, seatsBooked int, totalSeats int, basePrice float64) (string, error) {
+	return s.repo.CreateTripFromExit(ctx, queueEntryID, licensePlate, destinationName, seatsBooked, totalSeats, basePrice)
+}
+
 // Vehicles
 func (s *Service) ListVehicles(ctx context.Context, searchQuery string) ([]Vehicle, error) {
 	return s.repo.ListVehicles(ctx, searchQuery)

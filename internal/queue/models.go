@@ -16,22 +16,23 @@ type Route struct {
 }
 
 type Vehicle struct {
-	ID              string    `json:"id"`
-	LicensePlate    string    `json:"licensePlate"`
-	Capacity        int       `json:"capacity"`
-	PhoneNumber     *string   `json:"phoneNumber,omitempty"`
-	IsActive        bool      `json:"isActive"`
-	IsAvailable     bool      `json:"isAvailable"`
-	IsBanned        bool      `json:"isBanned"`
-	DefaultDestID   *string   `json:"defaultDestinationId,omitempty"`
-	DefaultDestName *string   `json:"defaultDestinationName,omitempty"`
-	AvailableSeats  int       `json:"availableSeats"`
-	TotalSeats      int       `json:"totalSeats"`
-	BasePrice       float64   `json:"basePrice"`
-	DestinationID   *string   `json:"destinationId,omitempty"`
-	DestinationName *string   `json:"destinationName,omitempty"`
-	CreatedAt       time.Time `json:"createdAt"`
-	UpdatedAt       time.Time `json:"updatedAt"`
+	ID                 string                     `json:"id"`
+	LicensePlate       string                     `json:"licensePlate"`
+	Capacity           int                        `json:"capacity"`
+	PhoneNumber        *string                    `json:"phoneNumber,omitempty"`
+	IsActive           bool                       `json:"isActive"`
+	IsAvailable        bool                       `json:"isAvailable"`
+	IsBanned           bool                       `json:"isBanned"`
+	DefaultDestID      *string                    `json:"defaultDestinationId,omitempty"`
+	DefaultDestName    *string                    `json:"defaultDestinationName,omitempty"`
+	AvailableSeats     int                        `json:"availableSeats"`
+	TotalSeats         int                        `json:"totalSeats"`
+	BasePrice          float64                    `json:"basePrice"`
+	DestinationID      *string                    `json:"destinationId,omitempty"`
+	DestinationName    *string                    `json:"destinationName,omitempty"`
+	CreatedAt          time.Time                  `json:"createdAt"`
+	UpdatedAt          time.Time                  `json:"updatedAt"`
+	AuthorizedStations []VehicleAuthorizedStation `json:"authorizedStations,omitempty"`
 }
 
 type VehicleAuthorizedStation struct {

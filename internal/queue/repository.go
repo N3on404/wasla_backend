@@ -45,6 +45,9 @@ type Repository interface {
 	// Aggregates
 	ListQueueSummaries(ctx context.Context) ([]QueueSummary, error)
 	ListRouteSummaries(ctx context.Context) ([]RouteSummary, error)
+
+	// Trips
+	CreateTripFromExit(ctx context.Context, queueEntryID string, licensePlate string, destinationName string, seatsBooked int, totalSeats int, basePrice float64) (string, error)
 }
 
 type RepositoryImpl struct {
@@ -185,6 +188,19 @@ func (r *RepositoryImpl) ListVehicles(ctx context.Context, searchQuery string) (
 			&v.DestinationID, &v.DestinationName, &v.CreatedAt, &v.UpdatedAt); err != nil {
 			return nil, err
 		}
+		// fetch authorized stations for each vehicle
+		authRows, err := r.db.Query(ctx, `SELECT id, vehicle_id, station_id, station_name, priority, is_default, created_at FROM vehicle_authorized_stations WHERE vehicle_id = $1 ORDER BY priority ASC, created_at ASC`, v.ID)
+		if err == nil {
+			var auths []VehicleAuthorizedStation
+			for authRows.Next() {
+				var as VehicleAuthorizedStation
+				if err := authRows.Scan(&as.ID, &as.VehicleID, &as.StationID, &as.StationName, &as.Priority, &as.IsDefault, &as.CreatedAt); err == nil {
+					auths = append(auths, as)
+				}
+			}
+			authRows.Close()
+			v.AuthorizedStations = auths
+		}
 		list = append(list, v)
 	}
 	return list, nil
@@ -238,9 +254,41 @@ func (r *RepositoryImpl) UpdateVehicle(ctx context.Context, id string, req Updat
 }
 
 func (r *RepositoryImpl) DeleteVehicle(ctx context.Context, id string) error {
+	// Delete related records in the correct order to avoid foreign key constraints
+	// Delete vehicle schedules first
+	_, err := r.db.Exec(ctx, `DELETE FROM vehicle_schedules WHERE vehicle_id = $1`, id)
+	if err != nil {
+		return fmt.Errorf("failed to delete vehicle schedules: %w", err)
+	}
+
+	// Delete authorized stations
+	_, err = r.db.Exec(ctx, `DELETE FROM vehicle_authorized_stations WHERE vehicle_id = $1`, id)
+	if err != nil {
+		return fmt.Errorf("failed to delete authorized stations: %w", err)
+	}
+
+	// Delete queue entries
+	_, err = r.db.Exec(ctx, `DELETE FROM vehicle_queue WHERE vehicle_id = $1`, id)
+	if err != nil {
+		return fmt.Errorf("failed to delete queue entries: %w", err)
+	}
+
+	// Delete day passes
+	_, err = r.db.Exec(ctx, `DELETE FROM day_passes WHERE vehicle_id = $1`, id)
+	if err != nil {
+		return fmt.Errorf("failed to delete day passes: %w", err)
+	}
+
+	// Delete exit passes
+	_, err = r.db.Exec(ctx, `DELETE FROM exit_passes WHERE vehicle_id = $1`, id)
+	if err != nil {
+		return fmt.Errorf("failed to delete exit passes: %w", err)
+	}
+
+	// Finally delete the vehicle
 	ct, err := r.db.Exec(ctx, `DELETE FROM vehicles WHERE id = $1`, id)
 	if err != nil {
-		return err
+		return fmt.Errorf("failed to delete vehicle: %w", err)
 	}
 	if ct.RowsAffected() == 0 {
 		return fmt.Errorf("vehicle not found")
@@ -663,6 +711,27 @@ func (r *RepositoryImpl) DeleteQueueEntry(ctx context.Context, id string) error 
 	return nil
 }
 
+// CreateTripFromExit inserts a trip row when a vehicle exits via print&remove
+func (r *RepositoryImpl) CreateTripFromExit(ctx context.Context, queueEntryID string, licensePlate string, destinationName string, seatsBooked int, totalSeats int, basePrice float64) (string, error) {
+	tripID := fmt.Sprintf("trip_%d", time.Now().UnixNano())
+	// Look up queue entry details to populate vehicle_id and destination_id
+	var vehicleID, destinationID string
+	if err := r.db.QueryRow(ctx, `SELECT vehicle_id, destination_id FROM vehicle_queue WHERE id=$1`, queueEntryID).Scan(&vehicleID, &destinationID); err != nil {
+		return "", err
+	}
+	// Insert into trips
+	if _, err := r.db.Exec(ctx, `
+        INSERT INTO trips (
+            id, vehicle_id, license_plate, destination_id, destination_name, queue_id, seats_booked,
+            vehicle_capacity, base_price, start_time, created_at
+        ) VALUES (
+            $1, $2, $3, $4, $5, $6, $7, $8, $9, NOW(), NOW()
+        )`, tripID, vehicleID, licensePlate, destinationID, destinationName, queueEntryID, seatsBooked, totalSeats, basePrice); err != nil {
+		return "", err
+	}
+	return tripID, nil
+}
+
 func (r *RepositoryImpl) ReorderQueue(ctx context.Context, destinationID string, entryIDs []string) error {
 	tx, err := r.db.Begin(ctx)
 	if err != nil {
@@ -730,24 +799,35 @@ func (r *RepositoryImpl) TransferSeats(ctx context.Context, fromEntryID, toEntry
 	}
 	defer tx.Rollback(ctx)
 
-	var fromAvail, toAvail, toTotal int
-	if err := tx.QueryRow(ctx, `SELECT available_seats FROM vehicle_queue WHERE id=$1 FOR UPDATE`, fromEntryID).Scan(&fromAvail); err != nil {
+	var fromAvail, fromTotal, toAvail, toTotal int
+	if err := tx.QueryRow(ctx, `SELECT available_seats, total_seats FROM vehicle_queue WHERE id=$1 FOR UPDATE`, fromEntryID).Scan(&fromAvail, &fromTotal); err != nil {
 		return err
 	}
 	if err := tx.QueryRow(ctx, `SELECT available_seats, total_seats FROM vehicle_queue WHERE id=$1 FOR UPDATE`, toEntryID).Scan(&toAvail, &toTotal); err != nil {
 		return err
 	}
-	if fromAvail < seats {
-		return fmt.Errorf("not enough seats to transfer")
-	}
-	if toAvail+seats > toTotal {
-		return fmt.Errorf("target exceeds total seats")
+
+	// Calculate booked seats
+	fromBooked := fromTotal - fromAvail
+	toBooked := toTotal - toAvail
+
+	// Check if source vehicle has enough booked seats to transfer
+	if fromBooked < seats {
+		return fmt.Errorf("source vehicle does not have enough booked seats to transfer")
 	}
 
-	if _, err := tx.Exec(ctx, `UPDATE vehicle_queue SET available_seats = available_seats - $2 WHERE id=$1`, fromEntryID, seats); err != nil {
+	// Check if target vehicle can accommodate the additional passengers
+	if toBooked+seats > toTotal {
+		return fmt.Errorf("target vehicle cannot accommodate additional passengers (would exceed total capacity)")
+	}
+
+	// Transfer booked seats: passengers move from source to target
+	// Source: reduce booked seats (increase available seats)
+	// Target: increase booked seats (decrease available seats)
+	if _, err := tx.Exec(ctx, `UPDATE vehicle_queue SET available_seats = available_seats + $2 WHERE id=$1`, fromEntryID, seats); err != nil {
 		return err
 	}
-	if _, err := tx.Exec(ctx, `UPDATE vehicle_queue SET available_seats = available_seats + $2 WHERE id=$1`, toEntryID, seats); err != nil {
+	if _, err := tx.Exec(ctx, `UPDATE vehicle_queue SET available_seats = available_seats - $2 WHERE id=$1`, toEntryID, seats); err != nil {
 		return err
 	}
 	return tx.Commit(ctx)
@@ -814,16 +894,15 @@ func (r *RepositoryImpl) ListDayPasses(ctx context.Context, limit int) ([]DayPas
 func (r *RepositoryImpl) ListQueueSummaries(ctx context.Context) ([]QueueSummary, error) {
 	rows, err := r.db.Query(ctx, `
 		SELECT q.destination_id,
-		       s.station_name as destination_name,
+		       COALESCE(r.station_name, q.destination_name) as destination_name,
 		       COUNT(*) as total_vehicles,
 		       COALESCE(SUM(q.total_seats),0) as total_seats,
 		       COALESCE(SUM(q.available_seats),0) as available_seats,
 		       COALESCE(r.base_price, 0) as base_price
 		FROM vehicle_queue q
-		LEFT JOIN stations s ON q.destination_id = s.station_id
 		LEFT JOIN routes r ON r.station_id = q.destination_id
-		GROUP BY q.destination_id, s.station_name, r.base_price
-		ORDER BY s.station_name ASC`)
+		GROUP BY q.destination_id, r.station_name, q.destination_name, r.base_price
+		ORDER BY COALESCE(r.station_name, q.destination_name) ASC`)
 	if err != nil {
 		return nil, err
 	}

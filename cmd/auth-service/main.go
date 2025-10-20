@@ -66,6 +66,16 @@ func main() {
 		api.POST("/auth/login", authHandler.Login)
 		api.POST("/auth/refresh", middleware.AuthRequired(), authHandler.RefreshToken)
 		api.POST("/auth/logout", middleware.AuthRequired(), authHandler.Logout)
+
+		// Staff CRUD (protected)
+		staff := api.Group("/staff", middleware.AuthRequired())
+		{
+			staff.GET("/", authHandler.ListStaff)
+			staff.GET(":id", authHandler.GetStaff)
+			staff.POST("/", authHandler.CreateStaff)
+			staff.PUT(":id", authHandler.UpdateStaff)
+			staff.DELETE(":id", authHandler.DeleteStaff)
+		}
 	}
 
 	// Get port from environment or use default

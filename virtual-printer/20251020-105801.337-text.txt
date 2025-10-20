@@ -1,0 +1,19 @@
+@!a!================================
+!  STE DHRAIFF SERVICES TRANSPORT
+!================================
+!     BILLET DE RSERVATION
+a!--------------------------------
+!Vehicule: 247 TUN 9550
+!Destination: JEMMAL
+!Sige: 2
+!Montant: 1.95 TND
+!Date: 20/10/2025 10:58
+!@Agent: fadhel mehri
+!--------------------------------
+!Merci de nous avoir choisis!
+!
+!
+!
+
+
+V

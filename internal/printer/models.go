@@ -90,3 +90,21 @@ type TicketData struct {
 	StaffFirstName string `json:"staffFirstName,omitempty"`
 	StaffLastName  string `json:"staffLastName,omitempty"`
 }
+
+// ExitPassAndRemoveRequest represents the request for printing exit pass and removing from queue
+type ExitPassAndRemoveRequest struct {
+	QueueEntryID    string  `json:"queueEntryId" binding:"required"`
+	LicensePlate    string  `json:"licensePlate" binding:"required"`
+	DestinationName string  `json:"destinationName" binding:"required"`
+	BookedSeats     int     `json:"bookedSeats" binding:"required"`
+	TotalSeats      int     `json:"totalSeats" binding:"required"`
+	BasePrice       float64 `json:"basePrice" binding:"required"`
+	CreatedBy       string  `json:"createdBy" binding:"required"`
+	StationName     string  `json:"stationName"`
+	RouteName       string  `json:"routeName"`
+	ExitPassCount   int     `json:"exitPassCount"`
+	CompanyName     string  `json:"companyName"`
+	CompanyLogo     string  `json:"companyLogo"`
+	StaffFirstName  string  `json:"staffFirstName"`
+	StaffLastName   string  `json:"staffLastName"`
+}

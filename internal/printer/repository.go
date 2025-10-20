@@ -5,7 +5,9 @@ import (
 	"fmt"
 	"net"
 	"os"
+	"path/filepath"
 	"strconv"
+	"strings"
 	"time"
 
 	"github.com/redis/go-redis/v9"
@@ -211,6 +213,10 @@ func (r *Repository) UpdatePrintQueueStatus(status *PrintQueueStatus) error {
 
 // TestPrinterConnection tests the connection to a printer
 func (r *Repository) TestPrinterConnection(config *PrinterConfig) error {
+	// Virtual mode always succeeds
+	if isVirtualPrinter(config) {
+		return nil
+	}
 	conn, err := net.DialTimeout("tcp", fmt.Sprintf("%s:%d", config.IP, config.Port), time.Duration(config.Timeout)*time.Millisecond)
 	if err != nil {
 		return fmt.Errorf("failed to connect to printer %s (%s:%d): %v", config.Name, config.IP, config.Port, err)
@@ -229,6 +235,42 @@ func (r *Repository) TestPrinterConnection(config *PrinterConfig) error {
 
 // SendPrintData sends raw print data to the printer
 func (r *Repository) SendPrintData(config *PrinterConfig, data []byte) error {
+	// In virtual mode, write data to local files for inspection instead of sending to a real printer
+	if isVirtualPrinter(config) {
+		dir := "virtual-printer"
+		if err := os.MkdirAll(dir, 0o755); err != nil {
+			return fmt.Errorf("failed to create virtual printer dir: %v", err)
+		}
+
+		ts := time.Now().Format("20060102-150405.000")
+		// Raw ESC/POS bytes
+		rawPath := filepath.Join(dir, fmt.Sprintf("%s-raw.bin", ts))
+		if err := os.WriteFile(rawPath, data, 0o644); err != nil {
+			return fmt.Errorf("failed to write virtual raw output: %v", err)
+		}
+
+		// Best-effort human-readable text by stripping non-printable bytes
+		var b []byte
+		for _, c := range data {
+			if c == '\n' || c == '\r' || (c >= 32 && c <= 126) {
+				b = append(b, c)
+			}
+		}
+		txtPath := filepath.Join(dir, fmt.Sprintf("%s-text.txt", ts))
+		if err := os.WriteFile(txtPath, b, 0o644); err != nil {
+			return fmt.Errorf("failed to write virtual text output: %v", err)
+		}
+
+		// Also append to a rolling log for quick view
+		logPath := filepath.Join(dir, "printer.log")
+		line := fmt.Sprintf("[%s] %s\n%s\n\n", ts, strings.TrimSpace(config.Name), string(b))
+		f, err := os.OpenFile(logPath, os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0o644)
+		if err == nil {
+			_, _ = f.WriteString(line)
+			_ = f.Close()
+		}
+		return nil
+	}
 	conn, err := net.DialTimeout("tcp", fmt.Sprintf("%s:%d", config.IP, config.Port), time.Duration(config.Timeout)*time.Millisecond)
 	if err != nil {
 		return fmt.Errorf("failed to connect to printer %s (%s:%d): %v", config.Name, config.IP, config.Port, err)
@@ -242,6 +284,23 @@ func (r *Repository) SendPrintData(config *PrinterConfig, data []byte) error {
 	}
 
 	return nil
+}
+
+// isVirtualPrinter returns true if virtual printing is enabled via env or config
+func isVirtualPrinter(config *PrinterConfig) bool {
+	if v := os.Getenv("PRINTER_VIRTUAL"); v != "" {
+		vl := strings.ToLower(v)
+		if vl == "1" || vl == "true" || vl == "yes" {
+			return true
+		}
+	}
+	if strings.EqualFold(config.IP, "virtual") {
+		return true
+	}
+	if strings.Contains(strings.ToLower(config.Name), "virtual") {
+		return true
+	}
+	return false
 }
 
 // Helper functions
