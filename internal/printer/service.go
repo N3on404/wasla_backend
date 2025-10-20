@@ -342,7 +342,7 @@ func (s *Service) generateTalonContent(data *TicketData) string {
 	content.WriteString(fmt.Sprintf("(%d)\n", data.SeatNumber))
 	content.WriteString("-----\n")
 	content.WriteString(fmt.Sprintf("Montant: %.2f TND\n", data.TotalAmount))
-	content.WriteString(fmt.Sprintf("Heure: %s\n", data.CreatedAt.Format("15:04")))
+	content.WriteString(fmt.Sprintf("Heure: %s\n", data.CreatedAt.Format("02/01/2006 15:04")))
 	content.WriteString(fmt.Sprintf("Agent: %s\n", data.CreatedBy))
 	content.WriteString("\n")
 

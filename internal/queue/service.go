@@ -150,12 +150,33 @@ func (s *Service) UpdateQueueEntry(ctx context.Context, id string, req UpdateQue
 }
 
 func (s *Service) DeleteQueueEntry(ctx context.Context, id string) error {
+	// Get the destination ID before deleting to check if queue becomes empty
+	var destinationID string
+	row := s.repo.(*RepositoryImpl).db.QueryRow(ctx, `SELECT destination_id FROM vehicle_queue WHERE id=$1`, id)
+	if err := row.Scan(&destinationID); err != nil {
+		return err
+	}
+
 	if err := s.repo.DeleteQueueEntry(ctx, id); err != nil {
 		return err
 	}
-	// Broadcast generic removal event (clients can refetch)
+
+	// Check if the destination queue is now empty
+	var remainingCount int
+	err := s.repo.(*RepositoryImpl).db.QueryRow(ctx,
+		`SELECT COUNT(*) FROM vehicle_queue WHERE destination_id=$1`, destinationID).Scan(&remainingCount)
+	if err != nil {
+		remainingCount = 0
+	}
+
+	// Broadcast removal event with additional context
 	if s.ws != nil {
-		s.ws.BroadcastToStation("*", "queue_entry_removed", map[string]interface{}{"id": id})
+		eventData := map[string]interface{}{
+			"id":            id,
+			"destinationId": destinationID,
+			"queueEmpty":    remainingCount == 0,
+		}
+		s.ws.BroadcastToStation("*", "queue_entry_removed", eventData)
 	}
 	return nil
 }
