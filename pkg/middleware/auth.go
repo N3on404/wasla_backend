@@ -31,6 +31,14 @@ func CORS() gin.HandlerFunc {
 // Logger middleware
 func Logger() gin.HandlerFunc {
 	return gin.LoggerWithFormatter(func(param gin.LogFormatterParams) string {
+		// Skip logging User-Agent for health check endpoints to prevent random data in tickets
+		var userAgent string
+		if param.Path == "/health" {
+			userAgent = "-" // Use dash instead of actual User-Agent for health checks
+		} else {
+			userAgent = param.Request.UserAgent()
+		}
+
 		return fmt.Sprintf("%s - [%s] \"%s %s %s %d %s \"%s\" %s\"\n",
 			param.ClientIP,
 			param.TimeStamp.Format("02/Jan/2006:15:04:05 -0700"),
@@ -39,7 +47,7 @@ func Logger() gin.HandlerFunc {
 			param.Request.Proto,
 			param.StatusCode,
 			param.Latency,
-			param.Request.UserAgent(),
+			userAgent,
 			param.ErrorMessage,
 		)
 	})

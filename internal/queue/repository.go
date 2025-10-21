@@ -390,7 +390,8 @@ func (r *RepositoryImpl) ListQueue(ctx context.Context, destinationID string, su
                    CASE 
                      WHEN dp.has_pass IS NULL THEN 'no_pass'
                      WHEN dp.has_pass = true AND dp.has_trips_today = true THEN 'has_pass'
-                     WHEN dp.has_pass = true AND dp.has_trips_today = false THEN 'recent_pass'
+                     WHEN dp.has_pass = true AND dp.has_trips_today = false AND q.entered_at > (now() AT TIME ZONE 'Africa/Tunis' - interval '30 minutes') THEN 'recent_pass'
+                     WHEN dp.has_pass = true AND dp.has_trips_today = false THEN 'has_pass'
                      ELSE 'no_pass'
                    END as day_pass_status,
                    dp.purchase_date as day_pass_purchased_at,
@@ -432,7 +433,8 @@ func (r *RepositoryImpl) ListQueue(ctx context.Context, destinationID string, su
                    CASE 
                      WHEN dp.has_pass IS NULL THEN 'no_pass'
                      WHEN dp.has_pass = true AND dp.has_trips_today = true THEN 'has_pass'
-                     WHEN dp.has_pass = true AND dp.has_trips_today = false THEN 'recent_pass'
+                     WHEN dp.has_pass = true AND dp.has_trips_today = false AND q.entered_at > (now() AT TIME ZONE 'Africa/Tunis' - interval '30 minutes') THEN 'recent_pass'
+                     WHEN dp.has_pass = true AND dp.has_trips_today = false THEN 'has_pass'
                      ELSE 'no_pass'
                    END as day_pass_status,
                    dp.purchase_date as day_pass_purchased_at,
