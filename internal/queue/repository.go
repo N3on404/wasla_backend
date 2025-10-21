@@ -3,6 +3,7 @@ package queue
 import (
 	"context"
 	"fmt"
+	"strings"
 	"time"
 
 	"github.com/jackc/pgx/v5"
@@ -43,7 +44,8 @@ type Repository interface {
 	ChangeDestination(ctx context.Context, entryID, newDestID, newDestName string) error
 	ListDayPasses(ctx context.Context, limit int) ([]DayPass, error)
 	// Aggregates
-	ListQueueSummaries(ctx context.Context) ([]QueueSummary, error)
+	ListQueueSummaries(ctx context.Context, station string) ([]QueueSummary, error)
+	ListAllDestinations(ctx context.Context) ([]Destination, error)
 	ListRouteSummaries(ctx context.Context) ([]RouteSummary, error)
 
 	// Trips
@@ -891,22 +893,66 @@ func (r *RepositoryImpl) ListDayPasses(ctx context.Context, limit int) ([]DayPas
 }
 
 // ListQueueSummaries returns aggregated per-destination stats from vehicle_queue table
-func (r *RepositoryImpl) ListQueueSummaries(ctx context.Context) ([]QueueSummary, error) {
-	rows, err := r.db.Query(ctx, `
-		SELECT q.destination_id,
-		       COALESCE(r.station_name, q.destination_name) as destination_name,
-		       COUNT(*) as total_vehicles,
-		       COALESCE(SUM(q.total_seats),0) as total_seats,
-		       COALESCE(SUM(q.available_seats),0) as available_seats,
-		       COALESCE(r.base_price, 0) as base_price
-		FROM vehicle_queue q
-		LEFT JOIN routes r ON r.station_id = q.destination_id
-		GROUP BY q.destination_id, r.station_name, q.destination_name, r.base_price
-		ORDER BY COALESCE(r.station_name, q.destination_name) ASC`)
+func (r *RepositoryImpl) ListQueueSummaries(ctx context.Context, station string) ([]QueueSummary, error) {
+	// Define station-to-destination mapping
+	stationDestinations := map[string][]string{
+		"jammel":         {"JAMMEL"},
+		"moknin-tboulba": {"MOKNIN", "TBOULBA"},
+		"kasra-hlele":    {"KASRA HLELE"},
+		"all":            {"JAMMEL", "MOKNIN", "TBOULBA", "KASRA HLELE"},
+	}
+
+	var query string
+	var args []interface{}
+
+	if station == "" || station == "all" {
+		// No filtering - return all destinations
+		query = `
+			SELECT q.destination_id,
+			       COALESCE(r.station_name, q.destination_name) as destination_name,
+			       COUNT(*) as total_vehicles,
+			       COALESCE(SUM(q.total_seats),0) as total_seats,
+			       COALESCE(SUM(q.available_seats),0) as available_seats,
+			       COALESCE(r.base_price, 0) as base_price
+			FROM vehicle_queue q
+			LEFT JOIN routes r ON r.station_id = q.destination_id
+			GROUP BY q.destination_id, r.station_name, q.destination_name, r.base_price
+			ORDER BY COALESCE(r.station_name, q.destination_name) ASC`
+	} else {
+		// Filter by station destinations
+		destinations, exists := stationDestinations[station]
+		if !exists {
+			// Unknown station, return empty result
+			return []QueueSummary{}, nil
+		}
+
+		// Build IN clause for destinations
+		placeholders := make([]string, len(destinations))
+		for i, dest := range destinations {
+			placeholders[i] = fmt.Sprintf("$%d", i+1)
+			args = append(args, dest)
+		}
+
+		query = fmt.Sprintf(`
+			SELECT q.destination_id,
+			       COALESCE(r.station_name, q.destination_name) as destination_name,
+			       COUNT(*) as total_vehicles,
+			       COALESCE(SUM(q.total_seats),0) as total_seats,
+			       COALESCE(SUM(q.available_seats),0) as available_seats,
+			       COALESCE(r.base_price, 0) as base_price
+			FROM vehicle_queue q
+			LEFT JOIN routes r ON r.station_id = q.destination_id
+			WHERE q.destination_name IN (%s)
+			GROUP BY q.destination_id, r.station_name, q.destination_name, r.base_price
+			ORDER BY COALESCE(r.station_name, q.destination_name) ASC`, strings.Join(placeholders, ","))
+	}
+
+	rows, err := r.db.Query(ctx, query, args...)
 	if err != nil {
 		return nil, err
 	}
 	defer rows.Close()
+
 	var list []QueueSummary
 	for rows.Next() {
 		var s QueueSummary
@@ -916,6 +962,28 @@ func (r *RepositoryImpl) ListQueueSummaries(ctx context.Context) ([]QueueSummary
 		list = append(list, s)
 	}
 	return list, nil
+}
+
+func (r *RepositoryImpl) ListAllDestinations(ctx context.Context) ([]Destination, error) {
+	rows, err := r.db.Query(ctx, `
+		SELECT station_id, station_name, base_price, is_active
+		FROM routes
+		WHERE is_active = true
+		ORDER BY station_name ASC`)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	var destinations []Destination
+	for rows.Next() {
+		var dest Destination
+		if err := rows.Scan(&dest.ID, &dest.Name, &dest.BasePrice, &dest.IsActive); err != nil {
+			return nil, err
+		}
+		destinations = append(destinations, dest)
+	}
+	return destinations, nil
 }
 
 // ListRouteSummaries joins active routes with queue aggregation

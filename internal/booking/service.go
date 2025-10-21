@@ -156,3 +156,24 @@ func (s *Service) CancelOneBookingByQueueEntry(ctx context.Context, req CancelOn
 	}
 	return b, err
 }
+
+func (s *Service) CreateGhostBooking(ctx context.Context, req CreateGhostBookingRequest) (*GhostBooking, error) {
+	b, err := s.repo.CreateGhostBooking(ctx, req)
+	if err == nil {
+		// Log statistics for ghost booking
+		if s.statsLogger != nil && req.StaffID != "" {
+			stationID := req.DestinationID // Using destination ID as station ID
+			s.statsLogger.LogSeatBookingTransactionAsync(req.StaffID, b.ID, stationID, b.SeatsBooked)
+		}
+
+		if s.ws != nil {
+			// Broadcast ghost booking event
+			s.ws.BroadcastToStation(req.DestinationID, "ghost_booking_created", b)
+		}
+	}
+	return b, err
+}
+
+func (s *Service) GetGhostBookingCount(ctx context.Context, destinationID string) (int, error) {
+	return s.repo.GetGhostBookingCount(ctx, destinationID)
+}

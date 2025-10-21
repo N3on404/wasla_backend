@@ -69,15 +69,27 @@ func (s *Service) AddPrintJob(jobType PrintJobType, content string, staffName st
 	return job, nil
 }
 
-// PrintTicket prints a ticket directly
-func (s *Service) PrintTicket(printerID string, ticketData *TicketData, jobType PrintJobType) error {
-	config, err := s.repo.GetPrinterConfig(printerID)
-	if err != nil {
-		return err
-	}
-
-	if !config.Enabled {
-		return fmt.Errorf("printer %s is disabled", config.Name)
+// PrintTicket prints a ticket directly using printer config from request
+func (s *Service) PrintTicket(ticketData *TicketData, jobType PrintJobType) error {
+	// Use printer config from request, or fallback to default
+	var config *PrinterConfig
+	if ticketData.PrinterConfig != nil {
+		// Convert frontend config to internal config
+		config = &PrinterConfig{
+			IP:      ticketData.PrinterConfig.IP,
+			Port:    ticketData.PrinterConfig.Port,
+			Width:   32,        // Default width
+			Timeout: 5000,      // Default timeout
+			Model:   "ESC/POS", // Default model
+			Enabled: true,      // Assume enabled if config provided
+		}
+	} else {
+		// Fallback to default printer config
+		defaultConfig, err := s.repo.GetPrinterConfig("default")
+		if err != nil {
+			return fmt.Errorf("no printer configuration provided and default config not found: %v", err)
+		}
+		config = defaultConfig
 	}
 
 	// Generate ticket content based on type
@@ -107,33 +119,33 @@ func (s *Service) PrintTicket(printerID string, ticketData *TicketData, jobType 
 }
 
 // PrintBookingTicket prints a booking ticket
-func (s *Service) PrintBookingTicket(printerID string, ticketData *TicketData) error {
-	return s.PrintTicket(printerID, ticketData, PrintJobTypeBookingTicket)
+func (s *Service) PrintBookingTicket(ticketData *TicketData) error {
+	return s.PrintTicket(ticketData, PrintJobTypeBookingTicket)
 }
 
 // PrintEntryTicket prints an entry ticket
-func (s *Service) PrintEntryTicket(printerID string, ticketData *TicketData) error {
-	return s.PrintTicket(printerID, ticketData, PrintJobTypeEntryTicket)
+func (s *Service) PrintEntryTicket(ticketData *TicketData) error {
+	return s.PrintTicket(ticketData, PrintJobTypeEntryTicket)
 }
 
 // PrintExitTicket prints an exit ticket
-func (s *Service) PrintExitTicket(printerID string, ticketData *TicketData) error {
-	return s.PrintTicket(printerID, ticketData, PrintJobTypeExitTicket)
+func (s *Service) PrintExitTicket(ticketData *TicketData) error {
+	return s.PrintTicket(ticketData, PrintJobTypeExitTicket)
 }
 
 // PrintDayPassTicket prints a day pass ticket
-func (s *Service) PrintDayPassTicket(printerID string, ticketData *TicketData) error {
-	return s.PrintTicket(printerID, ticketData, PrintJobTypeDayPassTicket)
+func (s *Service) PrintDayPassTicket(ticketData *TicketData) error {
+	return s.PrintTicket(ticketData, PrintJobTypeDayPassTicket)
 }
 
 // PrintExitPassTicket prints an exit pass ticket
-func (s *Service) PrintExitPassTicket(printerID string, ticketData *TicketData) error {
-	return s.PrintTicket(printerID, ticketData, PrintJobTypeExitPassTicket)
+func (s *Service) PrintExitPassTicket(ticketData *TicketData) error {
+	return s.PrintTicket(ticketData, PrintJobTypeExitPassTicket)
 }
 
 // PrintTalon prints a talon
-func (s *Service) PrintTalon(printerID string, ticketData *TicketData) error {
-	return s.PrintTicket(printerID, ticketData, PrintJobTypeTalon)
+func (s *Service) PrintTalon(ticketData *TicketData) error {
+	return s.PrintTicket(ticketData, PrintJobTypeTalon)
 }
 
 // Generate ticket content methods

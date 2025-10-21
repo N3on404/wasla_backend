@@ -160,30 +160,23 @@ func (h *Handler) GetPrintQueueStatus(c *gin.Context) {
 
 // PrintBookingTicket godoc
 // @Summary Print booking ticket
-// @Description Print a booking ticket
+// @Description Print a booking ticket using printer config from request
 // @Tags printer
 // @Accept json
 // @Produce json
-// @Param id path string true "Printer ID"
-// @Param ticket body TicketData true "Ticket data"
+// @Param ticket body TicketData true "Ticket data with printer config"
 // @Success 200 {object} map[string]string
 // @Failure 400 {object} map[string]string
 // @Failure 500 {object} map[string]string
-// @Router /printer/{id}/print/booking [post]
+// @Router /printer/print/booking [post]
 func (h *Handler) PrintBookingTicket(c *gin.Context) {
-	printerID := c.Param("id")
-	if printerID == "" {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "printer ID is required"})
-		return
-	}
-
 	var ticketData TicketData
 	if err := c.ShouldBindJSON(&ticketData); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
-	err := h.service.PrintBookingTicket(printerID, &ticketData)
+	err := h.service.PrintBookingTicket(&ticketData)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
@@ -194,30 +187,23 @@ func (h *Handler) PrintBookingTicket(c *gin.Context) {
 
 // PrintEntryTicket godoc
 // @Summary Print entry ticket
-// @Description Print an entry ticket
+// @Description Print an entry ticket using printer config from request
 // @Tags printer
 // @Accept json
 // @Produce json
-// @Param id path string true "Printer ID"
-// @Param ticket body TicketData true "Ticket data"
+// @Param ticket body TicketData true "Ticket data with printer config"
 // @Success 200 {object} map[string]string
 // @Failure 400 {object} map[string]string
 // @Failure 500 {object} map[string]string
-// @Router /printer/{id}/print/entry [post]
+// @Router /printer/print/entry [post]
 func (h *Handler) PrintEntryTicket(c *gin.Context) {
-	printerID := c.Param("id")
-	if printerID == "" {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "printer ID is required"})
-		return
-	}
-
 	var ticketData TicketData
 	if err := c.ShouldBindJSON(&ticketData); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
-	err := h.service.PrintEntryTicket(printerID, &ticketData)
+	err := h.service.PrintEntryTicket(&ticketData)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
@@ -228,30 +214,23 @@ func (h *Handler) PrintEntryTicket(c *gin.Context) {
 
 // PrintExitTicket godoc
 // @Summary Print exit ticket
-// @Description Print an exit ticket
+// @Description Print an exit ticket using printer config from request
 // @Tags printer
 // @Accept json
 // @Produce json
-// @Param id path string true "Printer ID"
-// @Param ticket body TicketData true "Ticket data"
+// @Param ticket body TicketData true "Ticket data with printer config"
 // @Success 200 {object} map[string]string
 // @Failure 400 {object} map[string]string
 // @Failure 500 {object} map[string]string
-// @Router /printer/{id}/print/exit [post]
+// @Router /printer/print/exit [post]
 func (h *Handler) PrintExitTicket(c *gin.Context) {
-	printerID := c.Param("id")
-	if printerID == "" {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "printer ID is required"})
-		return
-	}
-
 	var ticketData TicketData
 	if err := c.ShouldBindJSON(&ticketData); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
-	err := h.service.PrintExitTicket(printerID, &ticketData)
+	err := h.service.PrintExitTicket(&ticketData)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
@@ -262,30 +241,23 @@ func (h *Handler) PrintExitTicket(c *gin.Context) {
 
 // PrintDayPassTicket godoc
 // @Summary Print day pass ticket
-// @Description Print a day pass ticket
+// @Description Print a day pass ticket using printer config from request
 // @Tags printer
 // @Accept json
 // @Produce json
-// @Param id path string true "Printer ID"
-// @Param ticket body TicketData true "Ticket data"
+// @Param ticket body TicketData true "Ticket data with printer config"
 // @Success 200 {object} map[string]string
 // @Failure 400 {object} map[string]string
 // @Failure 500 {object} map[string]string
-// @Router /printer/{id}/print/daypass [post]
+// @Router /printer/print/daypass [post]
 func (h *Handler) PrintDayPassTicket(c *gin.Context) {
-	printerID := c.Param("id")
-	if printerID == "" {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "printer ID is required"})
-		return
-	}
-
 	var ticketData TicketData
 	if err := c.ShouldBindJSON(&ticketData); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
-	err := h.service.PrintDayPassTicket(printerID, &ticketData)
+	err := h.service.PrintDayPassTicket(&ticketData)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
@@ -296,30 +268,23 @@ func (h *Handler) PrintDayPassTicket(c *gin.Context) {
 
 // PrintExitPassTicket godoc
 // @Summary Print exit pass ticket
-// @Description Print an exit pass ticket
+// @Description Print an exit pass ticket using printer config from request
 // @Tags printer
 // @Accept json
 // @Produce json
-// @Param id path string true "Printer ID"
-// @Param ticket body TicketData true "Ticket data"
+// @Param ticket body TicketData true "Ticket data with printer config"
 // @Success 200 {object} map[string]string
 // @Failure 400 {object} map[string]string
 // @Failure 500 {object} map[string]string
-// @Router /printer/{id}/print/exitpass [post]
+// @Router /printer/print/exitpass [post]
 func (h *Handler) PrintExitPassTicket(c *gin.Context) {
-	printerID := c.Param("id")
-	if printerID == "" {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "printer ID is required"})
-		return
-	}
-
 	var ticketData TicketData
 	if err := c.ShouldBindJSON(&ticketData); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
-	err := h.service.PrintExitPassTicket(printerID, &ticketData)
+	err := h.service.PrintExitPassTicket(&ticketData)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
@@ -334,19 +299,12 @@ func (h *Handler) PrintExitPassTicket(c *gin.Context) {
 // @Tags printer
 // @Accept json
 // @Produce json
-// @Param id path string true "Printer ID"
-// @Param request body ExitPassAndRemoveRequest true "Exit pass and remove request"
+// @Param request body ExitPassAndRemoveRequest true "Exit pass and remove request with printer config"
 // @Success 200 {object} map[string]string
 // @Failure 400 {object} map[string]string
 // @Failure 500 {object} map[string]string
-// @Router /printer/{id}/print/exitpass-and-remove [post]
+// @Router /printer/print/exitpass-and-remove [post]
 func (h *Handler) PrintExitPassAndRemoveFromQueue(c *gin.Context) {
-	printerID := c.Param("id")
-	if printerID == "" {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "printer ID is required"})
-		return
-	}
-
 	var request ExitPassAndRemoveRequest
 	if err := c.ShouldBindJSON(&request); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -373,10 +331,11 @@ func (h *Handler) PrintExitPassAndRemoveFromQueue(c *gin.Context) {
 		CompanyLogo:     request.CompanyLogo,
 		StaffFirstName:  request.StaffFirstName,
 		StaffLastName:   request.StaffLastName,
+		PrinterConfig:   request.PrinterConfig,
 	}
 
 	// Print the exit pass ticket
-	err := h.service.PrintExitPassTicket(printerID, ticketData)
+	err := h.service.PrintExitPassTicket(ticketData)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to print exit pass ticket: " + err.Error()})
 		return
@@ -409,30 +368,23 @@ func (h *Handler) PrintExitPassAndRemoveFromQueue(c *gin.Context) {
 
 // PrintTalon godoc
 // @Summary Print talon
-// @Description Print a talon
+// @Description Print a talon using printer config from request
 // @Tags printer
 // @Accept json
 // @Produce json
-// @Param id path string true "Printer ID"
-// @Param ticket body TicketData true "Ticket data"
+// @Param ticket body TicketData true "Ticket data with printer config"
 // @Success 200 {object} map[string]string
 // @Failure 400 {object} map[string]string
 // @Failure 500 {object} map[string]string
-// @Router /printer/{id}/print/talon [post]
+// @Router /printer/print/talon [post]
 func (h *Handler) PrintTalon(c *gin.Context) {
-	printerID := c.Param("id")
-	if printerID == "" {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "printer ID is required"})
-		return
-	}
-
 	var ticketData TicketData
 	if err := c.ShouldBindJSON(&ticketData); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
-	err := h.service.PrintTalon(printerID, &ticketData)
+	err := h.service.PrintTalon(&ticketData)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return

@@ -129,3 +129,33 @@ func (h *Handler) GetTodayTripsCount(c *gin.Context) {
 	}
 	utils.SuccessResponse(c, http.StatusOK, "Today's trips count fetched", map[string]int{"count": count})
 }
+
+func (h *Handler) CreateGhostBooking(c *gin.Context) {
+	var req CreateGhostBookingRequest
+	if err := c.ShouldBindJSON(&req); err != nil {
+		utils.BadRequestResponse(c, "Invalid request")
+		return
+	}
+	// Use current logged staff from context
+	if staffID, ok := c.Get("staff_id"); ok {
+		if sid, ok2 := staffID.(string); ok2 && sid != "" {
+			req.StaffID = sid
+		}
+	}
+	b, err := h.service.CreateGhostBooking(context.Background(), req)
+	if err != nil {
+		utils.InternalServerErrorResponse(c, "Failed to create ghost booking", err)
+		return
+	}
+	utils.SuccessResponse(c, http.StatusCreated, "Ghost booking created", b)
+}
+
+func (h *Handler) GetGhostBookingCount(c *gin.Context) {
+	destinationID := c.Query("destination_id")
+	count, err := h.service.GetGhostBookingCount(context.Background(), destinationID)
+	if err != nil {
+		utils.InternalServerErrorResponse(c, "Failed to get ghost booking count", err)
+		return
+	}
+	utils.SuccessResponse(c, http.StatusOK, "Ghost booking count fetched", map[string]int{"count": count})
+}

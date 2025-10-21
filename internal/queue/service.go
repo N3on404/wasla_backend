@@ -239,8 +239,12 @@ func (s *Service) ListDayPasses(ctx context.Context, limit int) ([]DayPass, erro
 }
 
 // Aggregates
-func (s *Service) ListQueueSummaries(ctx context.Context) ([]QueueSummary, error) {
-	return s.repo.ListQueueSummaries(ctx)
+func (s *Service) ListQueueSummaries(ctx context.Context, station string) ([]QueueSummary, error) {
+	return s.repo.ListQueueSummaries(ctx, station)
+}
+
+func (s *Service) ListAllDestinations(ctx context.Context) ([]Destination, error) {
+	return s.repo.ListAllDestinations(ctx)
 }
 
 func (s *Service) ListRouteSummaries(ctx context.Context) ([]RouteSummary, error) {

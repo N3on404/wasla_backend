@@ -86,6 +86,7 @@ func main() {
 
 		// Aggregates
 		api.GET("/queue-summaries", h.ListQueueSummaries)
+		api.GET("/destinations", h.ListAllDestinations)
 		api.GET("/route-summaries", h.ListRouteSummaries)
 
 		// Day Passes (read-only)

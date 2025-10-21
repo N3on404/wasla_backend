@@ -74,23 +74,14 @@ func main() {
 		printerGroup.GET("/queue/status", printerHandler.GetPrintQueueStatus)
 		printerGroup.POST("/queue/add", printerHandler.AddPrintJob)
 
-		// Print routes
-		printerGroup.POST("/:id/print/booking", printerHandler.PrintBookingTicket)
-		printerGroup.POST("/:id/print/entry", printerHandler.PrintEntryTicket)
-		printerGroup.POST("/:id/print/exit", printerHandler.PrintExitTicket)
-		printerGroup.POST("/:id/print/daypass", printerHandler.PrintDayPassTicket)
-		printerGroup.POST("/:id/print/exitpass", printerHandler.PrintExitPassTicket)
-		printerGroup.POST("/:id/print/exitpass-and-remove", printerHandler.PrintExitPassAndRemoveFromQueue)
-		printerGroup.POST("/:id/print/talon", printerHandler.PrintTalon)
-
-		// Alternate patterns to avoid any param matching issues
-		printerGroup.POST("/print/:id/booking", printerHandler.PrintBookingTicket)
-		printerGroup.POST("/print/:id/entry", printerHandler.PrintEntryTicket)
-		printerGroup.POST("/print/:id/exit", printerHandler.PrintExitTicket)
-		printerGroup.POST("/print/:id/daypass", printerHandler.PrintDayPassTicket)
-		printerGroup.POST("/print/:id/exitpass", printerHandler.PrintExitPassTicket)
-		printerGroup.POST("/print/:id/exitpass-and-remove", printerHandler.PrintExitPassAndRemoveFromQueue)
-		printerGroup.POST("/print/:id/talon", printerHandler.PrintTalon)
+		// Print routes (updated to use printer config from request body)
+		printerGroup.POST("/print/booking", printerHandler.PrintBookingTicket)
+		printerGroup.POST("/print/entry", printerHandler.PrintEntryTicket)
+		printerGroup.POST("/print/exit", printerHandler.PrintExitTicket)
+		printerGroup.POST("/print/daypass", printerHandler.PrintDayPassTicket)
+		printerGroup.POST("/print/exitpass", printerHandler.PrintExitPassTicket)
+		printerGroup.POST("/print/exitpass-and-remove", printerHandler.PrintExitPassAndRemoveFromQueue)
+		printerGroup.POST("/print/talon", printerHandler.PrintTalon)
 	}
 
 	// Health check

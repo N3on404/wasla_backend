@@ -205,12 +205,24 @@ func (h *Handler) ListQueue(c *gin.Context) {
 
 // ListQueueSummaries returns aggregated per-destination stats
 func (h *Handler) ListQueueSummaries(c *gin.Context) {
-	list, err := h.service.ListQueueSummaries(context.Background())
+	// Get station parameter from query string
+	station := c.Query("station")
+
+	list, err := h.service.ListQueueSummaries(context.Background(), station)
 	if err != nil {
 		utils.InternalServerErrorResponse(c, "Failed to list queue summaries", err)
 		return
 	}
 	utils.SuccessResponse(c, http.StatusOK, "Queue summaries fetched", list)
+}
+
+func (h *Handler) ListAllDestinations(c *gin.Context) {
+	list, err := h.service.ListAllDestinations(context.Background())
+	if err != nil {
+		utils.InternalServerErrorResponse(c, "Failed to list destinations", err)
+		return
+	}
+	utils.SuccessResponse(c, http.StatusOK, "Destinations fetched", list)
 }
 
 // ListRouteSummaries returns all active routes with aggregated seats from the queue

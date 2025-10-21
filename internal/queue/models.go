@@ -15,6 +15,13 @@ type Route struct {
 	UpdatedAt     time.Time `json:"updatedAt"`
 }
 
+type Destination struct {
+	ID        string  `json:"id"`
+	Name      string  `json:"name"`
+	BasePrice float64 `json:"basePrice"`
+	IsActive  bool    `json:"isActive"`
+}
+
 type Vehicle struct {
 	ID                 string                     `json:"id"`
 	LicensePlate       string                     `json:"licensePlate"`

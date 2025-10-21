@@ -21,6 +21,30 @@ type CancelOneByQueueEntryRequest struct {
 	StaffID      string `json:"staffId"`
 }
 
+type CreateGhostBookingRequest struct {
+	DestinationID string `json:"destinationId" binding:"required"`
+	Seats         int    `json:"seats" binding:"required"`
+	StaffID       string `json:"staffId"`
+}
+
+type GhostBooking struct {
+	ID               string    `json:"id"`
+	DestinationID    string    `json:"destinationId"`
+	DestinationName  string    `json:"destinationName"`
+	SeatsBooked      int       `json:"seatsBooked"`
+	SeatNumber       int       `json:"seatNumber"` // Sequential ghost booking number
+	TotalAmount      float64   `json:"totalAmount"`
+	BookingStatus    string    `json:"bookingStatus"`
+	PaymentStatus    string    `json:"paymentStatus"`
+	VerificationCode string    `json:"verificationCode"`
+	CreatedBy        string    `json:"createdBy"`
+	CreatedByName    string    `json:"createdByName"`
+	CreatedAt        time.Time `json:"createdAt"`
+	// Ghost-specific fields
+	IsGhostBooking   bool    `json:"isGhostBooking"`
+	BasePrice        float64 `json:"basePrice"`
+}
+
 type Booking struct {
 	ID               string    `json:"id"`
 	QueueID          string    `json:"queueId"`

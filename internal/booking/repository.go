@@ -20,6 +20,9 @@ type Repository interface {
 	CancelOneBookingByQueueEntry(ctx context.Context, queueEntryID string, staffID string) (*Booking, error)
 	ListTodayTrips(ctx context.Context, search string, limit int) ([]Trip, error)
 	GetTodayTripsCount(ctx context.Context, destinationID *string) (int, error)
+	// Ghost booking methods
+	CreateGhostBooking(ctx context.Context, req CreateGhostBookingRequest) (*GhostBooking, error)
+	GetGhostBookingCount(ctx context.Context, destinationID string) (int, error)
 }
 
 type RepositoryImpl struct {
@@ -48,7 +51,7 @@ func (r *RepositoryImpl) CreateBookingByDestination(ctx context.Context, req Cre
 		if req.SubRoute != nil && *req.SubRoute != "" {
 			row = tx.QueryRow(ctx, `
                 WITH candidate AS (
-                    SELECT id
+                    SELECT id, destination_id
                     FROM vehicle_queue
                     WHERE destination_id=$1 AND queue_type='REGULAR' AND status IN ('WAITING','LOADING','READY')
                       AND sub_route=$3 AND available_seats = $2
@@ -59,13 +62,13 @@ func (r *RepositoryImpl) CreateBookingByDestination(ctx context.Context, req Cre
                 UPDATE vehicle_queue q
                 SET available_seats = q.available_seats - $2
                 FROM candidate c
-                LEFT JOIN routes r ON r.station_id = q.destination_id
+                LEFT JOIN routes r ON r.station_id = c.destination_id
                 WHERE q.id = c.id
                 RETURNING q.id, q.vehicle_id, COALESCE(r.base_price, q.base_price)`, req.DestinationID, req.Seats, *req.SubRoute)
 		} else {
 			row = tx.QueryRow(ctx, `
                 WITH candidate AS (
-                    SELECT id
+                    SELECT id, destination_id
                     FROM vehicle_queue
                     WHERE destination_id=$1 AND queue_type='REGULAR' AND status IN ('WAITING','LOADING','READY')
                       AND available_seats = $2
@@ -76,7 +79,7 @@ func (r *RepositoryImpl) CreateBookingByDestination(ctx context.Context, req Cre
                 UPDATE vehicle_queue q
                 SET available_seats = q.available_seats - $2
                 FROM candidate c
-                LEFT JOIN routes r ON r.station_id = q.destination_id
+                LEFT JOIN routes r ON r.station_id = c.destination_id
                 WHERE q.id = c.id
                 RETURNING q.id, q.vehicle_id, COALESCE(r.base_price, q.base_price)`, req.DestinationID, req.Seats)
 		}
@@ -97,7 +100,7 @@ func (r *RepositoryImpl) CreateBookingByDestination(ctx context.Context, req Cre
 		if req.SubRoute != nil && *req.SubRoute != "" {
 			row = tx.QueryRow(ctx, `
                 WITH candidate AS (
-                    SELECT id
+                    SELECT id, destination_id
                     FROM vehicle_queue
                     WHERE destination_id=$1 AND queue_type='REGULAR' AND status IN ('WAITING','LOADING','READY')
                       AND sub_route=$3 AND available_seats >= $2
@@ -108,13 +111,13 @@ func (r *RepositoryImpl) CreateBookingByDestination(ctx context.Context, req Cre
                 UPDATE vehicle_queue q
                 SET available_seats = q.available_seats - $2
                 FROM candidate c
-                LEFT JOIN routes r ON r.station_id = q.destination_id
+                LEFT JOIN routes r ON r.station_id = c.destination_id
                 WHERE q.id = c.id
                 RETURNING q.id, q.vehicle_id, COALESCE(r.base_price, q.base_price)`, req.DestinationID, req.Seats, *req.SubRoute)
 		} else {
 			row = tx.QueryRow(ctx, `
                 WITH candidate AS (
-                    SELECT id
+                    SELECT id, destination_id
                     FROM vehicle_queue
                     WHERE destination_id=$1 AND queue_type='REGULAR' AND status IN ('WAITING','LOADING','READY')
                       AND available_seats >= $2
@@ -125,7 +128,7 @@ func (r *RepositoryImpl) CreateBookingByDestination(ctx context.Context, req Cre
                 UPDATE vehicle_queue q
                 SET available_seats = q.available_seats - $2
                 FROM candidate c
-                LEFT JOIN routes r ON r.station_id = q.destination_id
+                LEFT JOIN routes r ON r.station_id = c.destination_id
                 WHERE q.id = c.id
                 RETURNING q.id, q.vehicle_id, COALESCE(r.base_price, q.base_price)`, req.DestinationID, req.Seats)
 		}
@@ -615,6 +618,110 @@ func (r *RepositoryImpl) GetTodayTripsCount(ctx context.Context, destinationID *
 	}
 
 	err := r.db.QueryRow(ctx, query, args...).Scan(&count)
+	if err != nil {
+		return 0, err
+	}
+	return count, nil
+}
+
+// CreateGhostBooking creates a ghost booking when no vehicles are available
+func (r *RepositoryImpl) CreateGhostBooking(ctx context.Context, req CreateGhostBookingRequest) (*GhostBooking, error) {
+	if req.Seats <= 0 {
+		return nil, fmt.Errorf("seats must be > 0")
+	}
+
+	tx, err := r.db.Begin(ctx)
+	if err != nil {
+		return nil, err
+	}
+	defer tx.Rollback(ctx)
+
+	// Get destination name and base price
+	var destinationName string
+	var basePrice float64
+	err = tx.QueryRow(ctx, `
+		SELECT station_name, base_price
+		FROM routes
+		WHERE station_id = $1 AND is_active = true`, req.DestinationID).Scan(&destinationName, &basePrice)
+	if err != nil {
+		return nil, fmt.Errorf("destination not found: %v", err)
+	}
+
+	// Get staff name for display
+	var staffName string
+	if req.StaffID != "" {
+		err = tx.QueryRow(ctx, `SELECT CONCAT(first_name, ' ', last_name) FROM staff WHERE id = $1`, req.StaffID).Scan(&staffName)
+		if err != nil {
+			staffName = "Unknown Staff"
+		}
+	} else {
+		staffName = "System"
+	}
+
+	// Get the next ghost booking number for this destination
+	var nextGhostNumber int
+	err = tx.QueryRow(ctx, `
+		SELECT COALESCE(MAX(seat_number), 0) + 1 
+		FROM bookings 
+		WHERE destination_id = $1 AND is_ghost_booking = true AND booking_status = 'ACTIVE'`, req.DestinationID).Scan(&nextGhostNumber)
+	if err != nil {
+		nextGhostNumber = 1
+	}
+
+	// Create ghost booking
+	var bookingID string
+	var verificationCode string
+	var createdAt time.Time
+	seatPrice := basePrice + 0.15 // base price + 0.15 TND fee per seat
+	totalAmount := seatPrice * float64(req.Seats)
+
+	err = tx.QueryRow(ctx, `
+		INSERT INTO bookings (
+			id, destination_id, seats_booked, seat_number, total_amount, booking_source, booking_type,
+			booking_status, payment_status, payment_method, verification_code,
+			is_verified, is_ghost_booking, created_by
+		) VALUES (
+			substr(md5(random()::text || clock_timestamp()::text),1,24),
+			$1, $2, $3, $4, 'CASH_STATION', 'CASH', 'ACTIVE', 'PAID', 'CASH',
+			LPAD(CAST(FLOOR(random()*1000000) AS TEXT), 6, '0'), false, true, $5
+		)
+		RETURNING id, verification_code, created_at`,
+		req.DestinationID, req.Seats, nextGhostNumber, totalAmount, req.StaffID).Scan(&bookingID, &verificationCode, &createdAt)
+	if err != nil {
+		return nil, err
+	}
+
+	ghostBooking := &GhostBooking{
+		ID:               bookingID,
+		DestinationID:    req.DestinationID,
+		DestinationName:  destinationName,
+		SeatsBooked:      req.Seats,
+		SeatNumber:       nextGhostNumber,
+		TotalAmount:      totalAmount,
+		BookingStatus:    "ACTIVE",
+		PaymentStatus:    "PAID",
+		VerificationCode: verificationCode,
+		CreatedBy:        req.StaffID,
+		CreatedByName:    staffName,
+		CreatedAt:        createdAt,
+		IsGhostBooking:   true,
+		BasePrice:        basePrice,
+	}
+
+	if err := tx.Commit(ctx); err != nil {
+		return nil, err
+	}
+
+	return ghostBooking, nil
+}
+
+// GetGhostBookingCount returns the count of active ghost bookings for a destination
+func (r *RepositoryImpl) GetGhostBookingCount(ctx context.Context, destinationID string) (int, error) {
+	var count int
+	err := r.db.QueryRow(ctx, `
+		SELECT COUNT(*) 
+		FROM bookings 
+		WHERE destination_id = $1 AND is_ghost_booking = true AND booking_status = 'ACTIVE'`, destinationID).Scan(&count)
 	if err != nil {
 		return 0, err
 	}

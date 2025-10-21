@@ -56,6 +56,9 @@ func main() {
 		api.GET("/trips", middleware.AuthRequired(), h.ListTrips)
 		api.GET("/trips/today", middleware.AuthRequired(), h.ListTodayTrips)
 		api.GET("/trips/today/count", middleware.AuthRequired(), h.GetTodayTripsCount)
+		// Ghost booking routes
+		api.POST("/bookings/ghost", middleware.AuthRequired(), h.CreateGhostBooking)
+		api.GET("/bookings/ghost/count", middleware.AuthRequired(), h.GetGhostBookingCount)
 	}
 
 	port := os.Getenv("BOOKING_SERVICE_PORT")
