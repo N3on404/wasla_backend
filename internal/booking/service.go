@@ -177,3 +177,7 @@ func (s *Service) CreateGhostBooking(ctx context.Context, req CreateGhostBooking
 func (s *Service) GetGhostBookingCount(ctx context.Context, destinationID string) (int, error) {
 	return s.repo.GetGhostBookingCount(ctx, destinationID)
 }
+
+func (s *Service) GetTodayTripsCountByLicensePlate(ctx context.Context, licensePlate string) (int, error) {
+	return s.repo.GetTodayTripsCountByLicensePlate(ctx, licensePlate)
+}

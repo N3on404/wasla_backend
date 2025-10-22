@@ -1,0 +1,343 @@
+2025/10/22 02:45:09 WebSocket Hub starting on port 8004
+127.0.0.1 - [22/Oct/2025:02:45:16 +0100] "GET /ws/queue/all?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjExMjc4MzUsImZpcnN0X25hbWUiOiJVc2VyIiwiaWF0IjoxNzYxMDQxNDM1LCJsYXN0X25hbWUiOiJJdmFuIiwic3RhZmZfaWQiOiJzdGFmZl8xNzU4OTk1NDI4MzYzXzJuaGZlZ3N2ZSJ9.4qLAd3-nucTgOoJNvtepMoEBvxl7pJLGGYlwUaz88lM HTTP/1.1 200 161.691µs "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) louaj-desktop/1.14.6 Chrome/124.0.6367.243 Electron/30.5.1 Safari/537.36" "
+2025/10/22 02:45:16 Client registered for station all. Total clients: 1
+[GIN] 2025/10/22 - 02:45:16 | 200 |     265.628µs |       127.0.0.1 | GET      "/ws/queue/all?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjExMjc4MzUsImZpcnN0X25hbWUiOiJVc2VyIiwiaWF0IjoxNzYxMDQxNDM1LCJsYXN0X25hbWUiOiJJdmFuIiwic3RhZmZfaWQiOiJzdGFmZl8xNzU4OTk1NDI4MzYzXzJuaGZlZ3N2ZSJ9.4qLAd3-nucTgOoJNvtepMoEBvxl7pJLGGYlwUaz88lM"
+2025/10/22 02:45:16 Client staff_1758995428363_2nhfegsve subscribed to events: [queue_updated queue_entry_added queue_entry_removed queue_entry_updated queue_reordered day_pass_created exit_pass_created]
+2025/10/22 02:45:50 Broadcasting message type 'queue_entry_added' to all clients
+127.0.0.1 - [22/Oct/2025:02:45:50 +0100] "POST /internal/broadcast HTTP/1.1 200 730.069µs "curl/7.81.0" "
+[GIN] 2025/10/22 - 02:45:50 | 200 |     843.684µs |       127.0.0.1 | POST     "/internal/broadcast"
+2025/10/22 02:46:16 Broadcasting message type 'queue_entry_added' to station 'route_1759022367969_hh3lxici0'
+2025/10/22 02:46:16 No clients found for station 'route_1759022367969_hh3lxici0'
+::1 - [22/Oct/2025:02:46:16 +0100] "POST /internal/broadcast HTTP/1.1 200 204.437µs "Go-http-client/1.1" "
+[GIN] 2025/10/22 - 02:46:16 | 200 |     233.588µs |             ::1 | POST     "/internal/broadcast"
+2025/10/22 02:50:44 Broadcasting message type 'day_pass_created' to all clients
+::1 - [22/Oct/2025:02:50:44 +0100] "POST /internal/broadcast HTTP/1.1 200 806.159µs "Go-http-client/1.1" "
+[GIN] 2025/10/22 - 02:50:44 | 200 |     956.824µs |             ::1 | POST     "/internal/broadcast"
+2025/10/22 02:50:44 Broadcasting message type 'queue_entry_added' to all clients
+::1 - [22/Oct/2025:02:50:44 +0100] "POST /internal/broadcast HTTP/1.1 200 1.865737ms "Go-http-client/1.1" "
+[GIN] 2025/10/22 - 02:50:44 | 200 |    2.070322ms |             ::1 | POST     "/internal/broadcast"
+2025/10/22 02:51:29 Client unregistered from station all. Total clients: 0
+127.0.0.1 - [22/Oct/2025:02:51:29 +0100] "GET /health HTTP/1.1 200 150.84µs "-" "
+[GIN] 2025/10/22 - 02:51:29 | 200 |     263.598µs |       127.0.0.1 | GET      "/health"
+127.0.0.1 - [22/Oct/2025:02:51:29 +0100] "GET /health HTTP/1.1 200 299.691µs "-" "
+[GIN] 2025/10/22 - 02:51:29 | 200 |     792.527µs |       127.0.0.1 | GET      "/health"
+127.0.0.1 - [22/Oct/2025:02:51:30 +0100] "GET /ws/queue/all?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjExMjc4MzUsImZpcnN0X25hbWUiOiJVc2VyIiwiaWF0IjoxNzYxMDQxNDM1LCJsYXN0X25hbWUiOiJJdmFuIiwic3RhZmZfaWQiOiJzdGFmZl8xNzU4OTk1NDI4MzYzXzJuaGZlZ3N2ZSJ9.4qLAd3-nucTgOoJNvtepMoEBvxl7pJLGGYlwUaz88lM HTTP/1.1 200 4.813584ms "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) louaj-desktop/1.14.6 Chrome/124.0.6367.243 Electron/30.5.1 Safari/537.36" "
+[GIN] 2025/10/22 - 02:51:30 | 200 |    5.144943ms |       127.0.0.1 | GET      "/ws/queue/all?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjExMjc4MzUsImZpcnN0X25hbWUiOiJVc2VyIiwiaWF0IjoxNzYxMDQxNDM1LCJsYXN0X25hbWUiOiJJdmFuIiwic3RhZmZfaWQiOiJzdGFmZl8xNzU4OTk1NDI4MzYzXzJuaGZlZ3N2ZSJ9.4qLAd3-nucTgOoJNvtepMoEBvxl7pJLGGYlwUaz88lM"
+2025/10/22 02:51:30 Client registered for station all. Total clients: 1
+2025/10/22 02:51:30 Client staff_1758995428363_2nhfegsve subscribed to events: [queue_updated queue_entry_added queue_entry_removed queue_entry_updated queue_reordered day_pass_created exit_pass_created]
+2025/10/22 02:51:38 WebSocket error: websocket: close 1005 (no status)
+2025/10/22 02:51:38 Client unregistered from station all. Total clients: 0
+2025/10/22 02:51:38 Client registered for station all. Total clients: 1
+127.0.0.1 - [22/Oct/2025:02:51:38 +0100] "GET /ws/queue/all?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjExMjc4MzUsImZpcnN0X25hbWUiOiJVc2VyIiwiaWF0IjoxNzYxMDQxNDM1LCJsYXN0X25hbWUiOiJJdmFuIiwic3RhZmZfaWQiOiJzdGFmZl8xNzU4OTk1NDI4MzYzXzJuaGZlZ3N2ZSJ9.4qLAd3-nucTgOoJNvtepMoEBvxl7pJLGGYlwUaz88lM HTTP/1.1 200 148.035µs "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) louaj-desktop/1.14.6 Chrome/124.0.6367.243 Electron/30.5.1 Safari/537.36" "
+[GIN] 2025/10/22 - 02:51:38 | 200 |     201.323µs |       127.0.0.1 | GET      "/ws/queue/all?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjExMjc4MzUsImZpcnN0X25hbWUiOiJVc2VyIiwiaWF0IjoxNzYxMDQxNDM1LCJsYXN0X25hbWUiOiJJdmFuIiwic3RhZmZfaWQiOiJzdGFmZl8xNzU4OTk1NDI4MzYzXzJuaGZlZ3N2ZSJ9.4qLAd3-nucTgOoJNvtepMoEBvxl7pJLGGYlwUaz88lM"
+2025/10/22 02:51:38 Broadcasting message type 'day_pass_created' to all clients
+::1 - [22/Oct/2025:02:51:38 +0100] "POST /internal/broadcast HTTP/1.1 200 150.64µs "Go-http-client/1.1" "
+[GIN] 2025/10/22 - 02:51:38 | 200 |     182.072µs |             ::1 | POST     "/internal/broadcast"
+2025/10/22 02:51:38 Broadcasting message type 'queue_entry_added' to all clients
+::1 - [22/Oct/2025:02:51:38 +0100] "POST /internal/broadcast HTTP/1.1 200 195.633µs "Go-http-client/1.1" "
+[GIN] 2025/10/22 - 02:51:38 | 200 |     223.044µs |             ::1 | POST     "/internal/broadcast"
+2025/10/22 02:51:38 Client staff_1758995428363_2nhfegsve subscribed to events: [queue_updated queue_entry_added queue_entry_removed queue_entry_updated queue_reordered day_pass_created exit_pass_created]
+2025/10/22 02:51:48 WebSocket error: websocket: close 1005 (no status)
+2025/10/22 02:51:48 Client unregistered from station all. Total clients: 0
+127.0.0.1 - [22/Oct/2025:02:51:48 +0100] "GET /ws/queue/all?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjExMjc4MzUsImZpcnN0X25hbWUiOiJVc2VyIiwiaWF0IjoxNzYxMDQxNDM1LCJsYXN0X25hbWUiOiJJdmFuIiwic3RhZmZfaWQiOiJzdGFmZl8xNzU4OTk1NDI4MzYzXzJuaGZlZ3N2ZSJ9.4qLAd3-nucTgOoJNvtepMoEBvxl7pJLGGYlwUaz88lM HTTP/1.1 200 730.859µs "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) louaj-desktop/1.14.6 Chrome/124.0.6367.243 Electron/30.5.1 Safari/537.36" "
+2025/10/22 02:51:48 Client registered for station all. Total clients: 1
+[GIN] 2025/10/22 - 02:51:48 | 200 |    1.003813ms |       127.0.0.1 | GET      "/ws/queue/all?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjExMjc4MzUsImZpcnN0X25hbWUiOiJVc2VyIiwiaWF0IjoxNzYxMDQxNDM1LCJsYXN0X25hbWUiOiJJdmFuIiwic3RhZmZfaWQiOiJzdGFmZl8xNzU4OTk1NDI4MzYzXzJuaGZlZ3N2ZSJ9.4qLAd3-nucTgOoJNvtepMoEBvxl7pJLGGYlwUaz88lM"
+2025/10/22 02:51:48 Client staff_1758995428363_2nhfegsve subscribed to events: [queue_updated queue_entry_added queue_entry_removed queue_entry_updated queue_reordered day_pass_created exit_pass_created]
+2025/10/22 02:51:49 WebSocket error: websocket: close 1005 (no status)
+2025/10/22 02:51:49 Client unregistered from station all. Total clients: 0
+127.0.0.1 - [22/Oct/2025:02:51:49 +0100] "GET /ws/queue/all?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjExMjc4MzUsImZpcnN0X25hbWUiOiJVc2VyIiwiaWF0IjoxNzYxMDQxNDM1LCJsYXN0X25hbWUiOiJJdmFuIiwic3RhZmZfaWQiOiJzdGFmZl8xNzU4OTk1NDI4MzYzXzJuaGZlZ3N2ZSJ9.4qLAd3-nucTgOoJNvtepMoEBvxl7pJLGGYlwUaz88lM HTTP/1.1 200 933.674µs "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) louaj-desktop/1.14.6 Chrome/124.0.6367.243 Electron/30.5.1 Safari/537.36" "
+2025/10/22 02:51:49 Client registered for station all. Total clients: 1
+[GIN] 2025/10/22 - 02:51:49 | 200 |    1.137941ms |       127.0.0.1 | GET      "/ws/queue/all?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjExMjc4MzUsImZpcnN0X25hbWUiOiJVc2VyIiwiaWF0IjoxNzYxMDQxNDM1LCJsYXN0X25hbWUiOiJJdmFuIiwic3RhZmZfaWQiOiJzdGFmZl8xNzU4OTk1NDI4MzYzXzJuaGZlZ3N2ZSJ9.4qLAd3-nucTgOoJNvtepMoEBvxl7pJLGGYlwUaz88lM"
+2025/10/22 02:51:49 Client staff_1758995428363_2nhfegsve subscribed to events: [queue_updated queue_entry_added queue_entry_removed queue_entry_updated queue_reordered day_pass_created exit_pass_created]
+2025/10/22 02:51:57 WebSocket error: websocket: close 1005 (no status)
+2025/10/22 02:51:57 Client unregistered from station all. Total clients: 0
+2025/10/22 02:51:57 Client registered for station all. Total clients: 1
+127.0.0.1 - [22/Oct/2025:02:51:57 +0100] "GET /ws/queue/all?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjExMjc4MzUsImZpcnN0X25hbWUiOiJVc2VyIiwiaWF0IjoxNzYxMDQxNDM1LCJsYXN0X25hbWUiOiJJdmFuIiwic3RhZmZfaWQiOiJzdGFmZl8xNzU4OTk1NDI4MzYzXzJuaGZlZ3N2ZSJ9.4qLAd3-nucTgOoJNvtepMoEBvxl7pJLGGYlwUaz88lM HTTP/1.1 200 513.201µs "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) louaj-desktop/1.14.6 Chrome/124.0.6367.243 Electron/30.5.1 Safari/537.36" "
+[GIN] 2025/10/22 - 02:51:57 | 200 |     680.342µs |       127.0.0.1 | GET      "/ws/queue/all?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjExMjc4MzUsImZpcnN0X25hbWUiOiJVc2VyIiwiaWF0IjoxNzYxMDQxNDM1LCJsYXN0X25hbWUiOiJJdmFuIiwic3RhZmZfaWQiOiJzdGFmZl8xNzU4OTk1NDI4MzYzXzJuaGZlZ3N2ZSJ9.4qLAd3-nucTgOoJNvtepMoEBvxl7pJLGGYlwUaz88lM"
+2025/10/22 02:51:57 Broadcasting message type 'day_pass_created' to all clients
+::1 - [22/Oct/2025:02:51:57 +0100] "POST /internal/broadcast HTTP/1.1 200 343.986µs "Go-http-client/1.1" "
+[GIN] 2025/10/22 - 02:51:57 | 200 |     394.222µs |             ::1 | POST     "/internal/broadcast"
+2025/10/22 02:51:57 Broadcasting message type 'queue_entry_added' to all clients
+::1 - [22/Oct/2025:02:51:57 +0100] "POST /internal/broadcast HTTP/1.1 200 260.602µs "Go-http-client/1.1" "
+[GIN] 2025/10/22 - 02:51:57 | 200 |     298.632µs |             ::1 | POST     "/internal/broadcast"
+2025/10/22 02:51:57 Client staff_1758995428363_2nhfegsve subscribed to events: [queue_updated queue_entry_added queue_entry_removed queue_entry_updated queue_reordered day_pass_created exit_pass_created]
+2025/10/22 02:52:05 WebSocket error: websocket: close 1005 (no status)
+2025/10/22 02:52:05 Client unregistered from station all. Total clients: 0
+2025/10/22 02:52:05 Client registered for station all. Total clients: 1
+127.0.0.1 - [22/Oct/2025:02:52:05 +0100] "GET /ws/queue/all?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjExMjc4MzUsImZpcnN0X25hbWUiOiJVc2VyIiwiaWF0IjoxNzYxMDQxNDM1LCJsYXN0X25hbWUiOiJJdmFuIiwic3RhZmZfaWQiOiJzdGFmZl8xNzU4OTk1NDI4MzYzXzJuaGZlZ3N2ZSJ9.4qLAd3-nucTgOoJNvtepMoEBvxl7pJLGGYlwUaz88lM HTTP/1.1 200 339.903µs "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) louaj-desktop/1.14.6 Chrome/124.0.6367.243 Electron/30.5.1 Safari/537.36" "
+[GIN] 2025/10/22 - 02:52:05 | 200 |     538.299µs |       127.0.0.1 | GET      "/ws/queue/all?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjExMjc4MzUsImZpcnN0X25hbWUiOiJVc2VyIiwiaWF0IjoxNzYxMDQxNDM1LCJsYXN0X25hbWUiOiJJdmFuIiwic3RhZmZfaWQiOiJzdGFmZl8xNzU4OTk1NDI4MzYzXzJuaGZlZ3N2ZSJ9.4qLAd3-nucTgOoJNvtepMoEBvxl7pJLGGYlwUaz88lM"
+2025/10/22 02:52:05 Client staff_1758995428363_2nhfegsve subscribed to events: [queue_updated queue_entry_added queue_entry_removed queue_entry_updated queue_reordered day_pass_created exit_pass_created]
+2025/10/22 02:52:06 WebSocket error: websocket: close 1005 (no status)
+2025/10/22 02:52:06 Client unregistered from station all. Total clients: 0
+127.0.0.1 - [22/Oct/2025:02:52:06 +0100] "GET /ws/queue/all?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjExMjc4MzUsImZpcnN0X25hbWUiOiJVc2VyIiwiaWF0IjoxNzYxMDQxNDM1LCJsYXN0X25hbWUiOiJJdmFuIiwic3RhZmZfaWQiOiJzdGFmZl8xNzU4OTk1NDI4MzYzXzJuaGZlZ3N2ZSJ9.4qLAd3-nucTgOoJNvtepMoEBvxl7pJLGGYlwUaz88lM HTTP/1.1 200 207.242µs "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) louaj-desktop/1.14.6 Chrome/124.0.6367.243 Electron/30.5.1 Safari/537.36" "
+2025/10/22 02:52:06 Client registered for station all. Total clients: 1
+[GIN] 2025/10/22 - 02:52:06 | 200 |     270.443µs |       127.0.0.1 | GET      "/ws/queue/all?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjExMjc4MzUsImZpcnN0X25hbWUiOiJVc2VyIiwiaWF0IjoxNzYxMDQxNDM1LCJsYXN0X25hbWUiOiJJdmFuIiwic3RhZmZfaWQiOiJzdGFmZl8xNzU4OTk1NDI4MzYzXzJuaGZlZ3N2ZSJ9.4qLAd3-nucTgOoJNvtepMoEBvxl7pJLGGYlwUaz88lM"
+2025/10/22 02:52:06 Client staff_1758995428363_2nhfegsve subscribed to events: [queue_updated queue_entry_added queue_entry_removed queue_entry_updated queue_reordered day_pass_created exit_pass_created]
+2025/10/22 02:52:07 WebSocket error: websocket: close 1005 (no status)
+2025/10/22 02:52:07 Client unregistered from station all. Total clients: 0
+127.0.0.1 - [22/Oct/2025:02:52:07 +0100] "GET /ws/queue/all?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjExMjc4MzUsImZpcnN0X25hbWUiOiJVc2VyIiwiaWF0IjoxNzYxMDQxNDM1LCJsYXN0X25hbWUiOiJJdmFuIiwic3RhZmZfaWQiOiJzdGFmZl8xNzU4OTk1NDI4MzYzXzJuaGZlZ3N2ZSJ9.4qLAd3-nucTgOoJNvtepMoEBvxl7pJLGGYlwUaz88lM HTTP/1.1 200 234.28µs "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) louaj-desktop/1.14.6 Chrome/124.0.6367.243 Electron/30.5.1 Safari/537.36" "
+[GIN] 2025/10/22 - 02:52:07 | 200 |     300.436µs |       127.0.0.1 | GET      "/ws/queue/all?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjExMjc4MzUsImZpcnN0X25hbWUiOiJVc2VyIiwiaWF0IjoxNzYxMDQxNDM1LCJsYXN0X25hbWUiOiJJdmFuIiwic3RhZmZfaWQiOiJzdGFmZl8xNzU4OTk1NDI4MzYzXzJuaGZlZ3N2ZSJ9.4qLAd3-nucTgOoJNvtepMoEBvxl7pJLGGYlwUaz88lM"
+2025/10/22 02:52:07 Client registered for station all. Total clients: 1
+2025/10/22 02:52:07 Client staff_1758995428363_2nhfegsve subscribed to events: [queue_updated queue_entry_added queue_entry_removed queue_entry_updated queue_reordered day_pass_created exit_pass_created]
+2025/10/22 02:52:09 Client unregistered from station all. Total clients: 0
+127.0.0.1 - [22/Oct/2025:02:52:10 +0100] "GET /health HTTP/1.1 200 61.467µs "-" "
+[GIN] 2025/10/22 - 02:52:10 | 200 |     141.115µs |       127.0.0.1 | GET      "/health"
+127.0.0.1 - [22/Oct/2025:02:52:10 +0100] "GET /health HTTP/1.1 200 36.156µs "-" "
+[GIN] 2025/10/22 - 02:52:10 | 200 |     117.724µs |       127.0.0.1 | GET      "/health"
+2025/10/22 02:52:10 Client registered for station all. Total clients: 1
+127.0.0.1 - [22/Oct/2025:02:52:10 +0100] "GET /ws/queue/all?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjExMjc4MzUsImZpcnN0X25hbWUiOiJVc2VyIiwiaWF0IjoxNzYxMDQxNDM1LCJsYXN0X25hbWUiOiJJdmFuIiwic3RhZmZfaWQiOiJzdGFmZl8xNzU4OTk1NDI4MzYzXzJuaGZlZ3N2ZSJ9.4qLAd3-nucTgOoJNvtepMoEBvxl7pJLGGYlwUaz88lM HTTP/1.1 200 730.733µs "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) louaj-desktop/1.14.6 Chrome/124.0.6367.243 Electron/30.5.1 Safari/537.36" "
+[GIN] 2025/10/22 - 02:52:10 | 200 |     872.092µs |       127.0.0.1 | GET      "/ws/queue/all?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjExMjc4MzUsImZpcnN0X25hbWUiOiJVc2VyIiwiaWF0IjoxNzYxMDQxNDM1LCJsYXN0X25hbWUiOiJJdmFuIiwic3RhZmZfaWQiOiJzdGFmZl8xNzU4OTk1NDI4MzYzXzJuaGZlZ3N2ZSJ9.4qLAd3-nucTgOoJNvtepMoEBvxl7pJLGGYlwUaz88lM"
+2025/10/22 02:52:10 Client staff_1758995428363_2nhfegsve subscribed to events: [queue_updated queue_entry_added queue_entry_removed queue_entry_updated queue_reordered day_pass_created exit_pass_created]
+2025/10/22 02:52:12 WebSocket error: websocket: close 1005 (no status)
+2025/10/22 02:52:12 Client unregistered from station all. Total clients: 0
+2025/10/22 02:52:12 Client registered for station all. Total clients: 1
+127.0.0.1 - [22/Oct/2025:02:52:12 +0100] "GET /ws/queue/all?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjExMjc4MzUsImZpcnN0X25hbWUiOiJVc2VyIiwiaWF0IjoxNzYxMDQxNDM1LCJsYXN0X25hbWUiOiJJdmFuIiwic3RhZmZfaWQiOiJzdGFmZl8xNzU4OTk1NDI4MzYzXzJuaGZlZ3N2ZSJ9.4qLAd3-nucTgOoJNvtepMoEBvxl7pJLGGYlwUaz88lM HTTP/1.1 200 906.854µs "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) louaj-desktop/1.14.6 Chrome/124.0.6367.243 Electron/30.5.1 Safari/537.36" "
+[GIN] 2025/10/22 - 02:52:12 | 200 |    1.269688ms |       127.0.0.1 | GET      "/ws/queue/all?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjExMjc4MzUsImZpcnN0X25hbWUiOiJVc2VyIiwiaWF0IjoxNzYxMDQxNDM1LCJsYXN0X25hbWUiOiJJdmFuIiwic3RhZmZfaWQiOiJzdGFmZl8xNzU4OTk1NDI4MzYzXzJuaGZlZ3N2ZSJ9.4qLAd3-nucTgOoJNvtepMoEBvxl7pJLGGYlwUaz88lM"
+2025/10/22 02:52:12 Client staff_1758995428363_2nhfegsve subscribed to events: [queue_updated queue_entry_added queue_entry_removed queue_entry_updated queue_reordered day_pass_created exit_pass_created]
+2025/10/22 02:52:51 WebSocket error: websocket: close 1005 (no status)
+2025/10/22 02:52:51 Client unregistered from station all. Total clients: 0
+127.0.0.1 - [22/Oct/2025:02:52:51 +0100] "GET /ws/queue/station-jemmal?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjExMjc4MzUsImZpcnN0X25hbWUiOiJVc2VyIiwiaWF0IjoxNzYxMDQxNDM1LCJsYXN0X25hbWUiOiJJdmFuIiwic3RhZmZfaWQiOiJzdGFmZl8xNzU4OTk1NDI4MzYzXzJuaGZlZ3N2ZSJ9.4qLAd3-nucTgOoJNvtepMoEBvxl7pJLGGYlwUaz88lM HTTP/1.1 200 440.561µs "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) louaj-desktop/1.14.6 Chrome/124.0.6367.243 Electron/30.5.1 Safari/537.36" "
+[GIN] 2025/10/22 - 02:52:51 | 200 |     752.032µs |       127.0.0.1 | GET      "/ws/queue/station-jemmal?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjExMjc4MzUsImZpcnN0X25hbWUiOiJVc2VyIiwiaWF0IjoxNzYxMDQxNDM1LCJsYXN0X25hbWUiOiJJdmFuIiwic3RhZmZfaWQiOiJzdGFmZl8xNzU4OTk1NDI4MzYzXzJuaGZlZ3N2ZSJ9.4qLAd3-nucTgOoJNvtepMoEBvxl7pJLGGYlwUaz88lM"
+2025/10/22 02:52:51 Client registered for station station-jemmal. Total clients: 1
+2025/10/22 02:52:51 Client staff_1758995428363_2nhfegsve subscribed to events: [queue_updated queue_entry_added queue_entry_removed queue_entry_updated queue_reordered day_pass_created exit_pass_created]
+2025/10/22 02:53:17 Broadcasting message type 'day_pass_created' to all clients
+::1 - [22/Oct/2025:02:53:17 +0100] "POST /internal/broadcast HTTP/1.1 200 647.876µs "Go-http-client/1.1" "
+[GIN] 2025/10/22 - 02:53:17 | 200 |     779.353µs |             ::1 | POST     "/internal/broadcast"
+2025/10/22 02:53:17 Broadcasting message type 'queue_entry_added' to all clients
+::1 - [22/Oct/2025:02:53:17 +0100] "POST /internal/broadcast HTTP/1.1 200 755.431µs "Go-http-client/1.1" "
+[GIN] 2025/10/22 - 02:53:17 | 200 |     949.858µs |             ::1 | POST     "/internal/broadcast"
+2025/10/22 02:53:22 WebSocket error: websocket: close 1005 (no status)
+2025/10/22 02:53:22 Client unregistered from station station-jemmal. Total clients: 0
+127.0.0.1 - [22/Oct/2025:02:53:22 +0100] "GET /ws/queue/station-ksar-hlel?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjExMjc4MzUsImZpcnN0X25hbWUiOiJVc2VyIiwiaWF0IjoxNzYxMDQxNDM1LCJsYXN0X25hbWUiOiJJdmFuIiwic3RhZmZfaWQiOiJzdGFmZl8xNzU4OTk1NDI4MzYzXzJuaGZlZ3N2ZSJ9.4qLAd3-nucTgOoJNvtepMoEBvxl7pJLGGYlwUaz88lM HTTP/1.1 200 141.388µs "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) louaj-desktop/1.14.6 Chrome/124.0.6367.243 Electron/30.5.1 Safari/537.36" "
+2025/10/22 02:53:22 Client registered for station station-ksar-hlel. Total clients: 1
+[GIN] 2025/10/22 - 02:53:22 | 200 |      190.56µs |       127.0.0.1 | GET      "/ws/queue/station-ksar-hlel?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjExMjc4MzUsImZpcnN0X25hbWUiOiJVc2VyIiwiaWF0IjoxNzYxMDQxNDM1LCJsYXN0X25hbWUiOiJJdmFuIiwic3RhZmZfaWQiOiJzdGFmZl8xNzU4OTk1NDI4MzYzXzJuaGZlZ3N2ZSJ9.4qLAd3-nucTgOoJNvtepMoEBvxl7pJLGGYlwUaz88lM"
+2025/10/22 02:53:22 Client staff_1758995428363_2nhfegsve subscribed to events: [queue_updated queue_entry_added queue_entry_removed queue_entry_updated queue_reordered day_pass_created exit_pass_created]
+2025/10/22 02:53:24 WebSocket error: websocket: close 1005 (no status)
+2025/10/22 02:53:24 Client unregistered from station station-ksar-hlel. Total clients: 0
+2025/10/22 02:53:24 Client registered for station station-jemmal. Total clients: 1
+127.0.0.1 - [22/Oct/2025:02:53:24 +0100] "GET /ws/queue/station-jemmal?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjExMjc4MzUsImZpcnN0X25hbWUiOiJVc2VyIiwiaWF0IjoxNzYxMDQxNDM1LCJsYXN0X25hbWUiOiJJdmFuIiwic3RhZmZfaWQiOiJzdGFmZl8xNzU4OTk1NDI4MzYzXzJuaGZlZ3N2ZSJ9.4qLAd3-nucTgOoJNvtepMoEBvxl7pJLGGYlwUaz88lM HTTP/1.1 200 150.487µs "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) louaj-desktop/1.14.6 Chrome/124.0.6367.243 Electron/30.5.1 Safari/537.36" "
+[GIN] 2025/10/22 - 02:53:24 | 200 |     228.572µs |       127.0.0.1 | GET      "/ws/queue/station-jemmal?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjExMjc4MzUsImZpcnN0X25hbWUiOiJVc2VyIiwiaWF0IjoxNzYxMDQxNDM1LCJsYXN0X25hbWUiOiJJdmFuIiwic3RhZmZfaWQiOiJzdGFmZl8xNzU4OTk1NDI4MzYzXzJuaGZlZ3N2ZSJ9.4qLAd3-nucTgOoJNvtepMoEBvxl7pJLGGYlwUaz88lM"
+2025/10/22 02:53:24 Client staff_1758995428363_2nhfegsve subscribed to events: [queue_updated queue_entry_added queue_entry_removed queue_entry_updated queue_reordered day_pass_created exit_pass_created]
+2025/10/22 02:54:25 WebSocket error: websocket: close 1005 (no status)
+2025/10/22 02:54:25 Client unregistered from station station-jemmal. Total clients: 0
+127.0.0.1 - [22/Oct/2025:02:54:25 +0100] "GET /ws/queue/station-jemmal?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjExMjc4MzUsImZpcnN0X25hbWUiOiJVc2VyIiwiaWF0IjoxNzYxMDQxNDM1LCJsYXN0X25hbWUiOiJJdmFuIiwic3RhZmZfaWQiOiJzdGFmZl8xNzU4OTk1NDI4MzYzXzJuaGZlZ3N2ZSJ9.4qLAd3-nucTgOoJNvtepMoEBvxl7pJLGGYlwUaz88lM HTTP/1.1 200 552.247µs "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) louaj-desktop/1.14.6 Chrome/124.0.6367.243 Electron/30.5.1 Safari/537.36" "
+2025/10/22 02:54:25 Client registered for station station-jemmal. Total clients: 1
+[GIN] 2025/10/22 - 02:54:25 | 200 |      782.81µs |       127.0.0.1 | GET      "/ws/queue/station-jemmal?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjExMjc4MzUsImZpcnN0X25hbWUiOiJVc2VyIiwiaWF0IjoxNzYxMDQxNDM1LCJsYXN0X25hbWUiOiJJdmFuIiwic3RhZmZfaWQiOiJzdGFmZl8xNzU4OTk1NDI4MzYzXzJuaGZlZ3N2ZSJ9.4qLAd3-nucTgOoJNvtepMoEBvxl7pJLGGYlwUaz88lM"
+2025/10/22 02:54:25 Client staff_1758995428363_2nhfegsve subscribed to events: [queue_updated queue_entry_added queue_entry_removed queue_entry_updated queue_reordered day_pass_created exit_pass_created]
+2025/10/22 02:54:38 WebSocket error: websocket: close 1005 (no status)
+2025/10/22 02:54:38 Client unregistered from station station-jemmal. Total clients: 0
+2025/10/22 02:54:38 Client registered for station station-jemmal. Total clients: 1
+127.0.0.1 - [22/Oct/2025:02:54:38 +0100] "GET /ws/queue/station-jemmal?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjExMjc4MzUsImZpcnN0X25hbWUiOiJVc2VyIiwiaWF0IjoxNzYxMDQxNDM1LCJsYXN0X25hbWUiOiJJdmFuIiwic3RhZmZfaWQiOiJzdGFmZl8xNzU4OTk1NDI4MzYzXzJuaGZlZ3N2ZSJ9.4qLAd3-nucTgOoJNvtepMoEBvxl7pJLGGYlwUaz88lM HTTP/1.1 200 1.280538ms "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) louaj-desktop/1.14.6 Chrome/124.0.6367.243 Electron/30.5.1 Safari/537.36" "
+[GIN] 2025/10/22 - 02:54:38 | 200 |    2.149858ms |       127.0.0.1 | GET      "/ws/queue/station-jemmal?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjExMjc4MzUsImZpcnN0X25hbWUiOiJVc2VyIiwiaWF0IjoxNzYxMDQxNDM1LCJsYXN0X25hbWUiOiJJdmFuIiwic3RhZmZfaWQiOiJzdGFmZl8xNzU4OTk1NDI4MzYzXzJuaGZlZ3N2ZSJ9.4qLAd3-nucTgOoJNvtepMoEBvxl7pJLGGYlwUaz88lM"
+2025/10/22 02:54:38 Client staff_1758995428363_2nhfegsve subscribed to events: [queue_updated queue_entry_added queue_entry_removed queue_entry_updated queue_reordered day_pass_created exit_pass_created]
+2025/10/22 02:54:45 WebSocket error: websocket: close 1005 (no status)
+2025/10/22 02:54:45 Client unregistered from station station-jemmal. Total clients: 0
+2025/10/22 02:54:45 Client registered for station station-jemmal. Total clients: 1
+127.0.0.1 - [22/Oct/2025:02:54:45 +0100] "GET /ws/queue/station-jemmal?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjExMjc4MzUsImZpcnN0X25hbWUiOiJVc2VyIiwiaWF0IjoxNzYxMDQxNDM1LCJsYXN0X25hbWUiOiJJdmFuIiwic3RhZmZfaWQiOiJzdGFmZl8xNzU4OTk1NDI4MzYzXzJuaGZlZ3N2ZSJ9.4qLAd3-nucTgOoJNvtepMoEBvxl7pJLGGYlwUaz88lM HTTP/1.1 200 902.98µs "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) louaj-desktop/1.14.6 Chrome/124.0.6367.243 Electron/30.5.1 Safari/537.36" "
+[GIN] 2025/10/22 - 02:54:45 | 200 |    1.420866ms |       127.0.0.1 | GET      "/ws/queue/station-jemmal?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjExMjc4MzUsImZpcnN0X25hbWUiOiJVc2VyIiwiaWF0IjoxNzYxMDQxNDM1LCJsYXN0X25hbWUiOiJJdmFuIiwic3RhZmZfaWQiOiJzdGFmZl8xNzU4OTk1NDI4MzYzXzJuaGZlZ3N2ZSJ9.4qLAd3-nucTgOoJNvtepMoEBvxl7pJLGGYlwUaz88lM"
+2025/10/22 02:54:45 Client staff_1758995428363_2nhfegsve subscribed to events: [queue_updated queue_entry_added queue_entry_removed queue_entry_updated queue_reordered day_pass_created exit_pass_created]
+2025/10/22 02:55:22 Broadcasting message type 'queue_entry_removed' to all clients
+::1 - [22/Oct/2025:02:55:22 +0100] "POST /internal/broadcast HTTP/1.1 200 89.523µs "Go-http-client/1.1" "
+[GIN] 2025/10/22 - 02:55:22 | 200 |     111.973µs |             ::1 | POST     "/internal/broadcast"
+2025/10/22 02:55:25 Broadcasting message type 'queue_entry_removed' to all clients
+::1 - [22/Oct/2025:02:55:25 +0100] "POST /internal/broadcast HTTP/1.1 200 188.469µs "Go-http-client/1.1" "
+[GIN] 2025/10/22 - 02:55:25 | 200 |     246.871µs |             ::1 | POST     "/internal/broadcast"
+2025/10/22 02:55:37 WebSocket error: websocket: close 1005 (no status)
+2025/10/22 02:55:37 Client unregistered from station station-jemmal. Total clients: 0
+127.0.0.1 - [22/Oct/2025:02:55:37 +0100] "GET /ws/queue/station-jemmal?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjExMjc4MzUsImZpcnN0X25hbWUiOiJVc2VyIiwiaWF0IjoxNzYxMDQxNDM1LCJsYXN0X25hbWUiOiJJdmFuIiwic3RhZmZfaWQiOiJzdGFmZl8xNzU4OTk1NDI4MzYzXzJuaGZlZ3N2ZSJ9.4qLAd3-nucTgOoJNvtepMoEBvxl7pJLGGYlwUaz88lM HTTP/1.1 200 166.249µs "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) louaj-desktop/1.14.6 Chrome/124.0.6367.243 Electron/30.5.1 Safari/537.36" "
+2025/10/22 02:55:37 Client registered for station station-jemmal. Total clients: 1
+[GIN] 2025/10/22 - 02:55:37 | 200 |     217.355µs |       127.0.0.1 | GET      "/ws/queue/station-jemmal?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjExMjc4MzUsImZpcnN0X25hbWUiOiJVc2VyIiwiaWF0IjoxNzYxMDQxNDM1LCJsYXN0X25hbWUiOiJJdmFuIiwic3RhZmZfaWQiOiJzdGFmZl8xNzU4OTk1NDI4MzYzXzJuaGZlZ3N2ZSJ9.4qLAd3-nucTgOoJNvtepMoEBvxl7pJLGGYlwUaz88lM"
+2025/10/22 02:55:37 Client staff_1758995428363_2nhfegsve subscribed to events: [queue_updated queue_entry_added queue_entry_removed queue_entry_updated queue_reordered day_pass_created exit_pass_created]
+2025/10/22 02:56:30 WebSocket error: websocket: close 1005 (no status)
+2025/10/22 02:56:30 Client unregistered from station station-jemmal. Total clients: 0
+2025/10/22 02:56:30 Client registered for station station-jemmal. Total clients: 1
+127.0.0.1 - [22/Oct/2025:02:56:30 +0100] "GET /ws/queue/station-jemmal?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjExMjc4MzUsImZpcnN0X25hbWUiOiJVc2VyIiwiaWF0IjoxNzYxMDQxNDM1LCJsYXN0X25hbWUiOiJJdmFuIiwic3RhZmZfaWQiOiJzdGFmZl8xNzU4OTk1NDI4MzYzXzJuaGZlZ3N2ZSJ9.4qLAd3-nucTgOoJNvtepMoEBvxl7pJLGGYlwUaz88lM HTTP/1.1 200 850.479µs "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) louaj-desktop/1.14.6 Chrome/124.0.6367.243 Electron/30.5.1 Safari/537.36" "
+[GIN] 2025/10/22 - 02:56:30 | 200 |     964.976µs |       127.0.0.1 | GET      "/ws/queue/station-jemmal?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjExMjc4MzUsImZpcnN0X25hbWUiOiJVc2VyIiwiaWF0IjoxNzYxMDQxNDM1LCJsYXN0X25hbWUiOiJJdmFuIiwic3RhZmZfaWQiOiJzdGFmZl8xNzU4OTk1NDI4MzYzXzJuaGZlZ3N2ZSJ9.4qLAd3-nucTgOoJNvtepMoEBvxl7pJLGGYlwUaz88lM"
+2025/10/22 02:56:30 Client staff_1758995428363_2nhfegsve subscribed to events: [queue_updated queue_entry_added queue_entry_removed queue_entry_updated queue_reordered day_pass_created exit_pass_created]
+2025/10/22 02:56:56 WebSocket error: websocket: close 1005 (no status)
+2025/10/22 02:56:56 Client unregistered from station station-jemmal. Total clients: 0
+2025/10/22 02:56:56 Client registered for station station-jemmal. Total clients: 1
+127.0.0.1 - [22/Oct/2025:02:56:56 +0100] "GET /ws/queue/station-jemmal?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjExMjc4MzUsImZpcnN0X25hbWUiOiJVc2VyIiwiaWF0IjoxNzYxMDQxNDM1LCJsYXN0X25hbWUiOiJJdmFuIiwic3RhZmZfaWQiOiJzdGFmZl8xNzU4OTk1NDI4MzYzXzJuaGZlZ3N2ZSJ9.4qLAd3-nucTgOoJNvtepMoEBvxl7pJLGGYlwUaz88lM HTTP/1.1 200 707.116µs "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) louaj-desktop/1.14.6 Chrome/124.0.6367.243 Electron/30.5.1 Safari/537.36" "
+[GIN] 2025/10/22 - 02:56:56 | 200 |    1.542196ms |       127.0.0.1 | GET      "/ws/queue/station-jemmal?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjExMjc4MzUsImZpcnN0X25hbWUiOiJVc2VyIiwiaWF0IjoxNzYxMDQxNDM1LCJsYXN0X25hbWUiOiJJdmFuIiwic3RhZmZfaWQiOiJzdGFmZl8xNzU4OTk1NDI4MzYzXzJuaGZlZ3N2ZSJ9.4qLAd3-nucTgOoJNvtepMoEBvxl7pJLGGYlwUaz88lM"
+2025/10/22 02:56:56 Client staff_1758995428363_2nhfegsve subscribed to events: [queue_updated queue_entry_added queue_entry_removed queue_entry_updated queue_reordered day_pass_created exit_pass_created]
+2025/10/22 02:57:12 WebSocket error: websocket: close 1005 (no status)
+2025/10/22 02:57:12 Client unregistered from station station-jemmal. Total clients: 0
+127.0.0.1 - [22/Oct/2025:02:57:12 +0100] "GET /ws/queue/station-jemmal?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjExMjc4MzUsImZpcnN0X25hbWUiOiJVc2VyIiwiaWF0IjoxNzYxMDQxNDM1LCJsYXN0X25hbWUiOiJJdmFuIiwic3RhZmZfaWQiOiJzdGFmZl8xNzU4OTk1NDI4MzYzXzJuaGZlZ3N2ZSJ9.4qLAd3-nucTgOoJNvtepMoEBvxl7pJLGGYlwUaz88lM HTTP/1.1 200 517.653µs "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) louaj-desktop/1.14.6 Chrome/124.0.6367.243 Electron/30.5.1 Safari/537.36" "
+[GIN] 2025/10/22 - 02:57:12 | 200 |     778.762µs |       127.0.0.1 | GET      "/ws/queue/station-jemmal?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjExMjc4MzUsImZpcnN0X25hbWUiOiJVc2VyIiwiaWF0IjoxNzYxMDQxNDM1LCJsYXN0X25hbWUiOiJJdmFuIiwic3RhZmZfaWQiOiJzdGFmZl8xNzU4OTk1NDI4MzYzXzJuaGZlZ3N2ZSJ9.4qLAd3-nucTgOoJNvtepMoEBvxl7pJLGGYlwUaz88lM"
+2025/10/22 02:57:12 Client registered for station station-jemmal. Total clients: 1
+2025/10/22 02:57:12 Client staff_1758995428363_2nhfegsve subscribed to events: [queue_updated queue_entry_added queue_entry_removed queue_entry_updated queue_reordered day_pass_created exit_pass_created]
+2025/10/22 02:57:28 WebSocket error: websocket: close 1005 (no status)
+2025/10/22 02:57:28 Client unregistered from station station-jemmal. Total clients: 0
+2025/10/22 02:57:28 Client registered for station station-jemmal. Total clients: 1
+127.0.0.1 - [22/Oct/2025:02:57:28 +0100] "GET /ws/queue/station-jemmal?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjExMjc4MzUsImZpcnN0X25hbWUiOiJVc2VyIiwiaWF0IjoxNzYxMDQxNDM1LCJsYXN0X25hbWUiOiJJdmFuIiwic3RhZmZfaWQiOiJzdGFmZl8xNzU4OTk1NDI4MzYzXzJuaGZlZ3N2ZSJ9.4qLAd3-nucTgOoJNvtepMoEBvxl7pJLGGYlwUaz88lM HTTP/1.1 200 650.565µs "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) louaj-desktop/1.14.6 Chrome/124.0.6367.243 Electron/30.5.1 Safari/537.36" "
+[GIN] 2025/10/22 - 02:57:28 | 200 |    1.140117ms |       127.0.0.1 | GET      "/ws/queue/station-jemmal?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjExMjc4MzUsImZpcnN0X25hbWUiOiJVc2VyIiwiaWF0IjoxNzYxMDQxNDM1LCJsYXN0X25hbWUiOiJJdmFuIiwic3RhZmZfaWQiOiJzdGFmZl8xNzU4OTk1NDI4MzYzXzJuaGZlZ3N2ZSJ9.4qLAd3-nucTgOoJNvtepMoEBvxl7pJLGGYlwUaz88lM"
+2025/10/22 02:57:28 Client staff_1758995428363_2nhfegsve subscribed to events: [queue_updated queue_entry_added queue_entry_removed queue_entry_updated queue_reordered day_pass_created exit_pass_created]
+2025/10/22 02:57:35 WebSocket error: websocket: close 1005 (no status)
+2025/10/22 02:57:35 Client unregistered from station station-jemmal. Total clients: 0
+2025/10/22 02:57:35 Client registered for station station-jemmal. Total clients: 1
+127.0.0.1 - [22/Oct/2025:02:57:35 +0100] "GET /ws/queue/station-jemmal?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjExMjc4MzUsImZpcnN0X25hbWUiOiJVc2VyIiwiaWF0IjoxNzYxMDQxNDM1LCJsYXN0X25hbWUiOiJJdmFuIiwic3RhZmZfaWQiOiJzdGFmZl8xNzU4OTk1NDI4MzYzXzJuaGZlZ3N2ZSJ9.4qLAd3-nucTgOoJNvtepMoEBvxl7pJLGGYlwUaz88lM HTTP/1.1 200 171.493µs "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) louaj-desktop/1.14.6 Chrome/124.0.6367.243 Electron/30.5.1 Safari/537.36" "
+[GIN] 2025/10/22 - 02:57:35 | 200 |     270.112µs |       127.0.0.1 | GET      "/ws/queue/station-jemmal?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjExMjc4MzUsImZpcnN0X25hbWUiOiJVc2VyIiwiaWF0IjoxNzYxMDQxNDM1LCJsYXN0X25hbWUiOiJJdmFuIiwic3RhZmZfaWQiOiJzdGFmZl8xNzU4OTk1NDI4MzYzXzJuaGZlZ3N2ZSJ9.4qLAd3-nucTgOoJNvtepMoEBvxl7pJLGGYlwUaz88lM"
+2025/10/22 02:57:35 Client staff_1758995428363_2nhfegsve subscribed to events: [queue_updated queue_entry_added queue_entry_removed queue_entry_updated queue_reordered day_pass_created exit_pass_created]
+2025/10/22 02:58:11 WebSocket error: websocket: close 1005 (no status)
+2025/10/22 02:58:11 Client unregistered from station station-jemmal. Total clients: 0
+2025/10/22 02:58:11 Client registered for station station-jemmal. Total clients: 1
+127.0.0.1 - [22/Oct/2025:02:58:11 +0100] "GET /ws/queue/station-jemmal?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjExMjc4MzUsImZpcnN0X25hbWUiOiJVc2VyIiwiaWF0IjoxNzYxMDQxNDM1LCJsYXN0X25hbWUiOiJJdmFuIiwic3RhZmZfaWQiOiJzdGFmZl8xNzU4OTk1NDI4MzYzXzJuaGZlZ3N2ZSJ9.4qLAd3-nucTgOoJNvtepMoEBvxl7pJLGGYlwUaz88lM HTTP/1.1 200 586.405µs "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) louaj-desktop/1.14.6 Chrome/124.0.6367.243 Electron/30.5.1 Safari/537.36" "
+[GIN] 2025/10/22 - 02:58:11 | 200 |    2.404766ms |       127.0.0.1 | GET      "/ws/queue/station-jemmal?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjExMjc4MzUsImZpcnN0X25hbWUiOiJVc2VyIiwiaWF0IjoxNzYxMDQxNDM1LCJsYXN0X25hbWUiOiJJdmFuIiwic3RhZmZfaWQiOiJzdGFmZl8xNzU4OTk1NDI4MzYzXzJuaGZlZ3N2ZSJ9.4qLAd3-nucTgOoJNvtepMoEBvxl7pJLGGYlwUaz88lM"
+2025/10/22 02:58:11 Client staff_1758995428363_2nhfegsve subscribed to events: [queue_updated queue_entry_added queue_entry_removed queue_entry_updated queue_reordered day_pass_created exit_pass_created]
+2025/10/22 02:58:14 WebSocket error: websocket: close 1005 (no status)
+2025/10/22 02:58:14 Client unregistered from station station-jemmal. Total clients: 0
+127.0.0.1 - [22/Oct/2025:02:58:14 +0100] "GET /ws/queue/station-jemmal?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjExMjc4MzUsImZpcnN0X25hbWUiOiJVc2VyIiwiaWF0IjoxNzYxMDQxNDM1LCJsYXN0X25hbWUiOiJJdmFuIiwic3RhZmZfaWQiOiJzdGFmZl8xNzU4OTk1NDI4MzYzXzJuaGZlZ3N2ZSJ9.4qLAd3-nucTgOoJNvtepMoEBvxl7pJLGGYlwUaz88lM HTTP/1.1 200 400.552µs "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) louaj-desktop/1.14.6 Chrome/124.0.6367.243 Electron/30.5.1 Safari/537.36" "
+2025/10/22 02:58:14 Client registered for station station-jemmal. Total clients: 1
+[GIN] 2025/10/22 - 02:58:14 | 200 |     490.937µs |       127.0.0.1 | GET      "/ws/queue/station-jemmal?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjExMjc4MzUsImZpcnN0X25hbWUiOiJVc2VyIiwiaWF0IjoxNzYxMDQxNDM1LCJsYXN0X25hbWUiOiJJdmFuIiwic3RhZmZfaWQiOiJzdGFmZl8xNzU4OTk1NDI4MzYzXzJuaGZlZ3N2ZSJ9.4qLAd3-nucTgOoJNvtepMoEBvxl7pJLGGYlwUaz88lM"
+2025/10/22 02:58:14 Client staff_1758995428363_2nhfegsve subscribed to events: [queue_updated queue_entry_added queue_entry_removed queue_entry_updated queue_reordered day_pass_created exit_pass_created]
+2025/10/22 02:58:33 WebSocket error: websocket: close 1005 (no status)
+2025/10/22 02:58:33 Client unregistered from station station-jemmal. Total clients: 0
+2025/10/22 02:58:33 Client registered for station station-teboulba. Total clients: 1
+127.0.0.1 - [22/Oct/2025:02:58:33 +0100] "GET /ws/queue/station-teboulba?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjExMjc4MzUsImZpcnN0X25hbWUiOiJVc2VyIiwiaWF0IjoxNzYxMDQxNDM1LCJsYXN0X25hbWUiOiJJdmFuIiwic3RhZmZfaWQiOiJzdGFmZl8xNzU4OTk1NDI4MzYzXzJuaGZlZ3N2ZSJ9.4qLAd3-nucTgOoJNvtepMoEBvxl7pJLGGYlwUaz88lM HTTP/1.1 200 353.233µs "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) louaj-desktop/1.14.6 Chrome/124.0.6367.243 Electron/30.5.1 Safari/537.36" "
+[GIN] 2025/10/22 - 02:58:33 | 200 |     806.325µs |       127.0.0.1 | GET      "/ws/queue/station-teboulba?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjExMjc4MzUsImZpcnN0X25hbWUiOiJVc2VyIiwiaWF0IjoxNzYxMDQxNDM1LCJsYXN0X25hbWUiOiJJdmFuIiwic3RhZmZfaWQiOiJzdGFmZl8xNzU4OTk1NDI4MzYzXzJuaGZlZ3N2ZSJ9.4qLAd3-nucTgOoJNvtepMoEBvxl7pJLGGYlwUaz88lM"
+2025/10/22 02:58:33 Client staff_1758995428363_2nhfegsve subscribed to events: [queue_updated queue_entry_added queue_entry_removed queue_entry_updated queue_reordered day_pass_created exit_pass_created]
+2025/10/22 02:58:34 WebSocket error: websocket: close 1005 (no status)
+2025/10/22 02:58:34 Client unregistered from station station-teboulba. Total clients: 0
+2025/10/22 02:58:34 Client registered for station station-ksar-hlel. Total clients: 1
+127.0.0.1 - [22/Oct/2025:02:58:34 +0100] "GET /ws/queue/station-ksar-hlel?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjExMjc4MzUsImZpcnN0X25hbWUiOiJVc2VyIiwiaWF0IjoxNzYxMDQxNDM1LCJsYXN0X25hbWUiOiJJdmFuIiwic3RhZmZfaWQiOiJzdGFmZl8xNzU4OTk1NDI4MzYzXzJuaGZlZ3N2ZSJ9.4qLAd3-nucTgOoJNvtepMoEBvxl7pJLGGYlwUaz88lM HTTP/1.1 200 228.59µs "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) louaj-desktop/1.14.6 Chrome/124.0.6367.243 Electron/30.5.1 Safari/537.36" "
+[GIN] 2025/10/22 - 02:58:34 | 200 |     295.219µs |       127.0.0.1 | GET      "/ws/queue/station-ksar-hlel?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjExMjc4MzUsImZpcnN0X25hbWUiOiJVc2VyIiwiaWF0IjoxNzYxMDQxNDM1LCJsYXN0X25hbWUiOiJJdmFuIiwic3RhZmZfaWQiOiJzdGFmZl8xNzU4OTk1NDI4MzYzXzJuaGZlZ3N2ZSJ9.4qLAd3-nucTgOoJNvtepMoEBvxl7pJLGGYlwUaz88lM"
+2025/10/22 02:58:34 Client staff_1758995428363_2nhfegsve subscribed to events: [queue_updated queue_entry_added queue_entry_removed queue_entry_updated queue_reordered day_pass_created exit_pass_created]
+2025/10/22 02:58:38 Broadcasting message type 'queue_entry_removed' to all clients
+::1 - [22/Oct/2025:02:58:38 +0100] "POST /internal/broadcast HTTP/1.1 200 148.126µs "Go-http-client/1.1" "
+[GIN] 2025/10/22 - 02:58:38 | 200 |     186.385µs |             ::1 | POST     "/internal/broadcast"
+2025/10/22 02:58:42 Broadcasting message type 'queue_entry_removed' to all clients
+::1 - [22/Oct/2025:02:58:42 +0100] "POST /internal/broadcast HTTP/1.1 200 399.393µs "Go-http-client/1.1" "
+[GIN] 2025/10/22 - 02:58:42 | 200 |     508.868µs |             ::1 | POST     "/internal/broadcast"
+2025/10/22 03:00:03 WebSocket error: websocket: close 1005 (no status)
+2025/10/22 03:00:03 Client unregistered from station station-ksar-hlel. Total clients: 0
+2025/10/22 03:00:03 Client registered for station station-ksar-hlel. Total clients: 1
+127.0.0.1 - [22/Oct/2025:03:00:03 +0100] "GET /ws/queue/station-ksar-hlel?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjExMjc4MzUsImZpcnN0X25hbWUiOiJVc2VyIiwiaWF0IjoxNzYxMDQxNDM1LCJsYXN0X25hbWUiOiJJdmFuIiwic3RhZmZfaWQiOiJzdGFmZl8xNzU4OTk1NDI4MzYzXzJuaGZlZ3N2ZSJ9.4qLAd3-nucTgOoJNvtepMoEBvxl7pJLGGYlwUaz88lM HTTP/1.1 200 234.947µs "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) louaj-desktop/1.14.6 Chrome/124.0.6367.243 Electron/30.5.1 Safari/537.36" "
+[GIN] 2025/10/22 - 03:00:03 | 200 |     583.368µs |       127.0.0.1 | GET      "/ws/queue/station-ksar-hlel?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjExMjc4MzUsImZpcnN0X25hbWUiOiJVc2VyIiwiaWF0IjoxNzYxMDQxNDM1LCJsYXN0X25hbWUiOiJJdmFuIiwic3RhZmZfaWQiOiJzdGFmZl8xNzU4OTk1NDI4MzYzXzJuaGZlZ3N2ZSJ9.4qLAd3-nucTgOoJNvtepMoEBvxl7pJLGGYlwUaz88lM"
+2025/10/22 03:00:03 Client staff_1758995428363_2nhfegsve subscribed to events: [queue_updated queue_entry_added queue_entry_removed queue_entry_updated queue_reordered day_pass_created exit_pass_created]
+2025/10/22 03:02:31 WebSocket error: websocket: close 1005 (no status)
+2025/10/22 03:02:31 Client unregistered from station station-ksar-hlel. Total clients: 0
+127.0.0.1 - [22/Oct/2025:03:02:31 +0100] "GET /ws/queue/station-ksar-hlel?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjExMjc4MzUsImZpcnN0X25hbWUiOiJVc2VyIiwiaWF0IjoxNzYxMDQxNDM1LCJsYXN0X25hbWUiOiJJdmFuIiwic3RhZmZfaWQiOiJzdGFmZl8xNzU4OTk1NDI4MzYzXzJuaGZlZ3N2ZSJ9.4qLAd3-nucTgOoJNvtepMoEBvxl7pJLGGYlwUaz88lM HTTP/1.1 200 921.573µs "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) louaj-desktop/1.14.6 Chrome/124.0.6367.243 Electron/30.5.1 Safari/537.36" "
+2025/10/22 03:02:31 Client registered for station station-ksar-hlel. Total clients: 1
+[GIN] 2025/10/22 - 03:02:31 | 200 |    1.204099ms |       127.0.0.1 | GET      "/ws/queue/station-ksar-hlel?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjExMjc4MzUsImZpcnN0X25hbWUiOiJVc2VyIiwiaWF0IjoxNzYxMDQxNDM1LCJsYXN0X25hbWUiOiJJdmFuIiwic3RhZmZfaWQiOiJzdGFmZl8xNzU4OTk1NDI4MzYzXzJuaGZlZ3N2ZSJ9.4qLAd3-nucTgOoJNvtepMoEBvxl7pJLGGYlwUaz88lM"
+2025/10/22 03:02:31 Client staff_1758995428363_2nhfegsve subscribed to events: [queue_updated queue_entry_added queue_entry_removed queue_entry_updated queue_reordered day_pass_created exit_pass_created]
+2025/10/22 03:02:44 WebSocket error: websocket: close 1005 (no status)
+2025/10/22 03:02:44 Client unregistered from station station-ksar-hlel. Total clients: 0
+127.0.0.1 - [22/Oct/2025:03:02:44 +0100] "GET /ws/queue/station-ksar-hlel?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjExMjc4MzUsImZpcnN0X25hbWUiOiJVc2VyIiwiaWF0IjoxNzYxMDQxNDM1LCJsYXN0X25hbWUiOiJJdmFuIiwic3RhZmZfaWQiOiJzdGFmZl8xNzU4OTk1NDI4MzYzXzJuaGZlZ3N2ZSJ9.4qLAd3-nucTgOoJNvtepMoEBvxl7pJLGGYlwUaz88lM HTTP/1.1 200 573.676µs "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) louaj-desktop/1.14.6 Chrome/124.0.6367.243 Electron/30.5.1 Safari/537.36" "
+[GIN] 2025/10/22 - 03:02:44 | 200 |     748.683µs |       127.0.0.1 | GET      "/ws/queue/station-ksar-hlel?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjExMjc4MzUsImZpcnN0X25hbWUiOiJVc2VyIiwiaWF0IjoxNzYxMDQxNDM1LCJsYXN0X25hbWUiOiJJdmFuIiwic3RhZmZfaWQiOiJzdGFmZl8xNzU4OTk1NDI4MzYzXzJuaGZlZ3N2ZSJ9.4qLAd3-nucTgOoJNvtepMoEBvxl7pJLGGYlwUaz88lM"
+2025/10/22 03:02:44 Client registered for station station-ksar-hlel. Total clients: 1
+2025/10/22 03:02:44 Client staff_1758995428363_2nhfegsve subscribed to events: [queue_updated queue_entry_added queue_entry_removed queue_entry_updated queue_reordered day_pass_created exit_pass_created]
+2025/10/22 03:02:52 WebSocket error: websocket: close 1005 (no status)
+2025/10/22 03:02:52 Client unregistered from station station-ksar-hlel. Total clients: 0
+2025/10/22 03:02:52 Client registered for station station-ksar-hlel. Total clients: 1
+127.0.0.1 - [22/Oct/2025:03:02:52 +0100] "GET /ws/queue/station-ksar-hlel?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjExMjc4MzUsImZpcnN0X25hbWUiOiJVc2VyIiwiaWF0IjoxNzYxMDQxNDM1LCJsYXN0X25hbWUiOiJJdmFuIiwic3RhZmZfaWQiOiJzdGFmZl8xNzU4OTk1NDI4MzYzXzJuaGZlZ3N2ZSJ9.4qLAd3-nucTgOoJNvtepMoEBvxl7pJLGGYlwUaz88lM HTTP/1.1 200 251.159µs "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) louaj-desktop/1.14.6 Chrome/124.0.6367.243 Electron/30.5.1 Safari/537.36" "
+[GIN] 2025/10/22 - 03:02:52 | 200 |     463.115µs |       127.0.0.1 | GET      "/ws/queue/station-ksar-hlel?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjExMjc4MzUsImZpcnN0X25hbWUiOiJVc2VyIiwiaWF0IjoxNzYxMDQxNDM1LCJsYXN0X25hbWUiOiJJdmFuIiwic3RhZmZfaWQiOiJzdGFmZl8xNzU4OTk1NDI4MzYzXzJuaGZlZ3N2ZSJ9.4qLAd3-nucTgOoJNvtepMoEBvxl7pJLGGYlwUaz88lM"
+2025/10/22 03:02:52 Client staff_1758995428363_2nhfegsve subscribed to events: [queue_updated queue_entry_added queue_entry_removed queue_entry_updated queue_reordered day_pass_created exit_pass_created]
+2025/10/22 03:03:06 WebSocket error: websocket: close 1005 (no status)
+2025/10/22 03:03:06 Client unregistered from station station-ksar-hlel. Total clients: 0
+127.0.0.1 - [22/Oct/2025:03:03:06 +0100] "GET /ws/queue/station-ksar-hlel?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjExMjc4MzUsImZpcnN0X25hbWUiOiJVc2VyIiwiaWF0IjoxNzYxMDQxNDM1LCJsYXN0X25hbWUiOiJJdmFuIiwic3RhZmZfaWQiOiJzdGFmZl8xNzU4OTk1NDI4MzYzXzJuaGZlZ3N2ZSJ9.4qLAd3-nucTgOoJNvtepMoEBvxl7pJLGGYlwUaz88lM HTTP/1.1 200 324.633µs "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) louaj-desktop/1.14.6 Chrome/124.0.6367.243 Electron/30.5.1 Safari/537.36" "
+2025/10/22 03:03:06 Client registered for station station-ksar-hlel. Total clients: 1
+[GIN] 2025/10/22 - 03:03:06 | 200 |     445.357µs |       127.0.0.1 | GET      "/ws/queue/station-ksar-hlel?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjExMjc4MzUsImZpcnN0X25hbWUiOiJVc2VyIiwiaWF0IjoxNzYxMDQxNDM1LCJsYXN0X25hbWUiOiJJdmFuIiwic3RhZmZfaWQiOiJzdGFmZl8xNzU4OTk1NDI4MzYzXzJuaGZlZ3N2ZSJ9.4qLAd3-nucTgOoJNvtepMoEBvxl7pJLGGYlwUaz88lM"
+2025/10/22 03:03:06 Client staff_1758995428363_2nhfegsve subscribed to events: [queue_updated queue_entry_added queue_entry_removed queue_entry_updated queue_reordered day_pass_created exit_pass_created]
+2025/10/22 03:03:30 WebSocket error: websocket: close 1005 (no status)
+2025/10/22 03:03:30 Client unregistered from station station-ksar-hlel. Total clients: 0
+127.0.0.1 - [22/Oct/2025:03:03:30 +0100] "GET /ws/queue/station-ksar-hlel?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjExMjc4MzUsImZpcnN0X25hbWUiOiJVc2VyIiwiaWF0IjoxNzYxMDQxNDM1LCJsYXN0X25hbWUiOiJJdmFuIiwic3RhZmZfaWQiOiJzdGFmZl8xNzU4OTk1NDI4MzYzXzJuaGZlZ3N2ZSJ9.4qLAd3-nucTgOoJNvtepMoEBvxl7pJLGGYlwUaz88lM HTTP/1.1 200 525.682µs "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) louaj-desktop/1.14.6 Chrome/124.0.6367.243 Electron/30.5.1 Safari/537.36" "
+2025/10/22 03:03:30 Client registered for station station-ksar-hlel. Total clients: 1
+[GIN] 2025/10/22 - 03:03:30 | 200 |     890.953µs |       127.0.0.1 | GET      "/ws/queue/station-ksar-hlel?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjExMjc4MzUsImZpcnN0X25hbWUiOiJVc2VyIiwiaWF0IjoxNzYxMDQxNDM1LCJsYXN0X25hbWUiOiJJdmFuIiwic3RhZmZfaWQiOiJzdGFmZl8xNzU4OTk1NDI4MzYzXzJuaGZlZ3N2ZSJ9.4qLAd3-nucTgOoJNvtepMoEBvxl7pJLGGYlwUaz88lM"
+2025/10/22 03:03:31 Client staff_1758995428363_2nhfegsve subscribed to events: [queue_updated queue_entry_added queue_entry_removed queue_entry_updated queue_reordered day_pass_created exit_pass_created]
+2025/10/22 03:03:37 WebSocket error: websocket: close 1005 (no status)
+2025/10/22 03:03:37 Client unregistered from station station-ksar-hlel. Total clients: 0
+2025/10/22 03:03:37 Client registered for station station-ksar-hlel. Total clients: 1
+127.0.0.1 - [22/Oct/2025:03:03:37 +0100] "GET /ws/queue/station-ksar-hlel?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjExMjc4MzUsImZpcnN0X25hbWUiOiJVc2VyIiwiaWF0IjoxNzYxMDQxNDM1LCJsYXN0X25hbWUiOiJJdmFuIiwic3RhZmZfaWQiOiJzdGFmZl8xNzU4OTk1NDI4MzYzXzJuaGZlZ3N2ZSJ9.4qLAd3-nucTgOoJNvtepMoEBvxl7pJLGGYlwUaz88lM HTTP/1.1 200 823.096µs "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) louaj-desktop/1.14.6 Chrome/124.0.6367.243 Electron/30.5.1 Safari/537.36" "
+[GIN] 2025/10/22 - 03:03:37 | 200 |    4.697306ms |       127.0.0.1 | GET      "/ws/queue/station-ksar-hlel?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjExMjc4MzUsImZpcnN0X25hbWUiOiJVc2VyIiwiaWF0IjoxNzYxMDQxNDM1LCJsYXN0X25hbWUiOiJJdmFuIiwic3RhZmZfaWQiOiJzdGFmZl8xNzU4OTk1NDI4MzYzXzJuaGZlZ3N2ZSJ9.4qLAd3-nucTgOoJNvtepMoEBvxl7pJLGGYlwUaz88lM"
+2025/10/22 03:03:37 Client staff_1758995428363_2nhfegsve subscribed to events: [queue_updated queue_entry_added queue_entry_removed queue_entry_updated queue_reordered day_pass_created exit_pass_created]
+2025/10/22 03:03:48 WebSocket error: websocket: close 1005 (no status)
+2025/10/22 03:03:48 Client unregistered from station station-ksar-hlel. Total clients: 0
+2025/10/22 03:03:48 Client registered for station station-ksar-hlel. Total clients: 1
+127.0.0.1 - [22/Oct/2025:03:03:48 +0100] "GET /ws/queue/station-ksar-hlel?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjExMjc4MzUsImZpcnN0X25hbWUiOiJVc2VyIiwiaWF0IjoxNzYxMDQxNDM1LCJsYXN0X25hbWUiOiJJdmFuIiwic3RhZmZfaWQiOiJzdGFmZl8xNzU4OTk1NDI4MzYzXzJuaGZlZ3N2ZSJ9.4qLAd3-nucTgOoJNvtepMoEBvxl7pJLGGYlwUaz88lM HTTP/1.1 200 232.436µs "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) louaj-desktop/1.14.6 Chrome/124.0.6367.243 Electron/30.5.1 Safari/537.36" "
+[GIN] 2025/10/22 - 03:03:48 | 200 |     326.357µs |       127.0.0.1 | GET      "/ws/queue/station-ksar-hlel?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjExMjc4MzUsImZpcnN0X25hbWUiOiJVc2VyIiwiaWF0IjoxNzYxMDQxNDM1LCJsYXN0X25hbWUiOiJJdmFuIiwic3RhZmZfaWQiOiJzdGFmZl8xNzU4OTk1NDI4MzYzXzJuaGZlZ3N2ZSJ9.4qLAd3-nucTgOoJNvtepMoEBvxl7pJLGGYlwUaz88lM"
+2025/10/22 03:03:48 Client staff_1758995428363_2nhfegsve subscribed to events: [queue_updated queue_entry_added queue_entry_removed queue_entry_updated queue_reordered day_pass_created exit_pass_created]
+2025/10/22 03:03:56 WebSocket error: websocket: close 1005 (no status)
+2025/10/22 03:03:56 Client unregistered from station station-ksar-hlel. Total clients: 0
+2025/10/22 03:03:56 Client registered for station station-ksar-hlel. Total clients: 1
+127.0.0.1 - [22/Oct/2025:03:03:56 +0100] "GET /ws/queue/station-ksar-hlel?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjExMjc4MzUsImZpcnN0X25hbWUiOiJVc2VyIiwiaWF0IjoxNzYxMDQxNDM1LCJsYXN0X25hbWUiOiJJdmFuIiwic3RhZmZfaWQiOiJzdGFmZl8xNzU4OTk1NDI4MzYzXzJuaGZlZ3N2ZSJ9.4qLAd3-nucTgOoJNvtepMoEBvxl7pJLGGYlwUaz88lM HTTP/1.1 200 289.669µs "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) louaj-desktop/1.14.6 Chrome/124.0.6367.243 Electron/30.5.1 Safari/537.36" "
+[GIN] 2025/10/22 - 03:03:56 | 200 |     373.094µs |       127.0.0.1 | GET      "/ws/queue/station-ksar-hlel?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjExMjc4MzUsImZpcnN0X25hbWUiOiJVc2VyIiwiaWF0IjoxNzYxMDQxNDM1LCJsYXN0X25hbWUiOiJJdmFuIiwic3RhZmZfaWQiOiJzdGFmZl8xNzU4OTk1NDI4MzYzXzJuaGZlZ3N2ZSJ9.4qLAd3-nucTgOoJNvtepMoEBvxl7pJLGGYlwUaz88lM"
+2025/10/22 03:03:56 Client staff_1758995428363_2nhfegsve subscribed to events: [queue_updated queue_entry_added queue_entry_removed queue_entry_updated queue_reordered day_pass_created exit_pass_created]
+2025/10/22 03:04:02 Broadcasting message type 'queue_entry_added' to all clients
+::1 - [22/Oct/2025:03:04:02 +0100] "POST /internal/broadcast HTTP/1.1 200 489.129µs "Go-http-client/1.1" "
+[GIN] 2025/10/22 - 03:04:02 | 200 |     582.587µs |             ::1 | POST     "/internal/broadcast"
+2025/10/22 03:04:03 WebSocket error: websocket: close 1005 (no status)
+2025/10/22 03:04:03 Client unregistered from station station-ksar-hlel. Total clients: 0
+2025/10/22 03:04:03 Client registered for station station-moknin. Total clients: 1
+127.0.0.1 - [22/Oct/2025:03:04:03 +0100] "GET /ws/queue/station-moknin?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjExMjc4MzUsImZpcnN0X25hbWUiOiJVc2VyIiwiaWF0IjoxNzYxMDQxNDM1LCJsYXN0X25hbWUiOiJJdmFuIiwic3RhZmZfaWQiOiJzdGFmZl8xNzU4OTk1NDI4MzYzXzJuaGZlZ3N2ZSJ9.4qLAd3-nucTgOoJNvtepMoEBvxl7pJLGGYlwUaz88lM HTTP/1.1 200 180.879µs "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) louaj-desktop/1.14.6 Chrome/124.0.6367.243 Electron/30.5.1 Safari/537.36" "
+[GIN] 2025/10/22 - 03:04:03 | 200 |      257.28µs |       127.0.0.1 | GET      "/ws/queue/station-moknin?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjExMjc4MzUsImZpcnN0X25hbWUiOiJVc2VyIiwiaWF0IjoxNzYxMDQxNDM1LCJsYXN0X25hbWUiOiJJdmFuIiwic3RhZmZfaWQiOiJzdGFmZl8xNzU4OTk1NDI4MzYzXzJuaGZlZ3N2ZSJ9.4qLAd3-nucTgOoJNvtepMoEBvxl7pJLGGYlwUaz88lM"
+2025/10/22 03:04:03 Client staff_1758995428363_2nhfegsve subscribed to events: [queue_updated queue_entry_added queue_entry_removed queue_entry_updated queue_reordered day_pass_created exit_pass_created]
+2025/10/22 03:13:02 Client unregistered from station station-moknin. Total clients: 0
+127.0.0.1 - [22/Oct/2025:03:13:02 +0100] "GET /health HTTP/1.1 200 163.61µs "-" "
+[GIN] 2025/10/22 - 03:13:02 | 200 |     306.389µs |       127.0.0.1 | GET      "/health"
+127.0.0.1 - [22/Oct/2025:03:13:02 +0100] "GET /health HTTP/1.1 200 188.984µs "-" "
+[GIN] 2025/10/22 - 03:13:02 | 200 |     532.497µs |       127.0.0.1 | GET      "/health"
+2025/10/22 03:13:02 Client registered for station route_1759022367969_hh3lxici0. Total clients: 1
+127.0.0.1 - [22/Oct/2025:03:13:02 +0100] "GET /ws/queue/route_1759022367969_hh3lxici0?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjExMjc4MzUsImZpcnN0X25hbWUiOiJVc2VyIiwiaWF0IjoxNzYxMDQxNDM1LCJsYXN0X25hbWUiOiJJdmFuIiwic3RhZmZfaWQiOiJzdGFmZl8xNzU4OTk1NDI4MzYzXzJuaGZlZ3N2ZSJ9.4qLAd3-nucTgOoJNvtepMoEBvxl7pJLGGYlwUaz88lM HTTP/1.1 200 170.87µs "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) louaj-desktop/1.14.6 Chrome/124.0.6367.243 Electron/30.5.1 Safari/537.36" "
+[GIN] 2025/10/22 - 03:13:02 | 200 |     246.791µs |       127.0.0.1 | GET      "/ws/queue/route_1759022367969_hh3lxici0?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjExMjc4MzUsImZpcnN0X25hbWUiOiJVc2VyIiwiaWF0IjoxNzYxMDQxNDM1LCJsYXN0X25hbWUiOiJJdmFuIiwic3RhZmZfaWQiOiJzdGFmZl8xNzU4OTk1NDI4MzYzXzJuaGZlZ3N2ZSJ9.4qLAd3-nucTgOoJNvtepMoEBvxl7pJLGGYlwUaz88lM"
+2025/10/22 03:13:02 Client staff_1758995428363_2nhfegsve subscribed to events: [queue_updated queue_entry_added queue_entry_removed queue_entry_updated queue_reordered day_pass_created exit_pass_created]
+2025/10/22 03:13:03 Client unregistered from station route_1759022367969_hh3lxici0. Total clients: 0
+127.0.0.1 - [22/Oct/2025:03:13:03 +0100] "GET /health HTTP/1.1 200 30.676µs "-" "
+[GIN] 2025/10/22 - 03:13:03 | 200 |     100.645µs |       127.0.0.1 | GET      "/health"
+127.0.0.1 - [22/Oct/2025:03:13:03 +0100] "GET /health HTTP/1.1 200 83.699µs "-" "
+[GIN] 2025/10/22 - 03:13:03 | 200 |     291.078µs |       127.0.0.1 | GET      "/health"
+2025/10/22 03:13:03 Client registered for station route_1759022367969_hh3lxici0. Total clients: 1
+127.0.0.1 - [22/Oct/2025:03:13:03 +0100] "GET /ws/queue/route_1759022367969_hh3lxici0?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjExMjc4MzUsImZpcnN0X25hbWUiOiJVc2VyIiwiaWF0IjoxNzYxMDQxNDM1LCJsYXN0X25hbWUiOiJJdmFuIiwic3RhZmZfaWQiOiJzdGFmZl8xNzU4OTk1NDI4MzYzXzJuaGZlZ3N2ZSJ9.4qLAd3-nucTgOoJNvtepMoEBvxl7pJLGGYlwUaz88lM HTTP/1.1 200 153.413µs "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) louaj-desktop/1.14.6 Chrome/124.0.6367.243 Electron/30.5.1 Safari/537.36" "
+[GIN] 2025/10/22 - 03:13:03 | 200 |     249.844µs |       127.0.0.1 | GET      "/ws/queue/route_1759022367969_hh3lxici0?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjExMjc4MzUsImZpcnN0X25hbWUiOiJVc2VyIiwiaWF0IjoxNzYxMDQxNDM1LCJsYXN0X25hbWUiOiJJdmFuIiwic3RhZmZfaWQiOiJzdGFmZl8xNzU4OTk1NDI4MzYzXzJuaGZlZ3N2ZSJ9.4qLAd3-nucTgOoJNvtepMoEBvxl7pJLGGYlwUaz88lM"
+2025/10/22 03:13:03 Client staff_1758995428363_2nhfegsve subscribed to events: [queue_updated queue_entry_added queue_entry_removed queue_entry_updated queue_reordered day_pass_created exit_pass_created]
+2025/10/22 03:13:03 Client unregistered from station route_1759022367969_hh3lxici0. Total clients: 0
+127.0.0.1 - [22/Oct/2025:03:13:03 +0100] "GET /health HTTP/1.1 200 37.46µs "-" "
+[GIN] 2025/10/22 - 03:13:03 | 200 |     102.972µs |       127.0.0.1 | GET      "/health"
+127.0.0.1 - [22/Oct/2025:03:13:03 +0100] "GET /health HTTP/1.1 200 73.667µs "-" "
+[GIN] 2025/10/22 - 03:13:03 | 200 |     266.189µs |       127.0.0.1 | GET      "/health"
+2025/10/22 03:13:03 Client registered for station route_1759022367969_hh3lxici0. Total clients: 1
+127.0.0.1 - [22/Oct/2025:03:13:03 +0100] "GET /ws/queue/route_1759022367969_hh3lxici0?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjExMjc4MzUsImZpcnN0X25hbWUiOiJVc2VyIiwiaWF0IjoxNzYxMDQxNDM1LCJsYXN0X25hbWUiOiJJdmFuIiwic3RhZmZfaWQiOiJzdGFmZl8xNzU4OTk1NDI4MzYzXzJuaGZlZ3N2ZSJ9.4qLAd3-nucTgOoJNvtepMoEBvxl7pJLGGYlwUaz88lM HTTP/1.1 200 461.303µs "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) louaj-desktop/1.14.6 Chrome/124.0.6367.243 Electron/30.5.1 Safari/537.36" "
+[GIN] 2025/10/22 - 03:13:03 | 200 |     568.565µs |       127.0.0.1 | GET      "/ws/queue/route_1759022367969_hh3lxici0?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjExMjc4MzUsImZpcnN0X25hbWUiOiJVc2VyIiwiaWF0IjoxNzYxMDQxNDM1LCJsYXN0X25hbWUiOiJJdmFuIiwic3RhZmZfaWQiOiJzdGFmZl8xNzU4OTk1NDI4MzYzXzJuaGZlZ3N2ZSJ9.4qLAd3-nucTgOoJNvtepMoEBvxl7pJLGGYlwUaz88lM"
+2025/10/22 03:13:03 Client staff_1758995428363_2nhfegsve subscribed to events: [queue_updated queue_entry_added queue_entry_removed queue_entry_updated queue_reordered day_pass_created exit_pass_created]
+2025/10/22 03:13:07 WebSocket error: websocket: close 1005 (no status)
+2025/10/22 03:13:07 Client unregistered from station route_1759022367969_hh3lxici0. Total clients: 0
+2025/10/22 03:13:07 Client registered for station station-moknin. Total clients: 1
+127.0.0.1 - [22/Oct/2025:03:13:07 +0100] "GET /ws/queue/station-moknin?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjExMjc4MzUsImZpcnN0X25hbWUiOiJVc2VyIiwiaWF0IjoxNzYxMDQxNDM1LCJsYXN0X25hbWUiOiJJdmFuIiwic3RhZmZfaWQiOiJzdGFmZl8xNzU4OTk1NDI4MzYzXzJuaGZlZ3N2ZSJ9.4qLAd3-nucTgOoJNvtepMoEBvxl7pJLGGYlwUaz88lM HTTP/1.1 200 116.169µs "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) louaj-desktop/1.14.6 Chrome/124.0.6367.243 Electron/30.5.1 Safari/537.36" "
+[GIN] 2025/10/22 - 03:13:07 | 200 |     174.092µs |       127.0.0.1 | GET      "/ws/queue/station-moknin?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjExMjc4MzUsImZpcnN0X25hbWUiOiJVc2VyIiwiaWF0IjoxNzYxMDQxNDM1LCJsYXN0X25hbWUiOiJJdmFuIiwic3RhZmZfaWQiOiJzdGFmZl8xNzU4OTk1NDI4MzYzXzJuaGZlZ3N2ZSJ9.4qLAd3-nucTgOoJNvtepMoEBvxl7pJLGGYlwUaz88lM"
+2025/10/22 03:13:07 Client staff_1758995428363_2nhfegsve subscribed to events: [queue_updated queue_entry_added queue_entry_removed queue_entry_updated queue_reordered day_pass_created exit_pass_created]
+2025/10/22 03:13:08 WebSocket error: websocket: close 1005 (no status)
+2025/10/22 03:13:08 Client unregistered from station station-moknin. Total clients: 0
+2025/10/22 03:13:08 Client registered for station station-teboulba. Total clients: 1
+127.0.0.1 - [22/Oct/2025:03:13:08 +0100] "GET /ws/queue/station-teboulba?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjExMjc4MzUsImZpcnN0X25hbWUiOiJVc2VyIiwiaWF0IjoxNzYxMDQxNDM1LCJsYXN0X25hbWUiOiJJdmFuIiwic3RhZmZfaWQiOiJzdGFmZl8xNzU4OTk1NDI4MzYzXzJuaGZlZ3N2ZSJ9.4qLAd3-nucTgOoJNvtepMoEBvxl7pJLGGYlwUaz88lM HTTP/1.1 200 210.248µs "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) louaj-desktop/1.14.6 Chrome/124.0.6367.243 Electron/30.5.1 Safari/537.36" "
+[GIN] 2025/10/22 - 03:13:08 | 200 |     397.429µs |       127.0.0.1 | GET      "/ws/queue/station-teboulba?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjExMjc4MzUsImZpcnN0X25hbWUiOiJVc2VyIiwiaWF0IjoxNzYxMDQxNDM1LCJsYXN0X25hbWUiOiJJdmFuIiwic3RhZmZfaWQiOiJzdGFmZl8xNzU4OTk1NDI4MzYzXzJuaGZlZ3N2ZSJ9.4qLAd3-nucTgOoJNvtepMoEBvxl7pJLGGYlwUaz88lM"
+2025/10/22 03:13:08 Client staff_1758995428363_2nhfegsve subscribed to events: [queue_updated queue_entry_added queue_entry_removed queue_entry_updated queue_reordered day_pass_created exit_pass_created]
+2025/10/22 03:13:12 Client unregistered from station station-teboulba. Total clients: 0
+127.0.0.1 - [22/Oct/2025:03:13:13 +0100] "GET /health HTTP/1.1 200 47.364µs "-" "
+[GIN] 2025/10/22 - 03:13:13 | 200 |     146.681µs |       127.0.0.1 | GET      "/health"
+127.0.0.1 - [22/Oct/2025:03:13:13 +0100] "GET /health HTTP/1.1 200 26.905µs "-" "
+[GIN] 2025/10/22 - 03:13:13 | 200 |      62.132µs |       127.0.0.1 | GET      "/health"
+127.0.0.1 - [22/Oct/2025:03:13:13 +0100] "GET /ws/queue/route_1759022367969_hh3lxici0?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjExMjc4MzUsImZpcnN0X25hbWUiOiJVc2VyIiwiaWF0IjoxNzYxMDQxNDM1LCJsYXN0X25hbWUiOiJJdmFuIiwic3RhZmZfaWQiOiJzdGFmZl8xNzU4OTk1NDI4MzYzXzJuaGZlZ3N2ZSJ9.4qLAd3-nucTgOoJNvtepMoEBvxl7pJLGGYlwUaz88lM HTTP/1.1 200 841.588µs "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) louaj-desktop/1.14.6 Chrome/124.0.6367.243 Electron/30.5.1 Safari/537.36" "
+2025/10/22 03:13:13 Client registered for station route_1759022367969_hh3lxici0. Total clients: 1
+[GIN] 2025/10/22 - 03:13:13 | 200 |     1.18625ms |       127.0.0.1 | GET      "/ws/queue/route_1759022367969_hh3lxici0?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjExMjc4MzUsImZpcnN0X25hbWUiOiJVc2VyIiwiaWF0IjoxNzYxMDQxNDM1LCJsYXN0X25hbWUiOiJJdmFuIiwic3RhZmZfaWQiOiJzdGFmZl8xNzU4OTk1NDI4MzYzXzJuaGZlZ3N2ZSJ9.4qLAd3-nucTgOoJNvtepMoEBvxl7pJLGGYlwUaz88lM"
+2025/10/22 03:13:13 Client staff_1758995428363_2nhfegsve subscribed to events: [queue_updated queue_entry_added queue_entry_removed queue_entry_updated queue_reordered day_pass_created exit_pass_created]
+2025/10/22 03:13:56 Client unregistered from station route_1759022367969_hh3lxici0. Total clients: 0
+127.0.0.1 - [22/Oct/2025:03:13:57 +0100] "GET /health HTTP/1.1 200 52.7µs "-" "
+[GIN] 2025/10/22 - 03:13:57 | 200 |      138.31µs |       127.0.0.1 | GET      "/health"
+127.0.0.1 - [22/Oct/2025:03:13:57 +0100] "GET /health HTTP/1.1 200 49.834µs "-" "
+[GIN] 2025/10/22 - 03:13:57 | 200 |     128.276µs |       127.0.0.1 | GET      "/health"
+2025/10/22 03:13:57 Client registered for station route_1759022367969_hh3lxici0. Total clients: 1
+127.0.0.1 - [22/Oct/2025:03:13:57 +0100] "GET /ws/queue/route_1759022367969_hh3lxici0?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjExMjc4MzUsImZpcnN0X25hbWUiOiJVc2VyIiwiaWF0IjoxNzYxMDQxNDM1LCJsYXN0X25hbWUiOiJJdmFuIiwic3RhZmZfaWQiOiJzdGFmZl8xNzU4OTk1NDI4MzYzXzJuaGZlZ3N2ZSJ9.4qLAd3-nucTgOoJNvtepMoEBvxl7pJLGGYlwUaz88lM HTTP/1.1 200 928.429µs "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) louaj-desktop/1.14.6 Chrome/124.0.6367.243 Electron/30.5.1 Safari/537.36" "
+[GIN] 2025/10/22 - 03:13:57 | 200 |    1.293562ms |       127.0.0.1 | GET      "/ws/queue/route_1759022367969_hh3lxici0?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjExMjc4MzUsImZpcnN0X25hbWUiOiJVc2VyIiwiaWF0IjoxNzYxMDQxNDM1LCJsYXN0X25hbWUiOiJJdmFuIiwic3RhZmZfaWQiOiJzdGFmZl8xNzU4OTk1NDI4MzYzXzJuaGZlZ3N2ZSJ9.4qLAd3-nucTgOoJNvtepMoEBvxl7pJLGGYlwUaz88lM"
+2025/10/22 03:13:57 Client staff_1758995428363_2nhfegsve subscribed to events: [queue_updated queue_entry_added queue_entry_removed queue_entry_updated queue_reordered day_pass_created exit_pass_created]
+2025/10/22 03:15:17 WebSocket error: websocket: close 1005 (no status)
+2025/10/22 03:15:17 Client unregistered from station route_1759022367969_hh3lxici0. Total clients: 0
+2025/10/22 03:15:17 Client registered for station route_1759022367969_hh3lxici0. Total clients: 1
+127.0.0.1 - [22/Oct/2025:03:15:17 +0100] "GET /ws/queue/route_1759022367969_hh3lxici0?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjExMjc4MzUsImZpcnN0X25hbWUiOiJVc2VyIiwiaWF0IjoxNzYxMDQxNDM1LCJsYXN0X25hbWUiOiJJdmFuIiwic3RhZmZfaWQiOiJzdGFmZl8xNzU4OTk1NDI4MzYzXzJuaGZlZ3N2ZSJ9.4qLAd3-nucTgOoJNvtepMoEBvxl7pJLGGYlwUaz88lM HTTP/1.1 200 260.695µs "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) louaj-desktop/1.14.6 Chrome/124.0.6367.243 Electron/30.5.1 Safari/537.36" "
+[GIN] 2025/10/22 - 03:15:17 | 200 |     377.162µs |       127.0.0.1 | GET      "/ws/queue/route_1759022367969_hh3lxici0?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjExMjc4MzUsImZpcnN0X25hbWUiOiJVc2VyIiwiaWF0IjoxNzYxMDQxNDM1LCJsYXN0X25hbWUiOiJJdmFuIiwic3RhZmZfaWQiOiJzdGFmZl8xNzU4OTk1NDI4MzYzXzJuaGZlZ3N2ZSJ9.4qLAd3-nucTgOoJNvtepMoEBvxl7pJLGGYlwUaz88lM"
+2025/10/22 03:15:17 Client staff_1758995428363_2nhfegsve subscribed to events: [queue_updated queue_entry_added queue_entry_removed queue_entry_updated queue_reordered day_pass_created exit_pass_created]
+2025/10/22 03:15:24 WebSocket error: websocket: close 1005 (no status)
+2025/10/22 03:15:24 Client unregistered from station route_1759022367969_hh3lxici0. Total clients: 0
+127.0.0.1 - [22/Oct/2025:03:15:24 +0100] "GET /ws/queue/route_1759022367969_hh3lxici0?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjExMjc4MzUsImZpcnN0X25hbWUiOiJVc2VyIiwiaWF0IjoxNzYxMDQxNDM1LCJsYXN0X25hbWUiOiJJdmFuIiwic3RhZmZfaWQiOiJzdGFmZl8xNzU4OTk1NDI4MzYzXzJuaGZlZ3N2ZSJ9.4qLAd3-nucTgOoJNvtepMoEBvxl7pJLGGYlwUaz88lM HTTP/1.1 200 350.312µs "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) louaj-desktop/1.14.6 Chrome/124.0.6367.243 Electron/30.5.1 Safari/537.36" "
+2025/10/22 03:15:24 Client registered for station route_1759022367969_hh3lxici0. Total clients: 1
+[GIN] 2025/10/22 - 03:15:24 | 200 |     475.733µs |       127.0.0.1 | GET      "/ws/queue/route_1759022367969_hh3lxici0?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjExMjc4MzUsImZpcnN0X25hbWUiOiJVc2VyIiwiaWF0IjoxNzYxMDQxNDM1LCJsYXN0X25hbWUiOiJJdmFuIiwic3RhZmZfaWQiOiJzdGFmZl8xNzU4OTk1NDI4MzYzXzJuaGZlZ3N2ZSJ9.4qLAd3-nucTgOoJNvtepMoEBvxl7pJLGGYlwUaz88lM"
+2025/10/22 03:15:24 Client staff_1758995428363_2nhfegsve subscribed to events: [queue_updated queue_entry_added queue_entry_removed queue_entry_updated queue_reordered day_pass_created exit_pass_created]
+2025/10/22 03:15:46 Client unregistered from station route_1759022367969_hh3lxici0. Total clients: 0

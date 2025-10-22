@@ -311,14 +311,26 @@ func (h *Handler) PrintExitPassAndRemoveFromQueue(c *gin.Context) {
 		return
 	}
 
-	// Calculate total amount: booked seats × base price
-	totalAmount := float64(request.BookedSeats) * request.BasePrice
+	var totalAmount float64
+	var seatNumber int
+
+	// Check if vehicle has bookings or is empty
+	if request.BookedSeats > 0 {
+		// Vehicle has bookings: calculate total amount as booked seats × base price
+		totalAmount = float64(request.BookedSeats) * request.BasePrice
+		seatNumber = request.BookedSeats
+	} else {
+		// Vehicle is empty: calculate total amount as service fees × vehicle capacity
+		serviceFeePerSeat := 0.15 // Service fee per seat
+		totalAmount = serviceFeePerSeat * float64(request.TotalSeats)
+		seatNumber = request.TotalSeats // Use total seats for empty vehicle
+	}
 
 	// Create ticket data for printing
 	ticketData := &TicketData{
 		LicensePlate:    request.LicensePlate,
 		DestinationName: request.DestinationName,
-		SeatNumber:      request.BookedSeats, // Use booked seats as seat number
+		SeatNumber:      seatNumber,
 		TotalAmount:     totalAmount,
 		CreatedBy:       request.CreatedBy,
 		CreatedAt:       time.Now(),
@@ -346,7 +358,15 @@ func (h *Handler) PrintExitPassAndRemoveFromQueue(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "queueEntryId is required"})
 		return
 	}
-	if _, tripErr := h.queueService.CreateTripFromExit(context.Background(), request.QueueEntryID, request.LicensePlate, request.DestinationName, request.BookedSeats, request.TotalSeats, request.BasePrice); tripErr != nil {
+
+	// Create trip record with appropriate seat count
+	tripSeatsBooked := request.BookedSeats
+	if request.BookedSeats == 0 {
+		// For empty vehicles, record the vehicle capacity as "seats booked" for trip tracking
+		tripSeatsBooked = request.TotalSeats
+	}
+
+	if _, tripErr := h.queueService.CreateTripFromExit(context.Background(), request.QueueEntryID, request.LicensePlate, request.DestinationName, tripSeatsBooked, request.TotalSeats, request.BasePrice); tripErr != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to create trip record: " + tripErr.Error()})
 		return
 	}
@@ -363,6 +383,7 @@ func (h *Handler) PrintExitPassAndRemoveFromQueue(c *gin.Context) {
 		"totalAmount": totalAmount,
 		"bookedSeats": request.BookedSeats,
 		"basePrice":   request.BasePrice,
+		"isEmpty":     request.BookedSeats == 0,
 	})
 }
 

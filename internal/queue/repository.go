@@ -898,10 +898,10 @@ func (r *RepositoryImpl) ListDayPasses(ctx context.Context, limit int) ([]DayPas
 func (r *RepositoryImpl) ListQueueSummaries(ctx context.Context, station string) ([]QueueSummary, error) {
 	// Define station-to-destination mapping
 	stationDestinations := map[string][]string{
-		"jammel":         {"JAMMEL"},
-		"moknin-tboulba": {"MOKNIN", "TBOULBA"},
-		"kasra-hlele":    {"KASRA HLELE"},
-		"all":            {"JAMMEL", "MOKNIN", "TBOULBA", "KASRA HLELE"},
+		"jammel":         {"JEMMAL"},
+		"moknin-tboulba": {"MOKNIN", "TEBOULBA"},
+		"kasra-hlele":    {"KSAR HLEL"},
+		"all":            {"JEMMAL", "MOKNIN", "TEBOULBA", "KSAR HLEL"},
 	}
 
 	var query string

@@ -170,9 +170,13 @@ func (s *Service) generateBookingTicketContent(data *TicketData) string {
 
 	// Detailed pricing breakdown
 	if data.BasePrice > 0 {
+		// Calculate service fee (0.15 TND per seat)
 		serviceFee := 0.15
-		content.WriteString(fmt.Sprintf("Prix de base: %.2f TND\n", data.BasePrice))
-		content.WriteString(fmt.Sprintf("Frais de service: %.2f TND\n", serviceFee))
+		baseTotal := data.BasePrice
+		serviceTotal := serviceFee
+
+		content.WriteString(fmt.Sprintf("Prix de base: %.2f TND\n", baseTotal))
+		content.WriteString(fmt.Sprintf("Frais de service: %.2f TND\n", serviceTotal))
 		content.WriteString(fmt.Sprintf("Total: %.2f TND\n", data.TotalAmount))
 	} else {
 		content.WriteString(fmt.Sprintf("Montant: %.2f TND\n", data.TotalAmount))
@@ -323,7 +327,37 @@ func (s *Service) generateExitPassTicketContent(data *TicketData) string {
 	// Essential information in compact format
 	content.WriteString(fmt.Sprintf("Vehicule: %s\n", data.LicensePlate))
 	content.WriteString(fmt.Sprintf("Destination: %s\n", data.DestinationName))
-	content.WriteString(fmt.Sprintf("Montant Total: %.2f TND\n", data.TotalAmount))
+
+	// Detailed pricing breakdown for exit pass
+	if data.BasePrice > 0 && data.SeatNumber > 0 {
+		// Check if this is an empty vehicle (seatNumber equals vehicle capacity)
+		if data.VehicleCapacity > 0 && data.SeatNumber == data.VehicleCapacity {
+			// Empty vehicle: show service fees calculation
+			serviceFeePerSeat := 0.15
+			serviceTotal := serviceFeePerSeat * float64(data.VehicleCapacity)
+
+			content.WriteString(fmt.Sprintf("Capacité véhicule: %d sièges\n", data.VehicleCapacity))
+			content.WriteString(fmt.Sprintf("Frais de service: %.2f TND\n", serviceTotal))
+			content.WriteString(fmt.Sprintf("Montant Total: %.2f TND\n", data.TotalAmount))
+		} else {
+			// Vehicle with bookings: show base price calculation
+			baseTotal := data.BasePrice * float64(data.SeatNumber)
+
+			content.WriteString(fmt.Sprintf("Sièges réservés: %d\n", data.SeatNumber))
+			content.WriteString(fmt.Sprintf("Prix de base: %.2f TND\n", baseTotal))
+			content.WriteString(fmt.Sprintf("Montant Total: %.2f TND\n", data.TotalAmount))
+		}
+	} else if data.BasePrice > 0 && data.VehicleCapacity > 0 {
+		// Fallback to vehicle capacity if seat number not available
+		baseTotal := data.BasePrice * float64(data.VehicleCapacity)
+
+		content.WriteString(fmt.Sprintf("Capacité véhicule: %d sièges\n", data.VehicleCapacity))
+		content.WriteString(fmt.Sprintf("Prix de base: %.2f TND\n", baseTotal))
+		content.WriteString(fmt.Sprintf("Montant Total: %.2f TND\n", data.TotalAmount))
+	} else {
+		content.WriteString(fmt.Sprintf("Montant Total: %.2f TND\n", data.TotalAmount))
+	}
+
 	fmt.Printf("DEBUG: Exit pass ticket time - Original: %v\n", data.CreatedAt)
 	content.WriteString(fmt.Sprintf("Date: %s\n", data.CreatedAt.Format("02/01/2006 15:04")))
 	content.WriteString(fmt.Sprintf("Agent: %s\n", data.CreatedBy))

@@ -23,6 +23,8 @@ type Repository interface {
 	// Ghost booking methods
 	CreateGhostBooking(ctx context.Context, req CreateGhostBookingRequest) (*GhostBooking, error)
 	GetGhostBookingCount(ctx context.Context, destinationID string) (int, error)
+	// Trip count by license plate
+	GetTodayTripsCountByLicensePlate(ctx context.Context, licensePlate string) (int, error)
 }
 
 type RepositoryImpl struct {
@@ -333,7 +335,7 @@ func (r *RepositoryImpl) ListTrips(ctx context.Context, limit int) ([]Trip, erro
 	}
 	rows, err := r.db.Query(ctx, `
         SELECT id, vehicle_id, license_plate, destination_id, destination_name, queue_id, seats_booked,
-               NULL::int as vehicle_capacity, NULL::numeric as base_price, start_time, created_at
+               vehicle_capacity, base_price, start_time, created_at
         FROM trips ORDER BY start_time DESC LIMIT $1`, limit)
 	if err != nil {
 		return nil, err
@@ -360,7 +362,7 @@ func (r *RepositoryImpl) ListTodayTrips(ctx context.Context, search string, limi
 	if search != "" {
 		rows, err = r.db.Query(ctx, `
             SELECT id, vehicle_id, license_plate, destination_id, destination_name, queue_id, seats_booked,
-                   NULL::int as vehicle_capacity, NULL::numeric as base_price, start_time, created_at
+                   vehicle_capacity, base_price, start_time, created_at
             FROM trips
             WHERE start_time::date = CURRENT_DATE AND license_plate ILIKE '%' || $1 || '%'
             ORDER BY start_time DESC
@@ -369,7 +371,7 @@ func (r *RepositoryImpl) ListTodayTrips(ctx context.Context, search string, limi
 	} else {
 		rows, err = r.db.Query(ctx, `
             SELECT id, vehicle_id, license_plate, destination_id, destination_name, queue_id, seats_booked,
-                   NULL::int as vehicle_capacity, NULL::numeric as base_price, start_time, created_at
+                   vehicle_capacity, base_price, start_time, created_at
             FROM trips
             WHERE start_time::date = CURRENT_DATE
             ORDER BY start_time DESC
@@ -722,6 +724,20 @@ func (r *RepositoryImpl) GetGhostBookingCount(ctx context.Context, destinationID
 		SELECT COUNT(*) 
 		FROM bookings 
 		WHERE destination_id = $1 AND is_ghost_booking = true AND booking_status = 'ACTIVE'`, destinationID).Scan(&count)
+	if err != nil {
+		return 0, err
+	}
+	return count, nil
+}
+
+// GetTodayTripsCountByLicensePlate returns the count of trips for a specific license plate today
+func (r *RepositoryImpl) GetTodayTripsCountByLicensePlate(ctx context.Context, licensePlate string) (int, error) {
+	var count int
+	err := r.db.QueryRow(ctx, `
+		SELECT COUNT(*)
+		FROM trips
+		WHERE start_time::date = CURRENT_DATE AND license_plate = $1
+	`, licensePlate).Scan(&count)
 	if err != nil {
 		return 0, err
 	}

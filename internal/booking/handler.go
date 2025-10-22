@@ -159,3 +159,17 @@ func (h *Handler) GetGhostBookingCount(c *gin.Context) {
 	}
 	utils.SuccessResponse(c, http.StatusOK, "Ghost booking count fetched", map[string]int{"count": count})
 }
+
+func (h *Handler) GetTodayTripsCountByLicensePlate(c *gin.Context) {
+	licensePlate := c.Query("license_plate")
+	if licensePlate == "" {
+		utils.BadRequestResponse(c, "license_plate parameter is required")
+		return
+	}
+	count, err := h.service.GetTodayTripsCountByLicensePlate(context.Background(), licensePlate)
+	if err != nil {
+		utils.InternalServerErrorResponse(c, "Failed to get trips count by license plate", err)
+		return
+	}
+	utils.SuccessResponse(c, http.StatusOK, "Trips count by license plate fetched", map[string]int{"count": count})
+}
