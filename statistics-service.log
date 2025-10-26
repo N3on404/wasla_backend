@@ -1,0 +1,203 @@
+[GIN-debug] [WARNING] Creating an Engine instance with the Logger and Recovery middleware already attached.
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+2025/10/26 07:09:39 Statistics service starting on port 8006
+127.0.0.1 - [26/Oct/2025:07:09:42 +0100] "GET /health HTTP/1.1 200 42.157µs "-" "
+[GIN] 2025/10/26 - 07:09:42 | 200 |     260.131µs |       127.0.0.1 | GET      "/health"
+127.0.0.1 - [26/Oct/2025:07:09:49 +0100] "GET /api/v1/statistics/staff/all?date=2025-10-26 HTTP/1.1 200 18.700571ms "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) management-desktop/0.1.0 Chrome/124.0.6367.243 Electron/30.5.1 Safari/537.36" "
+[GIN] 2025/10/26 - 07:09:49 | 200 |   19.017981ms |       127.0.0.1 | GET      "/api/v1/statistics/staff/all?date=2025-10-26"
+127.0.0.1 - [26/Oct/2025:07:09:49 +0100] "GET /api/v1/statistics/income/actual?date=2025-10-26 HTTP/1.1 200 13.310669ms "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) management-desktop/0.1.0 Chrome/124.0.6367.243 Electron/30.5.1 Safari/537.36" "
+[GIN] 2025/10/26 - 07:09:49 | 200 |   13.880497ms |       127.0.0.1 | GET      "/api/v1/statistics/income/actual?date=2025-10-26"
+127.0.0.1 - [26/Oct/2025:07:09:50 +0100] "GET /api/v1/statistics/ws?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjE1NDQ2MjUsImZpcnN0X25hbWUiOiJBaG1lZCIsImlhdCI6MTc2MTQ1ODIyNSwibGFzdF9uYW1lIjoiQmVuIEFsaSIsInN0YWZmX2lkIjoic3RhZmYtMDAxIn0.0HojxCDiYBnx_na8kSN2hWtU5Rq852JqKKMT2s6RWXI HTTP/1.1 200 743.273µs "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) management-desktop/0.1.0 Chrome/124.0.6367.243 Electron/30.5.1 Safari/537.36" "
+2025/10/26 07:09:50 Client registered for station *. Total clients: 1
+[GIN] 2025/10/26 - 07:09:50 | 200 |    1.637287ms |       127.0.0.1 | GET      "/api/v1/statistics/ws?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjE1NDQ2MjUsImZpcnN0X25hbWUiOiJBaG1lZCIsImlhdCI6MTc2MTQ1ODIyNSwibGFzdF9uYW1lIjoiQmVuIEFsaSIsInN0YWZmX2lkIjoic3RhZmYtMDAxIn0.0HojxCDiYBnx_na8kSN2hWtU5Rq852JqKKMT2s6RWXI"
+2025/10/26 07:10:09 Error getting station stats for periodic update: can't scan into dest[2] (col: date): cannot scan NULL into *time.Time
+2025/10/26 07:10:12 Error getting station stats for periodic update: can't scan into dest[2] (col: date): cannot scan NULL into *time.Time
+127.0.0.1 - [26/Oct/2025:07:10:12 +0100] "POST /api/v1/statistics/broadcast HTTP/1.1 200 9.645006ms "curl/7.81.0" "
+[GIN] 2025/10/26 - 07:10:12 | 200 |    9.782539ms |       127.0.0.1 | POST     "/api/v1/statistics/broadcast"
+2025/10/26 07:10:39 Error getting station stats for periodic update: can't scan into dest[2] (col: date): cannot scan NULL into *time.Time
+2025/10/26 07:11:09 Error getting station stats for periodic update: can't scan into dest[2] (col: date): cannot scan NULL into *time.Time
+2025/10/26 07:11:10 WebSocket error: websocket: close 1005 (no status)
+2025/10/26 07:11:10 Client unregistered from station *. Total clients: 0
+2025/10/26 07:11:10 Client registered for station *. Total clients: 1
+127.0.0.1 - [26/Oct/2025:07:11:10 +0100] "GET /api/v1/statistics/ws?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjE1NDQ2MjUsImZpcnN0X25hbWUiOiJBaG1lZCIsImlhdCI6MTc2MTQ1ODIyNSwibGFzdF9uYW1lIjoiQmVuIEFsaSIsInN0YWZmX2lkIjoic3RhZmYtMDAxIn0.0HojxCDiYBnx_na8kSN2hWtU5Rq852JqKKMT2s6RWXI HTTP/1.1 200 143.373µs "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) management-desktop/0.1.0 Chrome/124.0.6367.243 Electron/30.5.1 Safari/537.36" "
+[GIN] 2025/10/26 - 07:11:10 | 200 |     363.635µs |       127.0.0.1 | GET      "/api/v1/statistics/ws?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjE1NDQ2MjUsImZpcnN0X25hbWUiOiJBaG1lZCIsImlhdCI6MTc2MTQ1ODIyNSwibGFzdF9uYW1lIjoiQmVuIEFsaSIsInN0YWZmX2lkIjoic3RhZmYtMDAxIn0.0HojxCDiYBnx_na8kSN2hWtU5Rq852JqKKMT2s6RWXI"
+127.0.0.1 - [26/Oct/2025:07:11:10 +0100] "GET /api/v1/statistics/staff/all?date=2025-10-26 HTTP/1.1 200 4.879352ms "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) management-desktop/0.1.0 Chrome/124.0.6367.243 Electron/30.5.1 Safari/537.36" "
+[GIN] 2025/10/26 - 07:11:10 | 200 |    5.075611ms |       127.0.0.1 | GET      "/api/v1/statistics/staff/all?date=2025-10-26"
+127.0.0.1 - [26/Oct/2025:07:11:10 +0100] "GET /api/v1/statistics/income/actual?date=2025-10-26 HTTP/1.1 200 4.939021ms "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) management-desktop/0.1.0 Chrome/124.0.6367.243 Electron/30.5.1 Safari/537.36" "
+[GIN] 2025/10/26 - 07:11:10 | 200 |    5.206142ms |       127.0.0.1 | GET      "/api/v1/statistics/income/actual?date=2025-10-26"
+2025/10/26 07:11:19 WebSocket error: websocket: close 1005 (no status)
+2025/10/26 07:11:19 Client unregistered from station *. Total clients: 0
+127.0.0.1 - [26/Oct/2025:07:11:19 +0100] "GET /api/v1/statistics/ws?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjE1NDQ2MjUsImZpcnN0X25hbWUiOiJBaG1lZCIsImlhdCI6MTc2MTQ1ODIyNSwibGFzdF9uYW1lIjoiQmVuIEFsaSIsInN0YWZmX2lkIjoic3RhZmYtMDAxIn0.0HojxCDiYBnx_na8kSN2hWtU5Rq852JqKKMT2s6RWXI HTTP/1.1 200 505.632µs "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) management-desktop/0.1.0 Chrome/124.0.6367.243 Electron/30.5.1 Safari/537.36" "
+2025/10/26 07:11:19 Client registered for station *. Total clients: 1
+[GIN] 2025/10/26 - 07:11:19 | 200 |     803.602µs |       127.0.0.1 | GET      "/api/v1/statistics/ws?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjE1NDQ2MjUsImZpcnN0X25hbWUiOiJBaG1lZCIsImlhdCI6MTc2MTQ1ODIyNSwibGFzdF9uYW1lIjoiQmVuIEFsaSIsInN0YWZmX2lkIjoic3RhZmYtMDAxIn0.0HojxCDiYBnx_na8kSN2hWtU5Rq852JqKKMT2s6RWXI"
+127.0.0.1 - [26/Oct/2025:07:11:19 +0100] "GET /api/v1/statistics/staff/all?date=2025-10-26 HTTP/1.1 200 5.056478ms "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) management-desktop/0.1.0 Chrome/124.0.6367.243 Electron/30.5.1 Safari/537.36" "
+[GIN] 2025/10/26 - 07:11:19 | 200 |    5.191545ms |       127.0.0.1 | GET      "/api/v1/statistics/staff/all?date=2025-10-26"
+127.0.0.1 - [26/Oct/2025:07:11:20 +0100] "GET /api/v1/statistics/income/actual?date=2025-10-26 HTTP/1.1 200 2.525287ms "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) management-desktop/0.1.0 Chrome/124.0.6367.243 Electron/30.5.1 Safari/537.36" "
+[GIN] 2025/10/26 - 07:11:20 | 200 |    2.656145ms |       127.0.0.1 | GET      "/api/v1/statistics/income/actual?date=2025-10-26"
+2025/10/26 07:11:25 WebSocket error: websocket: close 1005 (no status)
+2025/10/26 07:11:25 Client unregistered from station *. Total clients: 0
+2025/10/26 07:11:25 Client registered for station *. Total clients: 1
+127.0.0.1 - [26/Oct/2025:07:11:25 +0100] "GET /api/v1/statistics/ws?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjE1NDQ2MjUsImZpcnN0X25hbWUiOiJBaG1lZCIsImlhdCI6MTc2MTQ1ODIyNSwibGFzdF9uYW1lIjoiQmVuIEFsaSIsInN0YWZmX2lkIjoic3RhZmYtMDAxIn0.0HojxCDiYBnx_na8kSN2hWtU5Rq852JqKKMT2s6RWXI HTTP/1.1 200 564.649µs "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) management-desktop/0.1.0 Chrome/124.0.6367.243 Electron/30.5.1 Safari/537.36" "
+[GIN] 2025/10/26 - 07:11:25 | 200 |    1.181627ms |       127.0.0.1 | GET      "/api/v1/statistics/ws?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjE1NDQ2MjUsImZpcnN0X25hbWUiOiJBaG1lZCIsImlhdCI6MTc2MTQ1ODIyNSwibGFzdF9uYW1lIjoiQmVuIEFsaSIsInN0YWZmX2lkIjoic3RhZmYtMDAxIn0.0HojxCDiYBnx_na8kSN2hWtU5Rq852JqKKMT2s6RWXI"
+127.0.0.1 - [26/Oct/2025:07:11:25 +0100] "GET /api/v1/statistics/staff/all?date=2025-10-26 HTTP/1.1 200 5.343901ms "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) management-desktop/0.1.0 Chrome/124.0.6367.243 Electron/30.5.1 Safari/537.36" "
+[GIN] 2025/10/26 - 07:11:25 | 200 |    5.516602ms |       127.0.0.1 | GET      "/api/v1/statistics/staff/all?date=2025-10-26"
+127.0.0.1 - [26/Oct/2025:07:11:25 +0100] "GET /api/v1/statistics/income/actual?date=2025-10-26 HTTP/1.1 200 5.732377ms "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) management-desktop/0.1.0 Chrome/124.0.6367.243 Electron/30.5.1 Safari/537.36" "
+[GIN] 2025/10/26 - 07:11:25 | 200 |    5.989109ms |       127.0.0.1 | GET      "/api/v1/statistics/income/actual?date=2025-10-26"
+2025/10/26 07:11:39 Error getting station stats for periodic update: can't scan into dest[2] (col: date): cannot scan NULL into *time.Time
+2025/10/26 07:12:09 Error getting station stats for periodic update: can't scan into dest[2] (col: date): cannot scan NULL into *time.Time
+2025/10/26 07:12:17 WebSocket error: websocket: close 1005 (no status)
+2025/10/26 07:12:17 Client unregistered from station *. Total clients: 0
+2025/10/26 07:12:17 Client registered for station *. Total clients: 1
+127.0.0.1 - [26/Oct/2025:07:12:17 +0100] "GET /api/v1/statistics/ws?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjE1NDQ2MjUsImZpcnN0X25hbWUiOiJBaG1lZCIsImlhdCI6MTc2MTQ1ODIyNSwibGFzdF9uYW1lIjoiQmVuIEFsaSIsInN0YWZmX2lkIjoic3RhZmYtMDAxIn0.0HojxCDiYBnx_na8kSN2hWtU5Rq852JqKKMT2s6RWXI HTTP/1.1 200 351.07µs "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) management-desktop/0.1.0 Chrome/124.0.6367.243 Electron/30.5.1 Safari/537.36" "
+[GIN] 2025/10/26 - 07:12:17 | 200 |     654.234µs |       127.0.0.1 | GET      "/api/v1/statistics/ws?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjE1NDQ2MjUsImZpcnN0X25hbWUiOiJBaG1lZCIsImlhdCI6MTc2MTQ1ODIyNSwibGFzdF9uYW1lIjoiQmVuIEFsaSIsInN0YWZmX2lkIjoic3RhZmYtMDAxIn0.0HojxCDiYBnx_na8kSN2hWtU5Rq852JqKKMT2s6RWXI"
+127.0.0.1 - [26/Oct/2025:07:12:17 +0100] "GET /api/v1/statistics/staff/all?date=2025-10-26 HTTP/1.1 200 9.005078ms "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) management-desktop/0.1.0 Chrome/124.0.6367.243 Electron/30.5.1 Safari/537.36" "
+[GIN] 2025/10/26 - 07:12:17 | 200 |    9.612098ms |       127.0.0.1 | GET      "/api/v1/statistics/staff/all?date=2025-10-26"
+127.0.0.1 - [26/Oct/2025:07:12:17 +0100] "GET /api/v1/statistics/income/actual?date=2025-10-26 HTTP/1.1 200 14.474729ms "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) management-desktop/0.1.0 Chrome/124.0.6367.243 Electron/30.5.1 Safari/537.36" "
+[GIN] 2025/10/26 - 07:12:17 | 200 |   14.789817ms |       127.0.0.1 | GET      "/api/v1/statistics/income/actual?date=2025-10-26"
+2025/10/26 07:12:23 WebSocket error: websocket: close 1005 (no status)
+2025/10/26 07:12:23 Client unregistered from station *. Total clients: 0
+2025/10/26 07:12:23 Client registered for station *. Total clients: 1
+127.0.0.1 - [26/Oct/2025:07:12:23 +0100] "GET /api/v1/statistics/ws?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjE1NDQ2MjUsImZpcnN0X25hbWUiOiJBaG1lZCIsImlhdCI6MTc2MTQ1ODIyNSwibGFzdF9uYW1lIjoiQmVuIEFsaSIsInN0YWZmX2lkIjoic3RhZmYtMDAxIn0.0HojxCDiYBnx_na8kSN2hWtU5Rq852JqKKMT2s6RWXI HTTP/1.1 200 753.037µs "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) management-desktop/0.1.0 Chrome/124.0.6367.243 Electron/30.5.1 Safari/537.36" "
+[GIN] 2025/10/26 - 07:12:23 | 200 |     2.49758ms |       127.0.0.1 | GET      "/api/v1/statistics/ws?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjE1NDQ2MjUsImZpcnN0X25hbWUiOiJBaG1lZCIsImlhdCI6MTc2MTQ1ODIyNSwibGFzdF9uYW1lIjoiQmVuIEFsaSIsInN0YWZmX2lkIjoic3RhZmYtMDAxIn0.0HojxCDiYBnx_na8kSN2hWtU5Rq852JqKKMT2s6RWXI"
+127.0.0.1 - [26/Oct/2025:07:12:23 +0100] "GET /api/v1/statistics/staff/all?date=2025-10-26 HTTP/1.1 200 8.46021ms "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) management-desktop/0.1.0 Chrome/124.0.6367.243 Electron/30.5.1 Safari/537.36" "
+[GIN] 2025/10/26 - 07:12:23 | 200 |    8.537298ms |       127.0.0.1 | GET      "/api/v1/statistics/staff/all?date=2025-10-26"
+127.0.0.1 - [26/Oct/2025:07:12:23 +0100] "GET /api/v1/statistics/income/actual?date=2025-10-26 HTTP/1.1 200 7.321891ms "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) management-desktop/0.1.0 Chrome/124.0.6367.243 Electron/30.5.1 Safari/537.36" "
+[GIN] 2025/10/26 - 07:12:23 | 200 |    7.984595ms |       127.0.0.1 | GET      "/api/v1/statistics/income/actual?date=2025-10-26"
+2025/10/26 07:12:39 Error getting station stats for periodic update: can't scan into dest[2] (col: date): cannot scan NULL into *time.Time
+2025/10/26 07:13:09 Error getting station stats for periodic update: can't scan into dest[2] (col: date): cannot scan NULL into *time.Time
+2025/10/26 07:13:18 WebSocket error: websocket: close 1005 (no status)
+2025/10/26 07:13:18 Client unregistered from station *. Total clients: 0
+127.0.0.1 - [26/Oct/2025:07:13:18 +0100] "GET /api/v1/statistics/staff/all?date=2025-10-26 HTTP/1.1 200 7.430901ms "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) management-desktop/0.1.0 Chrome/124.0.6367.243 Electron/30.5.1 Safari/537.36" "
+[GIN] 2025/10/26 - 07:13:18 | 200 |    7.837429ms |       127.0.0.1 | GET      "/api/v1/statistics/staff/all?date=2025-10-26"
+2025/10/26 07:13:18 Client registered for station *. Total clients: 1
+127.0.0.1 - [26/Oct/2025:07:13:18 +0100] "GET /api/v1/statistics/ws?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjE1NDQ2MjUsImZpcnN0X25hbWUiOiJBaG1lZCIsImlhdCI6MTc2MTQ1ODIyNSwibGFzdF9uYW1lIjoiQmVuIEFsaSIsInN0YWZmX2lkIjoic3RhZmYtMDAxIn0.0HojxCDiYBnx_na8kSN2hWtU5Rq852JqKKMT2s6RWXI HTTP/1.1 200 3.906426ms "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) management-desktop/0.1.0 Chrome/124.0.6367.243 Electron/30.5.1 Safari/537.36" "
+[GIN] 2025/10/26 - 07:13:18 | 200 |    4.256468ms |       127.0.0.1 | GET      "/api/v1/statistics/ws?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjE1NDQ2MjUsImZpcnN0X25hbWUiOiJBaG1lZCIsImlhdCI6MTc2MTQ1ODIyNSwibGFzdF9uYW1lIjoiQmVuIEFsaSIsInN0YWZmX2lkIjoic3RhZmYtMDAxIn0.0HojxCDiYBnx_na8kSN2hWtU5Rq852JqKKMT2s6RWXI"
+127.0.0.1 - [26/Oct/2025:07:13:18 +0100] "GET /api/v1/statistics/income/actual?date=2025-10-26 HTTP/1.1 200 3.510791ms "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) management-desktop/0.1.0 Chrome/124.0.6367.243 Electron/30.5.1 Safari/537.36" "
+[GIN] 2025/10/26 - 07:13:18 | 200 |    3.747684ms |       127.0.0.1 | GET      "/api/v1/statistics/income/actual?date=2025-10-26"
+2025/10/26 07:13:24 WebSocket error: websocket: close 1005 (no status)
+2025/10/26 07:13:24 Client unregistered from station *. Total clients: 0
+127.0.0.1 - [26/Oct/2025:07:13:24 +0100] "GET /api/v1/statistics/staff/all?date=2025-10-26 HTTP/1.1 200 5.738088ms "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) management-desktop/0.1.0 Chrome/124.0.6367.243 Electron/30.5.1 Safari/537.36" "
+[GIN] 2025/10/26 - 07:13:24 | 200 |    6.812017ms |       127.0.0.1 | GET      "/api/v1/statistics/staff/all?date=2025-10-26"
+127.0.0.1 - [26/Oct/2025:07:13:24 +0100] "GET /api/v1/statistics/ws?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjE1NDQ2MjUsImZpcnN0X25hbWUiOiJBaG1lZCIsImlhdCI6MTc2MTQ1ODIyNSwibGFzdF9uYW1lIjoiQmVuIEFsaSIsInN0YWZmX2lkIjoic3RhZmYtMDAxIn0.0HojxCDiYBnx_na8kSN2hWtU5Rq852JqKKMT2s6RWXI HTTP/1.1 200 461.816µs "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) management-desktop/0.1.0 Chrome/124.0.6367.243 Electron/30.5.1 Safari/537.36" "
+2025/10/26 07:13:24 Client registered for station *. Total clients: 1
+[GIN] 2025/10/26 - 07:13:24 | 200 |    1.420073ms |       127.0.0.1 | GET      "/api/v1/statistics/ws?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjE1NDQ2MjUsImZpcnN0X25hbWUiOiJBaG1lZCIsImlhdCI6MTc2MTQ1ODIyNSwibGFzdF9uYW1lIjoiQmVuIEFsaSIsInN0YWZmX2lkIjoic3RhZmYtMDAxIn0.0HojxCDiYBnx_na8kSN2hWtU5Rq852JqKKMT2s6RWXI"
+127.0.0.1 - [26/Oct/2025:07:13:24 +0100] "GET /api/v1/statistics/income/actual?date=2025-10-26 HTTP/1.1 200 8.8777ms "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) management-desktop/0.1.0 Chrome/124.0.6367.243 Electron/30.5.1 Safari/537.36" "
+[GIN] 2025/10/26 - 07:13:24 | 200 |   10.247583ms |       127.0.0.1 | GET      "/api/v1/statistics/income/actual?date=2025-10-26"
+2025/10/26 07:13:36 WebSocket error: websocket: close 1005 (no status)
+2025/10/26 07:13:36 Client unregistered from station *. Total clients: 0
+127.0.0.1 - [26/Oct/2025:07:13:36 +0100] "GET /api/v1/statistics/ws?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjE1NDQ2MjUsImZpcnN0X25hbWUiOiJBaG1lZCIsImlhdCI6MTc2MTQ1ODIyNSwibGFzdF9uYW1lIjoiQmVuIEFsaSIsInN0YWZmX2lkIjoic3RhZmYtMDAxIn0.0HojxCDiYBnx_na8kSN2hWtU5Rq852JqKKMT2s6RWXI HTTP/1.1 200 619.394µs "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) management-desktop/0.1.0 Chrome/124.0.6367.243 Electron/30.5.1 Safari/537.36" "
+2025/10/26 07:13:36 Client registered for station *. Total clients: 1
+[GIN] 2025/10/26 - 07:13:36 | 200 |    1.025556ms |       127.0.0.1 | GET      "/api/v1/statistics/ws?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjE1NDQ2MjUsImZpcnN0X25hbWUiOiJBaG1lZCIsImlhdCI6MTc2MTQ1ODIyNSwibGFzdF9uYW1lIjoiQmVuIEFsaSIsInN0YWZmX2lkIjoic3RhZmYtMDAxIn0.0HojxCDiYBnx_na8kSN2hWtU5Rq852JqKKMT2s6RWXI"
+127.0.0.1 - [26/Oct/2025:07:13:36 +0100] "GET /api/v1/statistics/staff/all?date=2025-10-26 HTTP/1.1 200 5.60058ms "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) management-desktop/0.1.0 Chrome/124.0.6367.243 Electron/30.5.1 Safari/537.36" "
+[GIN] 2025/10/26 - 07:13:36 | 200 |    5.738506ms |       127.0.0.1 | GET      "/api/v1/statistics/staff/all?date=2025-10-26"
+127.0.0.1 - [26/Oct/2025:07:13:36 +0100] "GET /api/v1/statistics/income/actual?date=2025-10-26 HTTP/1.1 200 7.519371ms "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) management-desktop/0.1.0 Chrome/124.0.6367.243 Electron/30.5.1 Safari/537.36" "
+[GIN] 2025/10/26 - 07:13:36 | 200 |    7.766084ms |       127.0.0.1 | GET      "/api/v1/statistics/income/actual?date=2025-10-26"
+2025/10/26 07:13:39 Error getting station stats for periodic update: can't scan into dest[2] (col: date): cannot scan NULL into *time.Time
+2025/10/26 07:14:09 Error getting station stats for periodic update: can't scan into dest[2] (col: date): cannot scan NULL into *time.Time
+2025/10/26 07:14:39 Error getting station stats for periodic update: can't scan into dest[2] (col: date): cannot scan NULL into *time.Time
+2025/10/26 07:15:09 Error getting station stats for periodic update: can't scan into dest[2] (col: date): cannot scan NULL into *time.Time
+2025/10/26 07:15:39 Error getting station stats for periodic update: can't scan into dest[2] (col: date): cannot scan NULL into *time.Time
+2025/10/26 07:16:09 Error getting station stats for periodic update: can't scan into dest[2] (col: date): cannot scan NULL into *time.Time
+127.0.0.1 - [26/Oct/2025:07:16:36 +0100] "GET /api/v1/statistics/income/day?date=2025-10-17 HTTP/1.1 200 15.106782ms "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) management-desktop/0.1.0 Chrome/124.0.6367.243 Electron/30.5.1 Safari/537.36" "
+[GIN] 2025/10/26 - 07:16:36 | 200 |   15.487663ms |       127.0.0.1 | GET      "/api/v1/statistics/income/day?date=2025-10-17"
+2025/10/26 07:16:39 Error getting station stats for periodic update: can't scan into dest[2] (col: date): cannot scan NULL into *time.Time
+2025/10/26 07:17:09 Error getting station stats for periodic update: can't scan into dest[2] (col: date): cannot scan NULL into *time.Time
+2025/10/26 07:17:39 Error getting station stats for periodic update: can't scan into dest[2] (col: date): cannot scan NULL into *time.Time
+2025/10/26 07:18:09 Error getting station stats for periodic update: can't scan into dest[2] (col: date): cannot scan NULL into *time.Time
+2025/10/26 07:18:39 Error getting station stats for periodic update: can't scan into dest[2] (col: date): cannot scan NULL into *time.Time
+2025/10/26 07:19:09 Error getting station stats for periodic update: can't scan into dest[2] (col: date): cannot scan NULL into *time.Time
+2025/10/26 07:19:39 Error getting station stats for periodic update: can't scan into dest[2] (col: date): cannot scan NULL into *time.Time
+2025/10/26 07:20:09 Error getting station stats for periodic update: can't scan into dest[2] (col: date): cannot scan NULL into *time.Time
+2025/10/26 07:20:39 Error getting station stats for periodic update: can't scan into dest[2] (col: date): cannot scan NULL into *time.Time
+2025/10/26 07:21:09 Error getting station stats for periodic update: can't scan into dest[2] (col: date): cannot scan NULL into *time.Time
+2025/10/26 07:21:39 Error getting station stats for periodic update: can't scan into dest[2] (col: date): cannot scan NULL into *time.Time
+2025/10/26 07:22:09 Error getting station stats for periodic update: can't scan into dest[2] (col: date): cannot scan NULL into *time.Time
+2025/10/26 07:22:39 Error getting station stats for periodic update: can't scan into dest[2] (col: date): cannot scan NULL into *time.Time
+2025/10/26 07:23:09 Error getting station stats for periodic update: can't scan into dest[2] (col: date): cannot scan NULL into *time.Time
+2025/10/26 07:23:39 Error getting station stats for periodic update: can't scan into dest[2] (col: date): cannot scan NULL into *time.Time
+2025/10/26 07:24:09 Error getting station stats for periodic update: can't scan into dest[2] (col: date): cannot scan NULL into *time.Time
+2025/10/26 07:24:39 Error getting station stats for periodic update: can't scan into dest[2] (col: date): cannot scan NULL into *time.Time
+2025/10/26 07:25:09 Error getting station stats for periodic update: can't scan into dest[2] (col: date): cannot scan NULL into *time.Time
+127.0.0.1 - [26/Oct/2025:07:25:34 +0100] "GET /api/v1/statistics/income/month?year=2025&month=10 HTTP/1.1 200 13.568374ms "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) management-desktop/0.1.0 Chrome/124.0.6367.243 Electron/30.5.1 Safari/537.36" "
+[GIN] 2025/10/26 - 07:25:34 | 200 |   13.947469ms |       127.0.0.1 | GET      "/api/v1/statistics/income/month?year=2025&month=10"
+127.0.0.1 - [26/Oct/2025:07:25:36 +0100] "GET /api/v1/statistics/income/month?year=2025&month=10 HTTP/1.1 200 9.205757ms "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) management-desktop/0.1.0 Chrome/124.0.6367.243 Electron/30.5.1 Safari/537.36" "
+[GIN] 2025/10/26 - 07:25:36 | 200 |    9.842171ms |       127.0.0.1 | GET      "/api/v1/statistics/income/month?year=2025&month=10"
+127.0.0.1 - [26/Oct/2025:07:25:37 +0100] "GET /api/v1/statistics/income/month?year=2025&month=10 HTTP/1.1 200 7.550147ms "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) management-desktop/0.1.0 Chrome/124.0.6367.243 Electron/30.5.1 Safari/537.36" "
+[GIN] 2025/10/26 - 07:25:37 | 200 |    7.895104ms |       127.0.0.1 | GET      "/api/v1/statistics/income/month?year=2025&month=10"
+127.0.0.1 - [26/Oct/2025:07:25:37 +0100] "GET /api/v1/statistics/income/month?year=2025&month=10 HTTP/1.1 200 5.382355ms "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) management-desktop/0.1.0 Chrome/124.0.6367.243 Electron/30.5.1 Safari/537.36" "
+[GIN] 2025/10/26 - 07:25:37 | 200 |    5.717319ms |       127.0.0.1 | GET      "/api/v1/statistics/income/month?year=2025&month=10"
+127.0.0.1 - [26/Oct/2025:07:25:38 +0100] "GET /api/v1/statistics/income/month?year=2025&month=10 HTTP/1.1 200 7.317483ms "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) management-desktop/0.1.0 Chrome/124.0.6367.243 Electron/30.5.1 Safari/537.36" "
+[GIN] 2025/10/26 - 07:25:38 | 200 |    7.585948ms |       127.0.0.1 | GET      "/api/v1/statistics/income/month?year=2025&month=10"
+127.0.0.1 - [26/Oct/2025:07:25:38 +0100] "GET /api/v1/statistics/income/month?year=2025&month=10 HTTP/1.1 200 6.020894ms "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) management-desktop/0.1.0 Chrome/124.0.6367.243 Electron/30.5.1 Safari/537.36" "
+[GIN] 2025/10/26 - 07:25:38 | 200 |    6.492406ms |       127.0.0.1 | GET      "/api/v1/statistics/income/month?year=2025&month=10"
+127.0.0.1 - [26/Oct/2025:07:25:38 +0100] "GET /api/v1/statistics/income/month?year=2025&month=10 HTTP/1.1 200 4.527021ms "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) management-desktop/0.1.0 Chrome/124.0.6367.243 Electron/30.5.1 Safari/537.36" "
+[GIN] 2025/10/26 - 07:25:38 | 200 |    4.871028ms |       127.0.0.1 | GET      "/api/v1/statistics/income/month?year=2025&month=10"
+127.0.0.1 - [26/Oct/2025:07:25:38 +0100] "GET /api/v1/statistics/income/month?year=2025&month=10 HTTP/1.1 200 6.027327ms "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) management-desktop/0.1.0 Chrome/124.0.6367.243 Electron/30.5.1 Safari/537.36" "
+[GIN] 2025/10/26 - 07:25:38 | 200 |    6.507972ms |       127.0.0.1 | GET      "/api/v1/statistics/income/month?year=2025&month=10"
+127.0.0.1 - [26/Oct/2025:07:25:39 +0100] "GET /api/v1/statistics/income/month?year=2025&month=10 HTTP/1.1 200 5.090939ms "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) management-desktop/0.1.0 Chrome/124.0.6367.243 Electron/30.5.1 Safari/537.36" "
+[GIN] 2025/10/26 - 07:25:39 | 200 |    5.491596ms |       127.0.0.1 | GET      "/api/v1/statistics/income/month?year=2025&month=10"
+2025/10/26 07:25:39 Error getting station stats for periodic update: can't scan into dest[2] (col: date): cannot scan NULL into *time.Time
+127.0.0.1 - [26/Oct/2025:07:25:42 +0100] "GET /api/v1/statistics/income/month?year=2025&month=9 HTTP/1.1 200 7.190292ms "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) management-desktop/0.1.0 Chrome/124.0.6367.243 Electron/30.5.1 Safari/537.36" "
+[GIN] 2025/10/26 - 07:25:42 | 200 |    7.406504ms |       127.0.0.1 | GET      "/api/v1/statistics/income/month?year=2025&month=9"
+127.0.0.1 - [26/Oct/2025:07:25:42 +0100] "GET /api/v1/statistics/income/month?year=2025&month=9 HTTP/1.1 200 6.669634ms "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) management-desktop/0.1.0 Chrome/124.0.6367.243 Electron/30.5.1 Safari/537.36" "
+[GIN] 2025/10/26 - 07:25:42 | 200 |    6.990337ms |       127.0.0.1 | GET      "/api/v1/statistics/income/month?year=2025&month=9"
+2025/10/26 07:26:09 Error getting station stats for periodic update: can't scan into dest[2] (col: date): cannot scan NULL into *time.Time
+2025/10/26 07:26:39 Error getting station stats for periodic update: can't scan into dest[2] (col: date): cannot scan NULL into *time.Time
+2025/10/26 07:27:09 Error getting station stats for periodic update: can't scan into dest[2] (col: date): cannot scan NULL into *time.Time
+2025/10/26 07:27:12 Client unregistered from station *. Total clients: 0
+2025/10/26 07:27:39 Error getting station stats for periodic update: can't scan into dest[2] (col: date): cannot scan NULL into *time.Time
+2025/10/26 07:28:09 Error getting station stats for periodic update: can't scan into dest[2] (col: date): cannot scan NULL into *time.Time
+2025/10/26 07:28:39 Error getting station stats for periodic update: can't scan into dest[2] (col: date): cannot scan NULL into *time.Time
+2025/10/26 07:29:09 Error getting station stats for periodic update: can't scan into dest[2] (col: date): cannot scan NULL into *time.Time
+2025/10/26 07:29:39 Error getting station stats for periodic update: can't scan into dest[2] (col: date): cannot scan NULL into *time.Time
+2025/10/26 07:30:09 Error getting station stats for periodic update: can't scan into dest[2] (col: date): cannot scan NULL into *time.Time
+2025/10/26 07:30:39 Error getting station stats for periodic update: can't scan into dest[2] (col: date): cannot scan NULL into *time.Time
+2025/10/26 07:31:09 Error getting station stats for periodic update: can't scan into dest[2] (col: date): cannot scan NULL into *time.Time
+2025/10/26 07:31:39 Error getting station stats for periodic update: can't scan into dest[2] (col: date): cannot scan NULL into *time.Time
+2025/10/26 07:32:09 Error getting station stats for periodic update: can't scan into dest[2] (col: date): cannot scan NULL into *time.Time
+2025/10/26 07:32:10 Client registered for station *. Total clients: 1
+127.0.0.1 - [26/Oct/2025:07:32:10 +0100] "GET /api/v1/statistics/ws?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjE1NDQ2MjUsImZpcnN0X25hbWUiOiJBaG1lZCIsImlhdCI6MTc2MTQ1ODIyNSwibGFzdF9uYW1lIjoiQmVuIEFsaSIsInN0YWZmX2lkIjoic3RhZmYtMDAxIn0.0HojxCDiYBnx_na8kSN2hWtU5Rq852JqKKMT2s6RWXI HTTP/1.1 200 120.166µs "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) management-desktop/0.1.0 Chrome/124.0.6367.243 Electron/30.5.1 Safari/537.36" "
+[GIN] 2025/10/26 - 07:32:10 | 200 |     314.541µs |       127.0.0.1 | GET      "/api/v1/statistics/ws?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjE1NDQ2MjUsImZpcnN0X25hbWUiOiJBaG1lZCIsImlhdCI6MTc2MTQ1ODIyNSwibGFzdF9uYW1lIjoiQmVuIEFsaSIsInN0YWZmX2lkIjoic3RhZmYtMDAxIn0.0HojxCDiYBnx_na8kSN2hWtU5Rq852JqKKMT2s6RWXI"
+127.0.0.1 - [26/Oct/2025:07:32:10 +0100] "GET /api/v1/statistics/staff/all?date=2025-10-26 HTTP/1.1 200 3.829608ms "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) management-desktop/0.1.0 Chrome/124.0.6367.243 Electron/30.5.1 Safari/537.36" "
+[GIN] 2025/10/26 - 07:32:10 | 200 |    3.932016ms |       127.0.0.1 | GET      "/api/v1/statistics/staff/all?date=2025-10-26"
+127.0.0.1 - [26/Oct/2025:07:32:10 +0100] "GET /api/v1/statistics/staff/all?date=2025-10-26 HTTP/1.1 200 2.195187ms "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) management-desktop/0.1.0 Chrome/124.0.6367.243 Electron/30.5.1 Safari/537.36" "
+[GIN] 2025/10/26 - 07:32:10 | 200 |    2.326584ms |       127.0.0.1 | GET      "/api/v1/statistics/staff/all?date=2025-10-26"
+2025/10/26 07:32:10 Client unregistered from station *. Total clients: 0
+127.0.0.1 - [26/Oct/2025:07:32:10 +0100] "GET /api/v1/statistics/ws?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjE1NDQ2MjUsImZpcnN0X25hbWUiOiJBaG1lZCIsImlhdCI6MTc2MTQ1ODIyNSwibGFzdF9uYW1lIjoiQmVuIEFsaSIsInN0YWZmX2lkIjoic3RhZmYtMDAxIn0.0HojxCDiYBnx_na8kSN2hWtU5Rq852JqKKMT2s6RWXI HTTP/1.1 200 168.218µs "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) management-desktop/0.1.0 Chrome/124.0.6367.243 Electron/30.5.1 Safari/537.36" "
+2025/10/26 07:32:10 Client registered for station *. Total clients: 1
+[GIN] 2025/10/26 - 07:32:10 | 200 |     442.988µs |       127.0.0.1 | GET      "/api/v1/statistics/ws?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjE1NDQ2MjUsImZpcnN0X25hbWUiOiJBaG1lZCIsImlhdCI6MTc2MTQ1ODIyNSwibGFzdF9uYW1lIjoiQmVuIEFsaSIsInN0YWZmX2lkIjoic3RhZmYtMDAxIn0.0HojxCDiYBnx_na8kSN2hWtU5Rq852JqKKMT2s6RWXI"
+127.0.0.1 - [26/Oct/2025:07:32:14 +0100] "GET /api/v1/statistics/income/month?year=2025&month=10 HTTP/1.1 200 14.273446ms "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) management-desktop/0.1.0 Chrome/124.0.6367.243 Electron/30.5.1 Safari/537.36" "
+[GIN] 2025/10/26 - 07:32:14 | 200 |   14.476851ms |       127.0.0.1 | GET      "/api/v1/statistics/income/month?year=2025&month=10"
+127.0.0.1 - [26/Oct/2025:07:32:17 +0100] "GET /api/v1/statistics/income/month?year=2025&month=9 HTTP/1.1 200 6.5187ms "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) management-desktop/0.1.0 Chrome/124.0.6367.243 Electron/30.5.1 Safari/537.36" "
+[GIN] 2025/10/26 - 07:32:17 | 200 |    7.132192ms |       127.0.0.1 | GET      "/api/v1/statistics/income/month?year=2025&month=9"
+127.0.0.1 - [26/Oct/2025:07:32:20 +0100] "GET /api/v1/statistics/income/month?year=2025&month=4 HTTP/1.1 200 5.323585ms "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) management-desktop/0.1.0 Chrome/124.0.6367.243 Electron/30.5.1 Safari/537.36" "
+[GIN] 2025/10/26 - 07:32:20 | 200 |    5.605192ms |       127.0.0.1 | GET      "/api/v1/statistics/income/month?year=2025&month=4"
+127.0.0.1 - [26/Oct/2025:07:32:20 +0100] "GET /api/v1/statistics/income/month?year=2025&month=4 HTTP/1.1 200 5.439672ms "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) management-desktop/0.1.0 Chrome/124.0.6367.243 Electron/30.5.1 Safari/537.36" "
+[GIN] 2025/10/26 - 07:32:20 | 200 |    5.796456ms |       127.0.0.1 | GET      "/api/v1/statistics/income/month?year=2025&month=4"
+127.0.0.1 - [26/Oct/2025:07:32:20 +0100] "GET /api/v1/statistics/income/month?year=2025&month=4 HTTP/1.1 200 5.397267ms "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) management-desktop/0.1.0 Chrome/124.0.6367.243 Electron/30.5.1 Safari/537.36" "
+[GIN] 2025/10/26 - 07:32:20 | 200 |    5.610026ms |       127.0.0.1 | GET      "/api/v1/statistics/income/month?year=2025&month=4"
+127.0.0.1 - [26/Oct/2025:07:32:21 +0100] "GET /api/v1/statistics/income/month?year=2025&month=4 HTTP/1.1 200 5.089561ms "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) management-desktop/0.1.0 Chrome/124.0.6367.243 Electron/30.5.1 Safari/537.36" "
+[GIN] 2025/10/26 - 07:32:21 | 200 |     5.52764ms |       127.0.0.1 | GET      "/api/v1/statistics/income/month?year=2025&month=4"
+127.0.0.1 - [26/Oct/2025:07:32:21 +0100] "GET /api/v1/statistics/income/month?year=2025&month=4 HTTP/1.1 200 2.761312ms "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) management-desktop/0.1.0 Chrome/124.0.6367.243 Electron/30.5.1 Safari/537.36" "
+[GIN] 2025/10/26 - 07:32:21 | 200 |    3.191952ms |       127.0.0.1 | GET      "/api/v1/statistics/income/month?year=2025&month=4"
+127.0.0.1 - [26/Oct/2025:07:32:21 +0100] "GET /api/v1/statistics/income/month?year=2025&month=4 HTTP/1.1 200 3.603361ms "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) management-desktop/0.1.0 Chrome/124.0.6367.243 Electron/30.5.1 Safari/537.36" "
+[GIN] 2025/10/26 - 07:32:21 | 200 |    3.911137ms |       127.0.0.1 | GET      "/api/v1/statistics/income/month?year=2025&month=4"
+2025/10/26 07:32:39 Error getting station stats for periodic update: can't scan into dest[2] (col: date): cannot scan NULL into *time.Time
+2025/10/26 07:33:09 Error getting station stats for periodic update: can't scan into dest[2] (col: date): cannot scan NULL into *time.Time
+2025/10/26 07:33:39 Error getting station stats for periodic update: can't scan into dest[2] (col: date): cannot scan NULL into *time.Time
+2025/10/26 07:34:09 Error getting station stats for periodic update: can't scan into dest[2] (col: date): cannot scan NULL into *time.Time
+2025/10/26 07:34:39 Error getting station stats for periodic update: can't scan into dest[2] (col: date): cannot scan NULL into *time.Time
+2025/10/26 07:34:41 WebSocket error: websocket: close 1005 (no status)
+2025/10/26 07:34:41 Client unregistered from station *. Total clients: 0
+127.0.0.1 - [26/Oct/2025:07:34:41 +0100] "GET /api/v1/statistics/staff/all-month?year=2025&month=4 HTTP/1.1 404 153ns "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) management-desktop/0.1.0 Chrome/124.0.6367.243 Electron/30.5.1 Safari/537.36" "
+[GIN] 2025/10/26 - 07:34:41 | 404 |     403.858µs |       127.0.0.1 | GET      "/api/v1/statistics/staff/all-month?year=2025&month=4"
+127.0.0.1 - [26/Oct/2025:07:34:41 +0100] "GET /api/v1/statistics/ws?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjE1NDQ2MjUsImZpcnN0X25hbWUiOiJBaG1lZCIsImlhdCI6MTc2MTQ1ODIyNSwibGFzdF9uYW1lIjoiQmVuIEFsaSIsInN0YWZmX2lkIjoic3RhZmYtMDAxIn0.0HojxCDiYBnx_na8kSN2hWtU5Rq852JqKKMT2s6RWXI HTTP/1.1 200 457.727µs "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) management-desktop/0.1.0 Chrome/124.0.6367.243 Electron/30.5.1 Safari/537.36" "
+2025/10/26 07:34:41 Client registered for station *. Total clients: 1
+[GIN] 2025/10/26 - 07:34:41 | 200 |     518.443µs |       127.0.0.1 | GET      "/api/v1/statistics/ws?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjE1NDQ2MjUsImZpcnN0X25hbWUiOiJBaG1lZCIsImlhdCI6MTc2MTQ1ODIyNSwibGFzdF9uYW1lIjoiQmVuIEFsaSIsInN0YWZmX2lkIjoic3RhZmYtMDAxIn0.0HojxCDiYBnx_na8kSN2hWtU5Rq852JqKKMT2s6RWXI"
+2025/10/26 07:35:09 Error getting station stats for periodic update: can't scan into dest[2] (col: date): cannot scan NULL into *time.Time
+2025/10/26 07:35:39 Error getting station stats for periodic update: can't scan into dest[2] (col: date): cannot scan NULL into *time.Time
+2025/10/26 07:36:09 Error getting station stats for periodic update: can't scan into dest[2] (col: date): cannot scan NULL into *time.Time

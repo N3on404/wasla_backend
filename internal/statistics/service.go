@@ -89,6 +89,17 @@ func (s *Service) GetAllStaffIncomeForDate(ctx context.Context, date time.Time) 
 	return s.repo.GetAllStaffIncomeForDate(ctx, date)
 }
 
+// GetAllStaffIncomeForMonth gets income summary for all staff members for a specific month
+func (s *Service) GetAllStaffIncomeForMonth(ctx context.Context, year, month int) ([]StaffIncomeSummary, error) {
+	if month < 1 || month > 12 {
+		return nil, fmt.Errorf("invalid month (must be 1-12)")
+	}
+	if year < 2020 || year > 2099 {
+		return nil, fmt.Errorf("invalid year")
+	}
+	return s.repo.GetAllStaffIncomeForMonth(ctx, year, month)
+}
+
 // GetAllStationIncomeForDate gets income summary for all stations for a specific date
 func (s *Service) GetAllStationIncomeForDate(ctx context.Context, date time.Time) ([]StationIncomeSummary, error) {
 	return s.repo.GetAllStationIncomeForDate(ctx, date)
@@ -146,4 +157,28 @@ func (s *Service) GetStationIncomeThisMonth(ctx context.Context, stationID strin
 	startOfMonth := time.Date(now.Year(), now.Month(), 1, 0, 0, 0, 0, now.Location())
 
 	return s.repo.GetStationIncomeRange(ctx, stationID, startOfMonth, now)
+}
+
+// GetActualIncomeForDate gets actual income for a specific date
+func (s *Service) GetActualIncomeForDate(ctx context.Context, date time.Time) (*ActualIncomeSummary, error) {
+	return s.repo.GetActualIncomeForDate(ctx, date)
+}
+
+// GetActualIncomeForPeriod gets actual income for a time period
+func (s *Service) GetActualIncomeForPeriod(ctx context.Context, startTime, endTime time.Time) (*ActualIncomeSummary, error) {
+	if startTime.After(endTime) {
+		return nil, fmt.Errorf("start time cannot be after end time")
+	}
+	return s.repo.GetActualIncomeForPeriod(ctx, startTime, endTime)
+}
+
+// GetActualIncomeForMonth gets actual income for a specific month
+func (s *Service) GetActualIncomeForMonth(ctx context.Context, year, month int) (*ActualIncomeSummary, error) {
+	if month < 1 || month > 12 {
+		return nil, fmt.Errorf("invalid month (must be 1-12)")
+	}
+	if year < 2020 || year > 2099 {
+		return nil, fmt.Errorf("invalid year")
+	}
+	return s.repo.GetActualIncomeForMonth(ctx, year, month)
 }

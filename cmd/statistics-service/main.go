@@ -55,6 +55,7 @@ func main() {
 		api.GET("/statistics/staff/:staffId/today", middleware.AuthRequired(), h.GetTodayStaffIncome)
 		api.GET("/statistics/staff/:staffId/range", middleware.AuthRequired(), h.GetStaffIncomeRange)
 		api.GET("/statistics/staff/all", middleware.AuthRequired(), h.GetAllStaffIncomeForDate)
+		api.GET("/statistics/staff/all-month", middleware.AuthRequired(), h.GetAllStaffIncomeForMonth)
 		api.GET("/statistics/staff/:staffId/transactions", middleware.AuthRequired(), h.GetStaffTransactionLog)
 
 		// Station income endpoints
@@ -66,6 +67,15 @@ func main() {
 
 		// Real-time WebSocket endpoint
 		api.GET("/statistics/ws", h.WebSocketStats)
+
+		// Trigger real-time broadcast (for cross-service communication)
+		api.POST("/statistics/broadcast", h.TriggerBroadcast)
+
+		// Actual income calculation endpoints
+		api.GET("/statistics/income/actual", middleware.AuthRequired(), h.GetActualIncome)
+		api.GET("/statistics/income/period", middleware.AuthRequired(), h.GetActualIncomeForPeriod)
+		api.GET("/statistics/income/day", middleware.AuthRequired(), h.GetActualIncomeForDay)
+		api.GET("/statistics/income/month", middleware.AuthRequired(), h.GetActualIncomeForMonth)
 	}
 
 	port := os.Getenv("STATISTICS_SERVICE_PORT")

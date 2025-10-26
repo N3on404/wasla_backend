@@ -278,6 +278,48 @@ func (h *Handler) GetAllStationIncomeForDate(c *gin.Context) {
 	utils.SuccessResponse(c, http.StatusOK, "All station income retrieved", income)
 }
 
+// GetAllStaffIncomeForMonth godoc
+// @Summary Get all staff income for a month
+// @Description Get income summary for all staff members for a specific month
+// @Tags statistics
+// @Accept json
+// @Produce json
+// @Param year query int true "Year"
+// @Param month query int true "Month (1-12)"
+// @Success 200 {object} utils.Response{data=[]StaffIncomeSummary}
+// @Failure 400 {object} utils.ErrorResponse
+// @Failure 500 {object} utils.ErrorResponse
+// @Router /statistics/staff/all-month [get]
+func (h *Handler) GetAllStaffIncomeForMonth(c *gin.Context) {
+	yearStr := c.Query("year")
+	monthStr := c.Query("month")
+
+	if yearStr == "" || monthStr == "" {
+		utils.BadRequestResponse(c, "Year and month are required")
+		return
+	}
+
+	year, err := strconv.Atoi(yearStr)
+	if err != nil || year < 2020 || year > 2099 {
+		utils.BadRequestResponse(c, "Invalid year")
+		return
+	}
+
+	month, err := strconv.Atoi(monthStr)
+	if err != nil || month < 1 || month > 12 {
+		utils.BadRequestResponse(c, "Invalid month (must be 1-12)")
+		return
+	}
+
+	income, err := h.service.GetAllStaffIncomeForMonth(c.Request.Context(), year, month)
+	if err != nil {
+		utils.InternalServerErrorResponse(c, "Failed to get all staff income for month", err)
+		return
+	}
+
+	utils.SuccessResponse(c, http.StatusOK, "All staff income for month retrieved", income)
+}
+
 // GetStaffTransactionLog godoc
 // @Summary Get transaction log for a staff member
 // @Description Get transaction log for a specific staff member
@@ -430,4 +472,169 @@ func (h *Handler) WebSocketStats(c *gin.Context) {
 
 	// Use the existing websocket ServeWS function
 	websocket.ServeWS(h.realtimeHub.wsHub, c.Writer, c.Request, "*", "statistics-client")
+}
+
+// GetActualIncome godoc
+// @Summary Get actual income with destination base prices
+// @Description Get actual income calculated as (destination base price + 0.150) per seat
+// @Tags statistics
+// @Accept json
+// @Produce json
+// @Param date query string false "Date (YYYY-MM-DD format, defaults to today)"
+// @Success 200 {object} utils.Response{data=ActualIncomeSummary}
+// @Failure 400 {object} utils.ErrorResponse
+// @Failure 500 {object} utils.ErrorResponse
+// @Router /statistics/income/actual [get]
+func (h *Handler) GetActualIncome(c *gin.Context) {
+	dateStr := c.Query("date")
+	var date time.Time
+	var err error
+
+	if dateStr != "" {
+		date, err = time.Parse("2006-01-02", dateStr)
+		if err != nil {
+			utils.BadRequestResponse(c, "Invalid date format. Use YYYY-MM-DD")
+			return
+		}
+	} else {
+		date = time.Now()
+	}
+
+	income, err := h.service.GetActualIncomeForDate(c.Request.Context(), date)
+	if err != nil {
+		utils.InternalServerErrorResponse(c, "Failed to get actual income", err)
+		return
+	}
+
+	utils.SuccessResponse(c, http.StatusOK, "Actual income retrieved", income)
+}
+
+// GetActualIncomeForPeriod godoc
+// @Summary Get actual income for a time period
+// @Description Get actual income for a specific time period
+// @Tags statistics
+// @Accept json
+// @Produce json
+// @Param start query string true "Start time (ISO 8601 format)"
+// @Param end query string true "End time (ISO 8601 format)"
+// @Success 200 {object} utils.Response{data=ActualIncomeSummary}
+// @Failure 400 {object} utils.ErrorResponse
+// @Failure 500 {object} utils.ErrorResponse
+// @Router /statistics/income/period [get]
+func (h *Handler) GetActualIncomeForPeriod(c *gin.Context) {
+	startStr := c.Query("start")
+	endStr := c.Query("end")
+
+	if startStr == "" || endStr == "" {
+		utils.BadRequestResponse(c, "Start and end times are required")
+		return
+	}
+
+	startTime, err := time.Parse(time.RFC3339, startStr)
+	if err != nil {
+		utils.BadRequestResponse(c, "Invalid start time format")
+		return
+	}
+
+	endTime, err := time.Parse(time.RFC3339, endStr)
+	if err != nil {
+		utils.BadRequestResponse(c, "Invalid end time format")
+		return
+	}
+
+	income, err := h.service.GetActualIncomeForPeriod(c.Request.Context(), startTime, endTime)
+	if err != nil {
+		utils.InternalServerErrorResponse(c, "Failed to get actual income for period", err)
+		return
+	}
+
+	utils.SuccessResponse(c, http.StatusOK, "Actual income for period retrieved", income)
+}
+
+// GetActualIncomeForDay godoc
+// @Summary Get actual income for a specific day
+// @Description Get actual income for a specific day
+// @Tags statistics
+// @Accept json
+// @Produce json
+// @Param date query string true "Date (YYYY-MM-DD format)"
+// @Success 200 {object} utils.Response{data=ActualIncomeSummary}
+// @Failure 400 {object} utils.ErrorResponse
+// @Failure 500 {object} utils.ErrorResponse
+// @Router /statistics/income/day [get]
+func (h *Handler) GetActualIncomeForDay(c *gin.Context) {
+	dateStr := c.Query("date")
+	if dateStr == "" {
+		utils.BadRequestResponse(c, "Date is required")
+		return
+	}
+
+	date, err := time.Parse("2006-01-02", dateStr)
+	if err != nil {
+		utils.BadRequestResponse(c, "Invalid date format. Use YYYY-MM-DD")
+		return
+	}
+
+	income, err := h.service.GetActualIncomeForDate(c.Request.Context(), date)
+	if err != nil {
+		utils.InternalServerErrorResponse(c, "Failed to get actual income for day", err)
+		return
+	}
+
+	utils.SuccessResponse(c, http.StatusOK, "Actual income for day retrieved", income)
+}
+
+// GetActualIncomeForMonth godoc
+// @Summary Get actual income for a month
+// @Description Get actual income for a specific month
+// @Tags statistics
+// @Accept json
+// @Produce json
+// @Param year query int true "Year"
+// @Param month query int true "Month (1-12)"
+// @Success 200 {object} utils.Response{data=ActualIncomeSummary}
+// @Failure 400 {object} utils.ErrorResponse
+// @Failure 500 {object} utils.ErrorResponse
+// @Router /statistics/income/month [get]
+func (h *Handler) GetActualIncomeForMonth(c *gin.Context) {
+	yearStr := c.Query("year")
+	monthStr := c.Query("month")
+
+	if yearStr == "" || monthStr == "" {
+		utils.BadRequestResponse(c, "Year and month are required")
+		return
+	}
+
+	year, err := strconv.Atoi(yearStr)
+	if err != nil || year < 2020 || year > 2099 {
+		utils.BadRequestResponse(c, "Invalid year")
+		return
+	}
+
+	month, err := strconv.Atoi(monthStr)
+	if err != nil || month < 1 || month > 12 {
+		utils.BadRequestResponse(c, "Invalid month (must be 1-12)")
+		return
+	}
+
+	income, err := h.service.GetActualIncomeForMonth(c.Request.Context(), year, month)
+	if err != nil {
+		utils.InternalServerErrorResponse(c, "Failed to get actual income for month", err)
+		return
+	}
+
+	utils.SuccessResponse(c, http.StatusOK, "Actual income for month retrieved", income)
+}
+
+// TriggerBroadcast triggers a real-time statistics update broadcast
+func (h *Handler) TriggerBroadcast(c *gin.Context) {
+	if h.realtimeHub == nil || h.realtimeHub.wsHub == nil {
+		utils.InternalServerErrorResponse(c, "Real-time statistics not available", nil)
+		return
+	}
+
+	// Force a broadcast of current statistics
+	h.realtimeHub.BroadcastPeriodicUpdates()
+
+	utils.SuccessResponse(c, http.StatusOK, "Statistics broadcast triggered", nil)
 }

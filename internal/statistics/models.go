@@ -118,3 +118,14 @@ type LogTransactionRequest struct {
 	Quantity        int     `json:"quantity"`
 	StationID       string  `json:"stationId"`
 }
+
+// ActualIncomeSummary represents actual income calculated with destination base prices
+type ActualIncomeSummary struct {
+	Date                    time.Time `json:"date"`
+	SeatsBooked             int       `json:"seatsBooked"`
+	ActualSeatIncome        float64   `json:"actualSeatIncome"` // Base price + 0.150 per seat
+	DayPassSales            int       `json:"dayPassSales"`
+	DayPassIncome           float64   `json:"dayPassIncome"`           // 2.0 per day pass
+	TotalActualIncome       float64   `json:"totalActualIncome"`       // actualSeatIncome + dayPassIncome
+	SeatsWithoutDestination int       `json:"seatsWithoutDestination"` // bookings without queue/destination info
+}

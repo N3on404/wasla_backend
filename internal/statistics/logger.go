@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"log"
+	"net/http"
 	"time"
 
 	"github.com/jackc/pgx/v5/pgxpool"
@@ -108,6 +109,13 @@ func (sl *StatisticsLogger) LogSeatBookingTransactionAsync(staffID, bookingID, s
 		if err := sl.LogSeatBookingTransaction(ctx, staffID, bookingID, stationID, seats); err != nil {
 			log.Printf("Async seat booking transaction logging failed: %v", err)
 		}
+
+		// Trigger statistics service to broadcast update
+		// This will notify all connected WebSocket clients
+		go func() {
+			time.Sleep(100 * time.Millisecond) // Small delay to ensure DB write is complete
+			sl.triggerStatisticsBroadcast()
+		}()
 	}()
 }
 
@@ -118,5 +126,27 @@ func (sl *StatisticsLogger) LogDayPassTransactionAsync(staffID, dayPassID, stati
 		if err := sl.LogDayPassTransaction(ctx, staffID, dayPassID, stationID); err != nil {
 			log.Printf("Async day pass transaction logging failed: %v", err)
 		}
+
+		// Trigger statistics service to broadcast update
+		go func() {
+			time.Sleep(100 * time.Millisecond)
+			sl.triggerStatisticsBroadcast()
+		}()
 	}()
+}
+
+// triggerStatisticsBroadcast triggers the statistics service to broadcast updates
+func (sl *StatisticsLogger) triggerStatisticsBroadcast() {
+	// Call the statistics service endpoint to trigger a broadcast
+	statisticsURL := "http://127.0.0.1:8006/api/v1/statistics/broadcast"
+	resp, err := http.Post(statisticsURL, "application/json", nil)
+	if err != nil {
+		log.Printf("Failed to trigger statistics broadcast: %v", err)
+		return
+	}
+	defer resp.Body.Close()
+
+	if resp.StatusCode != http.StatusOK {
+		log.Printf("Statistics broadcast returned status: %d", resp.StatusCode)
+	}
 }

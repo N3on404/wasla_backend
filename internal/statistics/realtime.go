@@ -88,7 +88,7 @@ func (h *RealTimeStatsHub) Run() {
 	for {
 		select {
 		case <-ticker.C:
-			h.broadcastPeriodicUpdates()
+			h.BroadcastPeriodicUpdates()
 		}
 	}
 }
@@ -143,8 +143,8 @@ func (h *RealTimeStatsHub) BroadcastStationIncomeUpdate(stationID string, update
 	h.wsHub.BroadcastToStation("*", "statistics_update", statsUpdate)
 }
 
-// broadcastPeriodicUpdates sends periodic updates to all clients
-func (h *RealTimeStatsHub) broadcastPeriodicUpdates() {
+// BroadcastPeriodicUpdates sends periodic updates to all clients
+func (h *RealTimeStatsHub) BroadcastPeriodicUpdates() {
 	if h.wsHub == nil || h.service == nil {
 		return
 	}
